@@ -1,3 +1,4 @@
+#include "menu/mostrarMenuVisitantes.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include <iostream>

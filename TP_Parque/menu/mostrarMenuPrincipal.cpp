@@ -1,3 +1,4 @@
+#include "menu/mostrarMenuPrincipal.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "menu/mostrarMenuVisitantes.h"
