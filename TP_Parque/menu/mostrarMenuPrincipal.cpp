@@ -1,8 +1,6 @@
-#ifndef MOSTRAR_MENU_PRINCIPAL_H
-#define MOSTRAR_MENU_PRINCIPAL_H
-#include "utiles/outputs/imprimirTitulo.hpp"
-#include "utiles/outputs/imprimirConNum.hpp"
-#include "menu/mostrarMenuVisitantes.hpp"
+#include "utiles/outputs/imprimirTitulo.h"
+#include "utiles/outputs/imprimirConNum.h"
+#include "menu/mostrarMenuVisitantes.h"
 #include <iostream>
 
 using namespace std;
@@ -47,5 +45,3 @@ void mostrarMenuPrincipal(){
 
     return;
 };
-
-#endif

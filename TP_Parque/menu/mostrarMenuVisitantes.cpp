@@ -1,7 +1,5 @@
-#ifndef MOSTRAR_MENU_VISITANTES_H
-#define MOSTRAR_MENU_VISITANTES_H
-#include "utiles/outputs/imprimirTitulo.hpp"
-#include "utiles/outputs/imprimirConNum.hpp"
+#include "utiles/outputs/imprimirTitulo.h"
+#include "utiles/outputs/imprimirConNum.h"
 #include <iostream>
 
 using namespace std;
@@ -51,5 +49,3 @@ void mostrarMenuVisitantes(){
         }
     }
 };
-
-#endif
