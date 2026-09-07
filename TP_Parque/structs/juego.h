@@ -2,12 +2,11 @@
 #define JUEGO_H
 
 const int LARGO_NOMBRE = 32;
-const int LARGO_TIPO = 32;
 
 struct Juego {
     int codigo;
     char nombre[LARGO_NOMBRE];
-    char tipo[LARGO_TIPO]; 
+    int tipo; 
     float alturaMinima;
     int capacidad;
     bool operativo;
