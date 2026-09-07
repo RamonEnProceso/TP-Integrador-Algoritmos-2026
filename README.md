@@ -6,9 +6,12 @@
 
 ## Cómo compilar y ejecutar
 
-```bash
-g++ -std=c++17 -Wall -Wextra *.cpp dominio/*.cpp lista/*.cpp -o parque
-./parque
+Para compilar el proyecto, respetando la consigna del trabajom, se debe insertar los siguientes comandos en `Powershell` desde la raíz:
+
+```powershell
+cd .\TP_Parque\
+$archivos = (Get-ChildItem -Recurse -Filter *.cpp).FullName
+g++ -std=c++17 -Wall -Wextra -I . $archivos -o parque
 ```
 
 ## Módulos
