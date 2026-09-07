@@ -1,4 +1,4 @@
-#include "menu/mostrarMenuPrincipal.hpp"
+#include "menu/mostrarMenuPrincipal.h"
 
 int main(){
     mostrarMenuPrincipal();
