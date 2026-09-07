@@ -1,4 +1,4 @@
-#include "utiles/outputs/imprimirConNum.hpp"
+#include "utiles/outputs/imprimirConNum.h"
 #include <iostream>
 
 using namespace std;

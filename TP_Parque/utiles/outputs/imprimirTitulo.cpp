@@ -1,4 +1,4 @@
-#include "utiles/outputs/imprimirTitulo.hpp"
+#include "utiles/outputs/imprimirTitulo.h"
 #include <iostream>
 
 using namespace std;
