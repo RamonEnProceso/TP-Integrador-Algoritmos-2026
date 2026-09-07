@@ -12,6 +12,7 @@ Para compilar el proyecto, respetando la consigna del trabajom, se debe insertar
 cd .\TP_Parque\
 $archivos = (Get-ChildItem -Recurse -Filter *.cpp).FullName
 g++ -std=c++17 -Wall -Wextra -I . $archivos -o parque
+.\parque.exe
 ```
 
 ## Módulos
