@@ -1,5 +1,4 @@
-#ifndef IMPRIMIR_TITULO_H
-#define IMPRIMIR_TITULO_H
+#include "utiles/outputs/imprimirTitulo.hpp"
 #include <iostream>
 
 using namespace std;
@@ -8,5 +7,3 @@ void imprimirTitulo(const char texto[]){
     cout << "----------" << texto << "----------" << "\n" ;
     return;
 };
-
-#endif
