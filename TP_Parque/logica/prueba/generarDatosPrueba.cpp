@@ -7,7 +7,7 @@
 
 using namespace std;
 
-void generarDatosPrueba(NodoVisitante *lista){
+void generarDatosPrueba(NodoVisitante*& lista){
     cout << "Generando datos...\n" ;
     cout << "Generando visitantes...\n" ;
 
@@ -40,8 +40,7 @@ void generarDatosPrueba(NodoVisitante *lista){
     listaJuegos[8] = {9, "Calesita", 2, 0.80, 20, true};
     listaJuegos[9] = {10, "Tazas Locas", 2, 0.90, 16, true};
     cout << "Grabandolos en archivo binario...\n" ;
-    crearArchivoJuegos(&listaJuegos, 10);
+    crearArchivoJuegos(listaJuegos, 10);
 
     return;
-
 };
