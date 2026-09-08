@@ -26,6 +26,8 @@ NodoVisitante* eliminarVisitanteListaPorPulsera(NodoVisitante *lista, int numPul
         anterior->siguiente = actual->siguiente;
     }
 
+    cout << "Se procederá a eliminar al visitante " << actual->visitante.nombre << endl;
+
     delete actual;
 
     cout << "Visitante eliminado correctamente.\n\n";
