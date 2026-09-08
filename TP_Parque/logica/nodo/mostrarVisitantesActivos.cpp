@@ -14,5 +14,5 @@ void mostrarVisitantesActivos(NodoVisitante *lista){
         imprimirConNumero(actual->visitante.pulsera, actual->visitante.nombre);
         actual = actual->siguiente;
     }
-    cout<<"Fin de la lista.\n";
+    cout<<"Fin de la lista.\n\n";
 }
