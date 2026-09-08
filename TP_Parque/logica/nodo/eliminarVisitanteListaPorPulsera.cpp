@@ -8,13 +8,15 @@ NodoVisitante* eliminarVisitanteListaPorPulsera(NodoVisitante *lista, int numPul
     NodoVisitante *anterior = nullptr;
     NodoVisitante *actual = lista;
 
+    cout << "Buscando Visitante...\n";
+
     while(actual != nullptr && actual->visitante.pulsera != numPulsera){
         anterior = actual;
         actual = actual->siguiente;
     }
 
     if (actual == nullptr){
-        cerr << "No se encontro un visitante con esa numero de pulsera.\n";
+        cerr << "No se encontro un visitante con esa numero de pulsera.\n\n";
         return lista;
     }
 
@@ -25,5 +27,8 @@ NodoVisitante* eliminarVisitanteListaPorPulsera(NodoVisitante *lista, int numPul
     }
 
     delete actual;
+
+    cout << "Visitante eliminado correctamente.\n\n";
+
     return lista;
 };
