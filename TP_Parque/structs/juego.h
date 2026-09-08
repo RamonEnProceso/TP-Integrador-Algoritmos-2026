@@ -1,8 +1,6 @@
 #ifndef JUEGO_H
 #define JUEGO_H
-
-const int LARGO_NOMBRE = 32;
-
+#include "structs/constante.h"
 struct Juego {
     int codigo;
     char nombre[LARGO_NOMBRE];
