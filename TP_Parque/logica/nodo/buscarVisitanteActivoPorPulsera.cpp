@@ -1,4 +1,4 @@
-#include "nodo/buscarVisitanteActivoPorPulsera.h"
+#include "logica/nodo/buscarVisitanteActivoPorPulsera.h"
 #include "logica/nodo/nodoVisitante.h"
 
 bool buscarVisitanteActivoPorPulsera(
