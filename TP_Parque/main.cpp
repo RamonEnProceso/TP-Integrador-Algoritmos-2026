@@ -4,6 +4,6 @@
 
 int main(){
     NodoVisitante *listaVisitantes = crearLista();
-    mostrarMenuPrincipal();
+    mostrarMenuPrincipal(listaVisitantes);
     return 0;
 }
