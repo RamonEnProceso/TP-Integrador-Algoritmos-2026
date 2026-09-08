@@ -9,11 +9,9 @@ using namespace std;
 
 void mostrarVisitantesActivos(NodoVisitante *lista){
     NodoVisitante *actual = lista;
-    int contador = 0;
     imprimirTitulo("Lista de Visitantes Activos");
     while (actual != nullptr){
         imprimirConNumero(actual->visitante.pulsera, actual->visitante.nombre);
-        contador++;
         actual = actual->siguiente;
     }
     cout<<"Fin de la lista.\n";
