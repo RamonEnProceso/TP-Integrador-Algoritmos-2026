@@ -1,5 +1,17 @@
 # Historial de Cambios
 
+## v0.0.3 - (08/09/2026)
+> Pulido, mejor menú y funciones útiles
+- Ramón | *Corrección de errores*
+    - Dependencias perdidas
+    - Variables redundantes
+- Ramón | *Creación de funcion para calcular promedio de un vector de enteros*
+- Ramón | *Conectar menú con funciones de gestión de Visitante*
+    - Generar datos de prueba
+    - Mostrar lista
+    - Buscar
+    - Eliminar
+
 ## v0.0.2 - (07/09/2026)
 > Creación de lista enlazada
 - Ramón | *Creación de Datos de Prueba*
