@@ -3,5 +3,6 @@
 #include "structs/juego.h"
 
 void imprimirJuego (Juego juego);
+const char* devolverOperativo (bool estado);
 
 #endif
