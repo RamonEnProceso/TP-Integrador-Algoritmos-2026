@@ -2,11 +2,13 @@
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "menu/mostrarMenuVisitantes.h"
+#include "logica/nodo/nodoVisitante.h"
+#include "logica/prueba/generarDatosPrueba.h"
 #include <iostream>
 
 using namespace std;
 
-void mostrarMenuPrincipal(){
+void mostrarMenuPrincipal(NodoVisitante *&listaVisitantes){
     int opcionElegida = 0;
 
     while (opcionElegida != -1)
@@ -29,13 +31,13 @@ void mostrarMenuPrincipal(){
         switch (opcionElegida)
         {
         case 1:
-            mostrarMenuVisitantes();
+            mostrarMenuVisitantes(listaVisitantes);
             break;
         case 2:
             /* Menu Juegos */
             break;
         case 3:
-            /* Generar Datos de Prueba */
+            generarDatosPrueba(listaVisitantes);
             break;
         case 4:
             cout << "\nHasta luego ;)\n\n";
