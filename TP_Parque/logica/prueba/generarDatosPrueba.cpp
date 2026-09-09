@@ -11,7 +11,7 @@ void generarDatosPrueba(NodoVisitante*& lista){
     cout << "Generando datos...\n" ;
     cout << "Generando visitantes...\n" ;
 
-    lista = agregarVisitanteLista({ 1000, "Ramón Ramirez", 23, 1.83f }, lista);
+    lista = agregarVisitanteLista({ 1000, "Ramon Ramirez", 23, 1.83f }, lista);
     lista = agregarVisitanteLista({ 1001, "Joaquin Orsini",   23, 1.83f }, lista);
     lista = agregarVisitanteLista({ 1002, "Ramiro Szrebka",   27, 1.79f }, lista);
     lista = agregarVisitanteLista({ 1003, "Ignacio Segovia",  19, 1.71f }, lista);
@@ -41,6 +41,6 @@ void generarDatosPrueba(NodoVisitante*& lista){
     listaJuegos[9] = {10, "Tazas Locas", 2, 0.90, 16, true};
     cout << "Grabandolos en archivo binario...\n" << endl ;
     crearArchivoJuegos(listaJuegos, 10);
-    
+
     return;
 };
