@@ -39,8 +39,8 @@ void generarDatosPrueba(NodoVisitante*& lista){
     cout << "Generando juegos infantiles...\n" ;
     listaJuegos[8] = {9, "Calesita", 2, 0.80, 20, true};
     listaJuegos[9] = {10, "Tazas Locas", 2, 0.90, 16, true};
-    cout << "Grabandolos en archivo binario...\n" ;
+    cout << "Grabandolos en archivo binario...\n" << endl ;
     crearArchivoJuegos(listaJuegos, 10);
-
+    
     return;
 };
