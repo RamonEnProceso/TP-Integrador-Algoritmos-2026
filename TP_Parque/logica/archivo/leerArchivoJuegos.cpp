@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int leerArchivoJuegos(Juego juegos[], int n){
+int leerArchivoJuegos(){
     ifstream arch(rutaArchivoJuegos, ios::binary);
     if (!arch){cerr<<"Error al leer el archvio juegos.dat"; return 1;}
 
