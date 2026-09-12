@@ -1,16 +1,20 @@
 #include "menu/mostrarMenuVisitantes.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
+#include "utiles/inputs/leerInputVisitante.h"
 #include "logica/nodo/nodoVisitante.h"
 #include "logica/nodo/mostrarVisitantesActivos.h"
+#include "logica/nodo/agregarVisitanteLista.h"
 #include "logica/nodo/eliminarVisitanteListaPorPulsera.h"
 #include "logica/nodo/buscarVisitanteActivoPorPulsera.h"
+#include "structs/visitante.h"
 #include <iostream>
 
 using namespace std;
 
 void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
     int opcionElegida = 0, numeroIngresado = 0;
+    Visitante nuevoVisitante;
 
     while (opcionElegida != -1)
     {
@@ -22,7 +26,7 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
         imprimirConNumero(4,"Ver Historial de juegos de Visitante (Pulsera / Nombre)");
         imprimirConNumero(5,"Eliminar Visitante");
         imprimirConNumero(6,"Volver al Menu Principal");
-        
+
         while (opcionElegida < 1 || opcionElegida > 6){
             cout << "Ingresa el numero de opcion elegida: "; cin >> opcionElegida; cout<<endl;
             if (opcionElegida < 1 || opcionElegida > 6){
@@ -36,13 +40,15 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
             mostrarVisitantesActivos(listaVisitantes);
             break;
         case 2:
-            /* Registrar Visitante */
+            leerInputVisitante(nuevoVisitante);
+            listaVisitantes = agregarVisitanteLista(nuevoVisitante, listaVisitantes);
+            cout<< "Visitante registrado correctamente.\n\n";
             break;
         case 3:
             cout << "Ingrese el numero de pulsera del visitante que desea buscar: ";
             cin >> numeroIngresado; cout << endl;
             buscarVisitanteActivoPorPulsera(listaVisitantes, numeroIngresado);
-            break;    
+            break;
         case 4:
             /* Ver Historial de juegos de Visitante (Pulsera / Nombre) */
             break;
