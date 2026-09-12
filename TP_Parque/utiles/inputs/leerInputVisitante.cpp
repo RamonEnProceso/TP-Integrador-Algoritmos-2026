@@ -8,6 +8,7 @@ using namespace std;
 
 void leerInputVisitante(Visitante &nuevo){
     imprimirTitulo("Ingrese los datos del visitante");
+    cin.ignore();
     cout << "Nombre: "; cin.getline(nuevo.nombre,LARGO_NOMBRE); cout << "\n";
     cout << "Numero de pulsera: "; cin >> nuevo.pulsera; cout << "\n";
     cout << "Edad: "; cin >> nuevo.edad; cout << "\n";
