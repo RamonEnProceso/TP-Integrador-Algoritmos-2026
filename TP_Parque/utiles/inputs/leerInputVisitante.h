@@ -2,6 +2,6 @@
 #define LEER_INPUT_JUEGO_H
 #include "structs/visitante.h"
 
-Visitante leerInputVisitante();
+void leerInputVisitante(Visitante &nuevo);
 
 #endif
