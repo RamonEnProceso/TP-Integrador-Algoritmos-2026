@@ -18,4 +18,8 @@ void imprimirJuego (Juego juego){
     cout << "Capacidad: " << juego.capacidad << endl;
     cout << "Altura Minima: " << juego.alturaMinima << endl;
     cout << "Estado: " << devolverOperativo(juego.operativo) << endl;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 50a6884 (fix: Arreglar orden de funciones)
