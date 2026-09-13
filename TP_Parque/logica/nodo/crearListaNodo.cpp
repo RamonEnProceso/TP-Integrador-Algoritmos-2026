@@ -1,5 +1,5 @@
 #include "logica/nodo/crearListaNodo.h"
-#include "logica/nodo/nodoVisitante.h"
+#include "structs/nodoVisitante.h"
 
 NodoVisitante* crearLista (){
     return nullptr;

@@ -1,5 +1,5 @@
 #include "logica/nodo/liberarVisitanteLista.h"
-#include "logica/nodo/nodoVisitante.h"
+#include "structs/nodoVisitante.h"
 
 NodoVisitante* liberarVisitanteLista(NodoVisitante *lista){
     while (lista != nullptr){

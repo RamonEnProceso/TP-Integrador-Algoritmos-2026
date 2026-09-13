@@ -1,5 +1,4 @@
-#include "logica/nodo/nodoVisitante.h"
-#include "logica/nodo/buscarVisitanteActivoPorPulsera.h"
+#include "structs/nodoVisitante.h"
 #include <iostream>
 
 using namespace std;

@@ -1,5 +1,5 @@
 #include "logica/nodo/agregarVisitanteLista.h"
-#include "logica/nodo/nodoVisitante.h"
+#include "structs/nodoVisitante.h"
 #include "structs/visitante.h"
 
 NodoVisitante* agregarVisitanteLista(Visitante dato, NodoVisitante *lista){

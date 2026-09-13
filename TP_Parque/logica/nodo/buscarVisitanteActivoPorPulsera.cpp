@@ -1,5 +1,5 @@
 #include "logica/nodo/buscarVisitanteActivoPorPulsera.h"
-#include "logica/nodo/nodoVisitante.h"
+#include "structs/nodoVisitante.h"
 #include "utiles/outputs/imprimirVisitante.h"
 #include <iostream>
 
@@ -18,6 +18,6 @@ void buscarVisitanteActivoPorPulsera(NodoVisitante *lista, int pulseraNum){
     }
 
     cout << "No se encontró a un Visitante con esa pulsera.\n\n";
-    
+
     return;
 }

@@ -1,5 +1,5 @@
 #include "logica/nodo/mostrarVisitantesActivos.h"
-#include "logica/nodo/nodoVisitante.h"
+#include "structs/nodoVisitante.h"
 #include "structs/visitante.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
