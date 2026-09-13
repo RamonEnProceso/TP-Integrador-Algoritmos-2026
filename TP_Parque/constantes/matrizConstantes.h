@@ -1,0 +1,8 @@
+#ifndef MATRIZ_CONSTANTES_H
+#define MATRIZ_CONSTANTES_H
+
+const int FRANJAS_HORARIAS = 5;
+
+const char FRANJAS_TEXTO[FRANJAS_HORARIAS][6] = {"08-10","10-12","12-14","14-18","18-20"};
+
+#endif
