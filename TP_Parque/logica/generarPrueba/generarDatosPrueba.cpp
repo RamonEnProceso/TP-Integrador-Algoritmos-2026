@@ -1,7 +1,7 @@
-#include "logica/prueba/generarDatosPrueba.h"
+#include "logica/generarPrueba/generarDatosPrueba.h"
 #include "logica/archivo/crearArchivoJuegos.h"
 #include "logica/nodo/agregarVisitanteLista.h"
-#include "logica/nodo/nodoVisitante.h"
+#include "structs/nodoVisitante.h"
 #include "structs/juego.h"
 #include <iostream>
 
