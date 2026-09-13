@@ -27,14 +27,43 @@ g++ -std=c++17 -Wall -Wextra -I . $archivos -o parque
 
 Para compilar el proyecto en una distribución basada en Debian, se debe insertar los siguientes comandos en `Bash` desde la raíz:
 
-`
+```
 cd TP_Parque/
 g++ -std=c++17 -Wall -Wextra -I. $(find . -name "*.cpp") -o parque.exe
 ./parque.exe
-`
+```
 
 ## Módulos
+Se optó por organizar las funciones del programa a partir de su propósito.
+Existen 5 carpetas:
+### `\utiles`
+> **Funciones reutilizables a lo largo de otros archivos.**
+> Código que se separó para repetir sin tener que escribirlo siempre.
+- `\inputs` y `outputs`
+    > Código reutilizable para **imprimir y leer** en la consola.
+- `\matematica`
+    > Código reutilizable para realizar **cálculos**.
 
+### `\logica`
+> **Funciones vinculadas al manejo de datos.**
+> Crea, lee, modifica y elimina datos del programa.
+
+
+### `\menu`
+> **Funciones vinculadas al menú de la aplicación.**
+> Conecta el input del usuario con los datos a mostrar/modificar.
+
+### `\structs`
+> **Resgistros.**
+> Registros utilizados por otras funciones.
+
+### `\constantes`
+> **Constantes.**
+> Variables fijas que leen otras funciones.
+
+### `\datos`
+> **Archivos generados por el programa**
+> Datos guardados por el programa en `.txt` y `.dat`.
 
 
 ## Integrantes y responsabilidades
@@ -43,6 +72,6 @@ g++ -std=c++17 -Wall -Wextra -I. $(find . -name "*.cpp") -o parque.exe
 2. **Orsini, Joaquín**
     > *Ordenamiento de Juegos, búsqueda de Juegos por Código o Nombre*...
 3. **Szrebka, Ramiro Agustín**
-    > *Lógica de gestión de Visitantes, Cargar juegos e imprimirlos, filtrar juegos más usados, matrices*...
+    > *Lógica de gestión de Visitantes, Cargar juegos e imprimirlos, filtrar juegos más usados, matriz de visitas...
 4. **Segovia Soler, Ignacio Matias**
     > ...
