@@ -1,5 +1,5 @@
 #include "logica/archivo/crearArchivoJuegos.h"
-#include "logica/archivo/rutasArchivos.h"
+#include "constantes/rutasArchivos.h"
 #include "structs/juego.h"
 #include <fstream>
 #include <iostream>

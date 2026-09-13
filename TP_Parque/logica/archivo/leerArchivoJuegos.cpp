@@ -1,5 +1,5 @@
 #include "logica/archivo/leerArchivoJuegos.h"
-#include "logica/archivo/rutasArchivos.h"
+#include "constantes/rutasArchivos.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "structs/juego.h"
