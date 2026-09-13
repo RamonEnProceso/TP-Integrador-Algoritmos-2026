@@ -1,6 +1,6 @@
 #ifndef VISITANTE_H
 #define VISITANTE_H
-#include "structs/constante.h"
+#include "constantes/generales.h"
 struct Visitante {
     int pulsera;
     char nombre[LARGO_NOMBRE];
