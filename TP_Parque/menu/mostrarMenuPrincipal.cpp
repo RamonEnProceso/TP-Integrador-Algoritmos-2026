@@ -2,8 +2,8 @@
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "menu/mostrarMenuVisitantes.h"
-#include "logica/nodo/nodoVisitante.h"
-#include "logica/prueba/generarDatosPrueba.h"
+#include "structs/nodoVisitante.h"
+#include "logica/generarPrueba/generarDatosPrueba.h"
 #include <iostream>
 
 using namespace std;
@@ -27,7 +27,7 @@ void mostrarMenuPrincipal(NodoVisitante *&listaVisitantes){
             }
         };
 
-        
+
         switch (opcionElegida)
         {
         case 1:

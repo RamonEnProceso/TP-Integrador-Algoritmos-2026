@@ -2,7 +2,7 @@
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "utiles/inputs/leerInputVisitante.h"
-#include "logica/nodo/nodoVisitante.h"
+#include "structs/nodoVisitante.h"
 #include "logica/nodo/mostrarVisitantesActivos.h"
 #include "logica/nodo/agregarVisitanteLista.h"
 #include "logica/nodo/eliminarVisitanteListaPorPulsera.h"
