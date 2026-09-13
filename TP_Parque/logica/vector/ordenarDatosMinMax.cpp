@@ -1,6 +1,6 @@
 #include "utiles/swap.h"
 
-int ordenarDatosMinMax(char **nombres, int *datos, int tamaño){
+void ordenarDatosMinMax(char **nombres, int *datos, int tamaño){
     bool huboCambios = true;
     for (int i = 0; i < tamaño-1 && huboCambios ;i++){
         huboCambios = false;
