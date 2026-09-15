@@ -1,7 +1,7 @@
 #include "utiles/inputs/leerInputVisitante.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "structs/visitante.h"
-#include "structs/constante.h"
+#include "constantes/generales.h"
 #include <iostream>
 
 using namespace std;

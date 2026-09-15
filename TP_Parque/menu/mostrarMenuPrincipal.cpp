@@ -1,4 +1,5 @@
 #include "menu/mostrarMenuPrincipal.h"
+#include "menu/mostrarMenuJuegos.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "menu/mostrarMenuVisitantes.h"
@@ -34,7 +35,7 @@ void mostrarMenuPrincipal(NodoVisitante *&listaVisitantes){
             mostrarMenuVisitantes(listaVisitantes);
             break;
         case 2:
-            /* Menu Juegos */
+            mostrarMenuJuegos();
             break;
         case 3:
             generarDatosPrueba(listaVisitantes);
