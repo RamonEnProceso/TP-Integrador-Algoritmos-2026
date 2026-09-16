@@ -5,11 +5,14 @@
 
 ## Arquitectura
 Se optó por organizar las funciones del programa a partir de su propósito.
-Existen 5 carpetas padre:
+Existen 5 carpetas:
 ### `\utiles`
 > **Funciones reutilizables a lo largo de otros archivos.**
 > Código que se separó para repetir sin tener que escribirlo siempre.
-
+- `\inputs` y `outputs`
+    > Código reutilizable para **imprimir y leer** en la consola.
+- `\matematica`
+    > Código reutilizable para realizar **cálculos**.
 
 ### `\logica`
 > **Funciones vinculadas al manejo de datos.**
@@ -21,12 +24,17 @@ Existen 5 carpetas padre:
 > Conecta el input del usuario con los datos a mostrar/modificar.
 
 ### `\structs`
-> **Resgistros y constantes del programa.**
-> Variables base del resto de funciones.
+> **Resgistros.**
+> Registros utilizados por otras funciones.
+
+### `\constantes`
+> **Constantes.**
+> Variables fijas que leen otras funciones.
 
 ### `\datos`
 > **Archivos generados por el programa**
 > Datos guardados por el programa en `.txt` y `.dat`.
+
 
 ---
 

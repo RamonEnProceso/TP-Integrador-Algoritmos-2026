@@ -1,5 +1,13 @@
 # Historial de Cambios
 
+## v0.0.4 - (13/09/2026)
+> Matrices y Vectores
+- Ramón | Modificar datos de prueba para variar datos
+- Ramón | Añadir función para registrar visitante desde menú
+- Ramón | Crear registro `MatrizJuegoXFranja` para facilitar manipulación de datos.
+- Ramón | Añadir función `swap()` para facilitar el ordenamiento burbuja
+- Ramón | Añadir funciones para ordenar dos vectores a la par (`ordenarDatosMinMax`) y encontrar la posición mayor (`devolverMayorPosV`)
+
 ## v0.0.3 - (08/09/2026)
 > Pulido, mejor menú y funciones útiles
 - Ramón | *Corrección de errores*
