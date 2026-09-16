@@ -1,27 +1,24 @@
 #include "logica/archivo/leerArchivoJuegos.h"
 #include "constantes/rutasArchivos.h"
-#include "utiles/outputs/imprimirConNum.h"
-#include "utiles/outputs/imprimirTitulo.h"
-#include "structs/juego.h"
 #include <fstream>
 #include <iostream>
 
 using namespace std;
 
-int leerArchivoJuegos(){
+int leerArchivoJuegos(Juego juegos[], int n) {
     ifstream arch(rutaArchivoJuegos, ios::binary);
-    if (!arch){cerr<<"Error al leer el archvio juegos.dat"; return 1;}
-
-    Juego juegoLeido;
-
-    imprimirTitulo("Lista de Juegos");
-    while (arch.read((char*)&juegoLeido,sizeof(juegoLeido))){
-        imprimirConNumero(juegoLeido.codigo,juegoLeido.nombre);
+    if (!arch) {
+        return 0; 
     }
 
-    cout << "Fin de la lista de juegos.\n\n";
+    Juego juegoLeido;
+    int cantidad = 0;
+
+    while (cantidad < n && arch.read((char*)&juegoLeido, sizeof(juegoLeido))) {
+        juegos[cantidad] = juegoLeido;
+        cantidad++;
+    }
 
     arch.close();
-
-    return 0;
+    return cantidad; 
 }

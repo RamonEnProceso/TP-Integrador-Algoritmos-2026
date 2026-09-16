@@ -1,4 +1,7 @@
 #include "menu/mostrarMenuVisitantes.h"
+#include "menu/seleccionarJuego.h"
+#include "logica/archivo/leerArchivoJuegos.h"
+#include "structs/juego.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "utiles/inputs/leerInputVisitante.h"
@@ -23,7 +26,7 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
         imprimirConNumero(1,"Mostrar Visitantes");
         imprimirConNumero(2,"Registrar Visitante");
         imprimirConNumero(3,"Buscar Visitante (Pulsera / Nombre)");
-        imprimirConNumero(4,"Ver Historial de juegos de Visitante (Pulsera / Nombre)");
+        imprimirConNumero(4,"Seleccionar Juego (Asignar juego a un visitante)");
         imprimirConNumero(5,"Eliminar Visitante");
         imprimirConNumero(6,"Volver al Menu Principal");
 
@@ -49,9 +52,16 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
             cin >> numeroIngresado; cout << endl;
             buscarVisitanteActivoPorPulsera(listaVisitantes, numeroIngresado);
             break;
-        case 4:
-            /* Ver Historial de juegos de Visitante (Pulsera / Nombre) */
+        case 4: {
+            Juego juegosParaSeleccion[50];
+            int cantJuegos = leerArchivoJuegos(juegosParaSeleccion, 50);
+            if (cantJuegos > 0) {
+                seleccionarJuego(juegosParaSeleccion, cantJuegos);
+            } else {
+                cout << "No hay juegos disponibles en el sistema.\n\n";
+            }
             break;
+        }
         case 5:
             cout << "Ingrese el numero de pulsera del visitante que desea eliminar: ";
             cin >> numeroIngresado; cout << endl;

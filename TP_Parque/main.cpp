@@ -1,6 +1,6 @@
 #include "menu/mostrarMenuPrincipal.h"
 #include "logica/nodo/crearListaNodo.h"
-#include "logica/nodo/nodoVisitante.h"
+#include "structs/nodoVisitante.h"
 
 int main(){
     NodoVisitante *listaVisitantes = crearLista();
