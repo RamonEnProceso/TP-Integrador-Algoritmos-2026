@@ -10,6 +10,7 @@
 #include "logica/nodo/agregarVisitanteLista.h"
 #include "logica/nodo/eliminarVisitanteListaPorPulsera.h"
 #include "logica/nodo/buscarVisitanteActivoPorPulsera.h"
+#include "logica/nodo/liberarVisitanteLista.h"
 #include "structs/visitante.h"
 #include <iostream>
 
@@ -28,7 +29,8 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
         imprimirConNumero(3,"Buscar Visitante (Pulsera / Nombre)");
         imprimirConNumero(4,"Seleccionar Juego (Asignar juego a un visitante)");
         imprimirConNumero(5,"Eliminar Visitante");
-        imprimirConNumero(6,"Volver al Menu Principal");
+        imprimirConNumero(6,"Liberar Visitantes");
+        imprimirConNumero(7,"Volver al Menu Principal");
 
         while (opcionElegida < 1 || opcionElegida > 6){
             cout << "Ingresa el numero de opcion elegida: "; cin >> opcionElegida; cout<<endl;
@@ -68,6 +70,11 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
             eliminarVisitanteListaPorPulsera(listaVisitantes,numeroIngresado);
             break;
         case 6:
+            liberarVisitanteLista(listaVisitantes);
+            cout<< "Liberando lista de visitantes...\n\n";
+            opcionElegida = 0;
+            return;
+        case 7:
             cout << "Regresando... \n\n";
             opcionElegida = 0;
             return;
