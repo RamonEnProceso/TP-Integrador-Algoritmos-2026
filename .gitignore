@@ -1,3 +1,4 @@
 *.dat
 *.exe
+.vscode/
 TP_Parque/compile_flags.txt
