@@ -3,12 +3,10 @@
 #include "utiles/outputs/imprimirConNum.h"
 #include "utiles/outputs/imprimirJuego.h"
 #include "logica/archivo/leerArchivoJuegos.h"
-#include "logica/vector/ordenarPorCodigo.h"
-#include "logica/vector/ordenarPorNombre.h"
-#include "logica/vector/buscarJuegoPorCodigoBinaria.h"
-#include "logica/texto/buscarJuegoPorNombre.h"
-#include "constantes/generales.h"
-#include "constantes/matrizConstantes.h"
+#include "menu/menuJuegos/mostrarMenuListaJuegos.h"
+#include "menu/menuJuegos/mostrarMenuOrdenarJuegos.h"
+#include "menu/menuJuegos/mostrarMenuBuscarJuegos.h"
+#include "menu/menuJuegos/mostrarMenuArchivosJuegos.h"
 #include "structs/juego.h"
 #include <iostream>
 
@@ -27,10 +25,10 @@ void mostrarMenuJuegos(Juego *listaJuegos, int cantJuegos) {
     while (opcionElegida != -1) {
         opcionElegida = 0;
         imprimirTitulo("Menu Juegos");
-        imprimirConNumero(1, "Ordenar por Codigo");
-        imprimirConNumero(2, "Ordenar por Nombre");
-        imprimirConNumero(3, "Buscar Juego por Codigo");
-        imprimirConNumero(4, "Buscar Juego por Nombre");
+        imprimirConNumero(1, "Mostrar juegos");
+        imprimirConNumero(2, "Ordenar Juego");
+        imprimirConNumero(3, "Buscar Juego");
+        imprimirConNumero(4, "Administrar archivos de juegos");
         imprimirConNumero(5, "Volver al Menu Principal");
 
         while (opcionElegida < 1 || opcionElegida > 5) {
@@ -42,38 +40,19 @@ void mostrarMenuJuegos(Juego *listaJuegos, int cantJuegos) {
         }
 
         switch (opcionElegida) {
+
             case 1:
-                ordenarPorCodigo(listaJuegos, cantJuegos);
-                cout << "Juegos ordenados por codigo exitosamente.\n\n";
+                mostrarMenuListaJuegos(listaJuegos, cantJuegos);
                 break;
             case 2:
-                ordenarPorNombre(listaJuegos, cantJuegos);
-                cout << "Juegos ordenados alfabeticamente exitosamente.\n\n";
+                mostrarMenuOrdenarJuegos(listaJuegos, cantJuegos);
                 break;
             case 3: {
-                cout << "Ingrese el codigo a buscar: ";
-                int cod;
-                cin >> cod;
-                ordenarPorCodigo(listaJuegos, cantJuegos); 
-                int posCod = buscarJuegoPorCodigoBinaria(listaJuegos, cantJuegos, cod);
-                if (posCod != -1) {
-                    imprimirJuego(listaJuegos[posCod]);
-                } else {
-                    cout << "Juego no encontrado.\n\n";
-                }
+                mostrarMenuBuscarJuegos(listaJuegos, cantJuegos);
                 break;
             }
             case 4: {
-                cout << "Ingrese el nombre a buscar (parcial): ";
-                char nom[LARGO_NOMBRE];
-                cin.ignore();
-                cin.getline(nom, LARGO_NOMBRE);
-                int posNom = buscarJuegoPorNombre(listaJuegos, cantJuegos, nom);
-                if (posNom != -1) {
-                    imprimirJuego(listaJuegos[posNom]);
-                } else {
-                    cout << "Juego no encontrado.\n\n";
-                }
+                mostrarMenuArchivosJuegos(listaJuegos, cantJuegos);
                 break;
             }
             case 5:
