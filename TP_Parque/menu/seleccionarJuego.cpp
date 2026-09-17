@@ -29,9 +29,9 @@ int seleccionarJuego(Juego juegos[], int n) {
     } 
     else if (opcion == 2) {
         cout << "Ingrese el nombre (puede ser parcial): ";
-        char nom[32];
+        char nom[LARGO_NOMBRE];
         cin.ignore(); 
-        cin.getline(nom, 32);
+        cin.getline(nom, LARGO_NOMBRE);
         indiceEncontrado = buscarJuegoPorNombre(juegos, n, nom);
     } 
     else {

@@ -7,6 +7,7 @@
 #include "logica/vector/ordenarPorNombre.h"
 #include "logica/vector/buscarJuegoPorCodigoBinaria.h"
 #include "logica/texto/buscarJuegoPorNombre.h"
+#include "constantes/generales.h"
 #include "structs/juego.h"
 #include <iostream>
 
@@ -64,9 +65,9 @@ void mostrarMenuJuegos() {
             }
             case 4: {
                 cout << "Ingrese el nombre a buscar (parcial): ";
-                char nom[32];
+                char nom[LARGO_NOMBRE];
                 cin.ignore();
-                cin.getline(nom, 32);
+                cin.getline(nom, LARGO_NOMBRE);
                 int posNom = buscarJuegoPorNombre(juegos, cantidad, nom);
                 if (posNom != -1) {
                     imprimirJuego(juegos[posNom]);
