@@ -1,12 +1,22 @@
 # Historial de Cambios
 
+## v0.0.5 - (14/09/2026)
+> Vectores: ordenamiento, búsquedas y submenú
+- Joaquín | Reescribir `leerArchivoJuegos()` para cargar binario y leerlo
+- Joaquín | Añadir `ordenarPorCodigo()` y `ordenarPorNombre()`
+- Joaquín | Añadir `buscarJuegoPorCodigo` por ordenamiento binario
+- Joaquín | Añadir `buscarJuegoPorNombre()`
+- Joaquín | Añadir submenú de Juegos
+- Joaquín | Añadir `seleccionarJuego()` y conectarlo al menú de Visitantes
+- Joaquín | Corregir rutas
+
 ## v0.0.4 - (13/09/2026)
 > Matrices y Vectores
-- Ramón | Modificar datos de prueba para variar datos
-- Ramón | Añadir función para registrar visitante desde menú
-- Ramón | Crear registro `MatrizJuegoXFranja` para facilitar manipulación de datos.
-- Ramón | Añadir función `swap()` para facilitar el ordenamiento burbuja
-- Ramón | Añadir funciones para ordenar dos vectores a la par (`ordenarDatosMinMax`) y encontrar la posición mayor (`devolverMayorPosV`)
+- Ramiro | Modificar datos de prueba para variar datos
+- Ramiro | Añadir función para registrar visitante desde menú
+- Ramiro | Crear registro `MatrizJuegoXFranja` para facilitar manipulación de datos.
+- Ramiro | Añadir función `swap()` para facilitar el ordenamiento burbuja
+- Ramiro | Añadir funciones para ordenar dos vectores a la par (`ordenarDatosMinMax`) y encontrar la posición mayor (`devolverMayorPosV`)
 
 ## v0.0.3 - (08/09/2026)
 > Pulido, mejor menú y funciones útiles
