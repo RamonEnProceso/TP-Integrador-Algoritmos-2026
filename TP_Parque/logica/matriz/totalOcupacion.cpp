@@ -6,5 +6,7 @@
 int totalOcupacion(MatrizJuegoXHoras datos){
     int* vector = new int[datos.juegos];
     totalPorJuego(datos, vector);
-    return sumaTotalV(vector, datos.juegos);
+    int sumaTotal = sumaTotalV(vector, datos.juegos);
+    delete vector;
+    return sumaTotal;
 }
