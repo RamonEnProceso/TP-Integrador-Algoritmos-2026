@@ -6,7 +6,7 @@
 
 struct DatosParque {
     NodoVisitante* listaVisitantes;
-    MatrizJuegoXHoras matriz;
+    MatrizJuegoXHoras datosMatriz;
     Juego juegos[MAX_JUEGOS];
     int cantJuegos;
 };

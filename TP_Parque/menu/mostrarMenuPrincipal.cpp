@@ -38,7 +38,7 @@ void mostrarMenuPrincipal(DatosParque &datos){
             mostrarMenuJuegos(datos.juegos, datos.cantJuegos);
             break;
         case 3:
-            generarDatosPrueba(datos.listaVisitantes);
+            generarDatosPrueba(datos);
             break;
         case 4:
             cout << "\nHasta luego ;)\n\n";

@@ -1,7 +1,7 @@
 #ifndef GENERAR_DATOS_PRUEBA_H
 #define GENERAR_DATOS_PRUEBA_H
-#include "structs/nodoVisitante.h"
+#include "structs/datosParque.h"
 
-void generarDatosPrueba(NodoVisitante*& lista);
+void generarDatosPrueba(DatosParque &datos);
 
 #endif
