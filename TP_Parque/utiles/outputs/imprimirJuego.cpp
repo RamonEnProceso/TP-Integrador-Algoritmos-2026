@@ -1,4 +1,5 @@
 #include "structs/juego.h"
+#include "constantes/tiposJuegos.h"
 #include <iostream>
 
 using namespace std;
@@ -14,7 +15,7 @@ const char* devolverOperativo (bool estado){
 void imprimirJuego (Juego juego){
     cout << "Nombre: " << juego.nombre << endl;
     cout << "Codigo: " << juego.codigo << endl;
-    cout << "Tipo de Juego: " << juego.tipo << endl;
+    cout << "Tipo de Juego: " << TIPOS_JUEGOS[juego.tipo] << endl;
     cout << "Capacidad: " << juego.capacidad << endl;
     cout << "Altura Minima: " << juego.alturaMinima << endl;
     cout << "Estado: " << devolverOperativo(juego.operativo) << endl;
