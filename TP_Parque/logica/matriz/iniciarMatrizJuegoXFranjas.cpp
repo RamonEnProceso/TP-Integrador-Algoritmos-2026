@@ -7,7 +7,7 @@ using namespace std;
 
 void iniciarMatrizJuegoXFranjas (MatrizJuegoXHoras datos, Juego juegos[]){
     cout << "Inicializar datos de opación de juegos por franja horaria...\n\n";
-    for (int i = 0; i<datos.cantJuegos;i++){
+    for (int i = 0; i<datos.juegos;i++){
         cout<< "Cargando visitas al juego: " << juegos[i].nombre;
         for (int j = 0; i<datos.franjas; j++){
             cout << "Cargando visitas de " << FRANJAS_TEXTO[j] <<": ";

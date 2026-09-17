@@ -1,9 +1,12 @@
 #include "menu/mostrarMenuPrincipal.h"
 #include "logica/nodo/crearListaNodo.h"
-#include "structs/nodoVisitante.h"
+#include "structs/datosParque.h"
 
 int main(){
-    NodoVisitante *listaVisitantes = crearLista();
-    mostrarMenuPrincipal(listaVisitantes);
+    DatosParque datos;
+    datos.listaVisitantes = crearLista();
+    datos.cantJuegos = 0;
+
+    mostrarMenuPrincipal(datos);
     return 0;
 }

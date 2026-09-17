@@ -5,8 +5,7 @@
 struct MatrizJuegoXHoras {
     int matriz[MAX_JUEGOS][FRANJAS_HORARIAS];
     int franjas;
-    int cantJuegos;
-    Juego listaJuegos;
+    int juegos;
 };
 
 #endif

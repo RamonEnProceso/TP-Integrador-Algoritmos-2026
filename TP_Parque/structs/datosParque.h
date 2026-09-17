@@ -8,6 +8,7 @@ struct DatosParque {
     NodoVisitante* listaVisitantes;
     MatrizJuegoXHoras matriz;
     Juego juegos[MAX_JUEGOS];
+    int cantJuegos;
 };
 
 #endif

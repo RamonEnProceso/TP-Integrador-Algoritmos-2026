@@ -14,11 +14,10 @@
 
 using namespace std;
 
-void mostrarMenuJuegos() {
+void mostrarMenuJuegos(Juego *listaJuegos, int cantJuegos) {
     int opcionElegida = 0;
-    Juego juegos[MAX_JUEGOS]; 
     
-    int cantidad = leerArchivoJuegos(juegos, MAX_JUEGOS);
+    int cantidad = leerArchivoJuegos(listaJuegos, cantJuegos);
 
     if (cantidad == 0) {
         cout << "No hay juegos cargados. Genera los datos de prueba desde el Menu Principal.\n\n";
@@ -44,21 +43,21 @@ void mostrarMenuJuegos() {
 
         switch (opcionElegida) {
             case 1:
-                ordenarPorCodigo(juegos, cantidad);
+                ordenarPorCodigo(listaJuegos, cantJuegos);
                 cout << "Juegos ordenados por codigo exitosamente.\n\n";
                 break;
             case 2:
-                ordenarPorNombre(juegos, cantidad);
+                ordenarPorNombre(listaJuegos, cantJuegos);
                 cout << "Juegos ordenados alfabeticamente exitosamente.\n\n";
                 break;
             case 3: {
                 cout << "Ingrese el codigo a buscar: ";
                 int cod;
                 cin >> cod;
-                ordenarPorCodigo(juegos, cantidad); 
-                int posCod = buscarJuegoPorCodigoBinaria(juegos, cantidad, cod);
+                ordenarPorCodigo(listaJuegos, cantJuegos); 
+                int posCod = buscarJuegoPorCodigoBinaria(listaJuegos, cantJuegos, cod);
                 if (posCod != -1) {
-                    imprimirJuego(juegos[posCod]);
+                    imprimirJuego(listaJuegos[posCod]);
                 } else {
                     cout << "Juego no encontrado.\n\n";
                 }
@@ -69,9 +68,9 @@ void mostrarMenuJuegos() {
                 char nom[LARGO_NOMBRE];
                 cin.ignore();
                 cin.getline(nom, LARGO_NOMBRE);
-                int posNom = buscarJuegoPorNombre(juegos, cantidad, nom);
+                int posNom = buscarJuegoPorNombre(listaJuegos, cantJuegos, nom);
                 if (posNom != -1) {
-                    imprimirJuego(juegos[posNom]);
+                    imprimirJuego(listaJuegos[posNom]);
                 } else {
                     cout << "Juego no encontrado.\n\n";
                 }

@@ -35,7 +35,7 @@ void mostrarMenuPrincipal(DatosParque &datos){
             mostrarMenuVisitantes(datos.listaVisitantes);
             break;
         case 2:
-            mostrarMenuJuegos();
+            mostrarMenuJuegos(datos.juegos, datos.cantJuegos);
             break;
         case 3:
             generarDatosPrueba(datos.listaVisitantes);
