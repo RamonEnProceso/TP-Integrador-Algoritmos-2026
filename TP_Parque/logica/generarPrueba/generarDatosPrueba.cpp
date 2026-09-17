@@ -45,7 +45,7 @@ void generarDatosPrueba(DatosParque &datos){
     cout << "Grabandolos en archivo binario...\n" << endl ;
     crearArchivoJuegos(datos.juegos, datos.cantJuegos);
     
-    cout << "Generando matriz de ocupación de Juegos...\n";
+    cout << "Generando matriz de ocupacion de Juegos...\n";
     const int OCUPACION_PRUEBA[10][FRANJAS_HORARIAS] = {
         { 2,  6, 18, 12,  8},
         { 3,  5, 10,  9,  4},
