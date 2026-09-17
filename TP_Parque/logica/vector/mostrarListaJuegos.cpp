@@ -8,8 +8,8 @@ using namespace std;
 void mostrarListaJuegos(Juego *listaJuegos, int cantJuegos){
     imprimirTitulo("Lista de Juegos");
     if(cantJuegos < 1){cout<<"No hay juegos en lista.\n";}
-    for (int i; i<cantJuegos; i++){
-        imprimirConNumero(i,listaJuegos[i].nombre);}
+    for (int i = 0; i<cantJuegos; i++){
+        imprimirConNumero(listaJuegos[i].codigo,listaJuegos[i].nombre);}
     cout <<"Fin de lista de Juegos.\n\n";
     return;
 }
@@ -19,11 +19,11 @@ void mostrarListaJuegosDisponibles(Juego *listaJuegos, int cantJuegos){
     if(cantJuegos < 1){cout<<"No hay juegos en lista.\n";}
 
     int contador = 0;
-    
-    for (int i; i<cantJuegos; i++){
+
+    for (int i = 0; i<cantJuegos; i++){
         if (listaJuegos[i].operativo)
         {
-            imprimirConNumero(i,listaJuegos[i].nombre);
+            imprimirConNumero(listaJuegos[i].codigo,listaJuegos[i].nombre);
             contador++;
         }
     }

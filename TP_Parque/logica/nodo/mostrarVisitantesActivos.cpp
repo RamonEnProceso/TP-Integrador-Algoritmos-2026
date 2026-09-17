@@ -16,7 +16,7 @@ void mostrarVisitantesActivos(NodoVisitante *lista){
         imprimirConNumero(actual->visitante.pulsera, actual->visitante.nombre);
         actual = actual->siguiente;
     }
-    if(contador=0){
+    if(contador==0){
         cout<<"No se encontraron visitantes.\n\n";
     }else{
         cout<<"Fin de la lista.\n\n";
