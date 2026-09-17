@@ -26,7 +26,7 @@ void mostrarMenuJuegos(Juego *listaJuegos, int cantJuegos) {
         opcionElegida = 0;
         imprimirTitulo("Menu Juegos");
         imprimirConNumero(1, "Mostrar juegos");
-        imprimirConNumero(2, "Ordenar Juego");
+        imprimirConNumero(2, "Ordenar Juegos");
         imprimirConNumero(3, "Buscar Juego");
         imprimirConNumero(4, "Administrar archivos de juegos");
         imprimirConNumero(5, "Volver al Menu Principal");
