@@ -1,20 +1,21 @@
 #include "logica/texto/buscarJuegoPorNombre.h"
 #include <cstring>
 #include <cctype>
+#include "constantes/generales.h"
 
 int buscarJuegoPorNombre(Juego juegos[], int n, const char nombreBuscado[]) {
-    char buscadoMin[32];
+    char buscadoMin[LARGO_NOMBRE];
     int i = 0;
-    while (nombreBuscado[i] != '\0' && i < 31) {
+    while (nombreBuscado[i] != '\0' && i < LARGO_NOMBRE - 1) {
         buscadoMin[i] = tolower(nombreBuscado[i]);
         i++;
     }
     buscadoMin[i] = '\0';
 
     for (int j = 0; j < n; j++) {
-        char nombreJuegoMin[32];
+        char nombreJuegoMin[LARGO_NOMBRE];
         int k = 0;
-        while (juegos[j].nombre[k] != '\0' && k < 31) {
+        while (juegos[j].nombre[k] != '\0' && k < LARGO_NOMBRE - 1) {
             nombreJuegoMin[k] = tolower(juegos[j].nombre[k]);
             k++;
         }
