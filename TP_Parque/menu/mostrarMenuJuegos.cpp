@@ -8,6 +8,7 @@
 #include "logica/vector/buscarJuegoPorCodigoBinaria.h"
 #include "logica/texto/buscarJuegoPorNombre.h"
 #include "constantes/generales.h"
+#include "constantes/matrizConstantes.h"
 #include "structs/juego.h"
 #include <iostream>
 
@@ -15,9 +16,9 @@ using namespace std;
 
 void mostrarMenuJuegos() {
     int opcionElegida = 0;
-    Juego juegos[50]; 
+    Juego juegos[MAX_JUEGOS]; 
     
-    int cantidad = leerArchivoJuegos(juegos, 50);
+    int cantidad = leerArchivoJuegos(juegos, MAX_JUEGOS);
 
     if (cantidad == 0) {
         cout << "No hay juegos cargados. Genera los datos de prueba desde el Menu Principal.\n\n";
