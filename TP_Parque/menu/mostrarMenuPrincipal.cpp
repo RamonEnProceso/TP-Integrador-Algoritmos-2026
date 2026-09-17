@@ -3,13 +3,13 @@
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "menu/mostrarMenuVisitantes.h"
-#include "structs/nodoVisitante.h"
+#include "structs/datosParque.h"
 #include "logica/generarPrueba/generarDatosPrueba.h"
 #include <iostream>
 
 using namespace std;
 
-void mostrarMenuPrincipal(NodoVisitante *&listaVisitantes){
+void mostrarMenuPrincipal(DatosParque &datos){
     int opcionElegida = 0;
 
     while (opcionElegida != -1)
@@ -32,13 +32,13 @@ void mostrarMenuPrincipal(NodoVisitante *&listaVisitantes){
         switch (opcionElegida)
         {
         case 1:
-            mostrarMenuVisitantes(listaVisitantes);
+            mostrarMenuVisitantes(datos.listaVisitantes);
             break;
         case 2:
             mostrarMenuJuegos();
             break;
         case 3:
-            generarDatosPrueba(listaVisitantes);
+            generarDatosPrueba(datos.listaVisitantes);
             break;
         case 4:
             cout << "\nHasta luego ;)\n\n";
