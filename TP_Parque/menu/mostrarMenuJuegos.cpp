@@ -7,15 +7,17 @@
 #include "menu/menuJuegos/mostrarMenuOrdenarJuegos.h"
 #include "menu/menuJuegos/mostrarMenuBuscarJuegos.h"
 #include "menu/menuJuegos/mostrarMenuArchivosJuegos.h"
+#include "constantes/matrizConstantes.h"
 #include "structs/juego.h"
 #include <iostream>
 
 using namespace std;
 
-void mostrarMenuJuegos(Juego *listaJuegos, int cantJuegos) {
+void mostrarMenuJuegos(Juego *listaJuegos) {
     int opcionElegida = 0;
-    
-    int cantidad = leerArchivoJuegos(listaJuegos, cantJuegos);
+
+    // MAX_JUEGOS es la capacidad del arreglo; cantidad es cuantos hay en el archivo
+    int cantidad = leerArchivoJuegos(listaJuegos, MAX_JUEGOS);
 
     if (cantidad == 0) {
         cout << "No hay juegos cargados. Genera los datos de prueba desde el Menu Principal.\n\n";
@@ -32,7 +34,7 @@ void mostrarMenuJuegos(Juego *listaJuegos, int cantJuegos) {
         imprimirConNumero(5, "Volver al Menu Principal");
 
         while (opcionElegida < 1 || opcionElegida > 5) {
-            cout << "Ingresa el numero de opcion elegida: "; 
+            cout << "Ingresa el numero de opcion elegida: ";
             cin >> opcionElegida; cout << endl;
             if (opcionElegida < 1 || opcionElegida > 5) {
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
@@ -42,17 +44,17 @@ void mostrarMenuJuegos(Juego *listaJuegos, int cantJuegos) {
         switch (opcionElegida) {
 
             case 1:
-                mostrarMenuListaJuegos(listaJuegos, cantJuegos);
+                mostrarMenuListaJuegos(listaJuegos, cantidad);
                 break;
             case 2:
-                mostrarMenuOrdenarJuegos(listaJuegos, cantJuegos);
+                mostrarMenuOrdenarJuegos(listaJuegos, cantidad);
                 break;
             case 3: {
-                mostrarMenuBuscarJuegos(listaJuegos, cantJuegos);
+                mostrarMenuBuscarJuegos(listaJuegos, cantidad);
                 break;
             }
             case 4: {
-                mostrarMenuArchivosJuegos(listaJuegos, cantJuegos);
+                mostrarMenuArchivosJuegos(listaJuegos, cantidad);
                 break;
             }
             case 5:

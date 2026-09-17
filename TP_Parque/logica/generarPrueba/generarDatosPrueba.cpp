@@ -59,6 +59,10 @@ void generarDatosPrueba(DatosParque &datos){
         { 2,  5,  7,  6,  3}
     };
 
+    // Las dimensiones van ANTES de usarlas en los bucles
+    datos.datosMatriz.juegos = datos.cantJuegos;
+    datos.datosMatriz.franjas = FRANJAS_HORARIAS;
+
     for (int i = 0; i < datos.datosMatriz.juegos; i++){
         for (int j = 0; j < datos.datosMatriz.franjas; j++){
             datos.datosMatriz.matriz[i][j] = OCUPACION_PRUEBA[i][j];

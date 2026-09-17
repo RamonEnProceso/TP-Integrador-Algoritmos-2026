@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void mostrarMenuListaJuegos(Juego *listaJuegos, int cantJuegos) {
+void mostrarMenuArchivosJuegos(Juego *listaJuegos, int cantJuegos) {
     int opcionElegida = 0;
 
     while (opcionElegida != -1) {
@@ -19,7 +19,7 @@ void mostrarMenuListaJuegos(Juego *listaJuegos, int cantJuegos) {
         imprimirConNumero(3, "Volver al Menu de Juegos");
 
         while (opcionElegida < 1 || opcionElegida > 3) {
-            cout << "Ingresa el numero de opcion elegida: "; 
+            cout << "Ingresa el numero de opcion elegida: ";
             cin >> opcionElegida; cout << endl;
             if (opcionElegida < 1 || opcionElegida > 3) {
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
