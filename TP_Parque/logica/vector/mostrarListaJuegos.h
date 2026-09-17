@@ -4,5 +4,6 @@
 #include "utiles/outputs/imprimirConNum.h"
 
 void mostrarListaJuegos(Juego *listaJuegos, int cantJuegos);
+void mostrarListaJuegosDisponibles(Juego *listaJuegos, int cantJuegos);
 
 #endif
