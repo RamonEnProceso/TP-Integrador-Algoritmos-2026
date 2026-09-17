@@ -3,6 +3,7 @@
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "menu/mostrarMenuVisitantes.h"
+#include "menu/mostrarMenuOcupacion.h"
 #include "structs/datosParque.h"
 #include "logica/generarPrueba/generarDatosPrueba.h"
 #include <iostream>
@@ -18,12 +19,13 @@ void mostrarMenuPrincipal(DatosParque &datos){
         imprimirTitulo("Menu Principal");
         imprimirConNumero(1,"Gestionar Visitantes");
         imprimirConNumero(2,"Gestionar Juegos");
-        imprimirConNumero(3,"Generar Datos De Prueba");
-        imprimirConNumero(4,"Salir del programa");
+        imprimirConNumero(3,"Gestionar Ocupacion de juegos");
+        imprimirConNumero(4,"Generar Datos De Prueba");
+        imprimirConNumero(5,"Salir del programa");
 
-        while (opcionElegida < 1 || opcionElegida > 4){
+        while (opcionElegida < 1 || opcionElegida > 5){
             cout << "Ingresa el numero de opcion elegida: "; cin >> opcionElegida; cout<<endl;
-            if (opcionElegida < 1 || opcionElegida > 4){
+            if (opcionElegida < 1 || opcionElegida > 5){
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
             }
         };
@@ -35,12 +37,15 @@ void mostrarMenuPrincipal(DatosParque &datos){
             mostrarMenuVisitantes(datos.listaVisitantes);
             break;
         case 2:
-            mostrarMenuJuegos(datos.juegos, datos.cantJuegos);
+            mostrarMenuJuegos(datos.juegos);
             break;
         case 3:
-            generarDatosPrueba(datos);
+            mostrarMenuOcupacion(datos);
             break;
         case 4:
+            generarDatosPrueba(datos);
+            break;
+        case 5:
             cout << "\nHasta luego ;)\n\n";
             opcionElegida = -1;
             break;
