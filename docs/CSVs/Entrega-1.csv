@@ -30,7 +30,7 @@
 21,consultarJuegoN(),FALSE,Nacho,,,,,
 22,cambiarEstadoJuegoN() (seekg / seekp),FALSE,Nacho,,,,,
 23,exportarReporteDia() (.txt),FALSE,Nacho,,,,,
-24,listadoPorTipoConCorte(),FALSE,Nacho,,,,,
+24,listadoPorTipoConCorte(),FALSE,Ramón,,,,,
 ,Lista enlazada,,,,,,,
 25,crearNodoVisitante(),TRUE,Ramón,,,,,
 26,agregarVisitanteActivo(),TRUE,Ramón,,,,,
