@@ -32,9 +32,9 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
         imprimirConNumero(6,"Liberar Visitantes");
         imprimirConNumero(7,"Volver al Menu Principal");
 
-        while (opcionElegida < 1 || opcionElegida > 6){
+        while (opcionElegida < 1 || opcionElegida > 7){
             cout << "Ingresa el numero de opcion elegida: "; cin >> opcionElegida; cout<<endl;
-            if (opcionElegida < 1 || opcionElegida > 6){
+            if (opcionElegida < 1 || opcionElegida > 7){
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
             }
         };
