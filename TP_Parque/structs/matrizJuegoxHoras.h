@@ -3,7 +3,7 @@
 #include "constantes/matrizConstantes.h"
 #include "structs/juego.h"
 struct MatrizJuegoXHoras {
-    int matriz[MAX_JUEGOS][FRANJAS_HORARIAS];
+    int *matriz[MAX_JUEGOS];
     int franjas;
     int juegos;
 };
