@@ -35,41 +35,6 @@ Existen 5 carpetas:
 > **Archivos generados por el programa**
 > Datos guardados por el programa en `.txt` y `.dat`.
 
-
----
-
-## Menú
-- Menu Principal
-  - Gestionar Juegos
-    - Mostrar todos los juegos
-      - Mostrar disponibles
-      - Mostrar lista completa
-    - Buscar juego (y mostrar datos)
-      - Por Binario
-      - Por Nombre
-        - Consultar disponibilidad
-        - Mostrar usos
-        - Modificar
-        - Eliminar
-    - Ordenar lista de Juegos
-      - Por Codigo
-      - Por Nombre
-    - Estadisticas
-      - Contar juegos operando
-      - Obtener juego más usado
-  - Gestionar Visitantes
-    - Mostrar Visitantes (codigo y nombre)
-    - Registrar Visitante
-    - Buscar Visitante (y mostrar datos)
-      - Por Nombre
-      - Por Codigo
-        - Verificar acceso a juego (altura/ disponibilidad)
-        - Modificar (altura/nombre/edad)
-        - Eliminar
-    - Liberar lista 
-  - Generar Datos de prueba
-  - Salir
-
 ---
 
 ## Matriz de ocupación
