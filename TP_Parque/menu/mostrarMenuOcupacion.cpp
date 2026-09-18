@@ -58,9 +58,8 @@ void mostrarMenuOcupacion(DatosParque &datos){
             }
 
             case 4: {
+                
                 int total = totalOcupacion(datos.datosMatriz);
-                cout << "La cantidad total de visitas del dia fue de " << total << " accesos.\n\n";
-
                 int totalJuegos[MAX_JUEGOS];
                 int totalFranjas[FRANJAS_HORARIAS];
                 totalPorJuego(datos.datosMatriz, totalJuegos);
@@ -75,6 +74,7 @@ void mostrarMenuOcupacion(DatosParque &datos){
                 for (int j = 0; j < datos.datosMatriz.franjas; j++){
                     imprimirConNumero(totalFranjas[j], FRANJAS_TEXTO[j]);
                 }
+                cout << "La cantidad total de visitas del dia fue de " << total << " accesos.\n\n";
                 cout << "\n";
                 break;
             }
