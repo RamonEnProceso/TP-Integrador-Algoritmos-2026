@@ -16,7 +16,6 @@ using namespace std;
 void mostrarMenuJuegos(Juego *listaJuegos) {
     int opcionElegida = 0;
 
-    // MAX_JUEGOS es la capacidad del arreglo; cantidad es cuantos hay en el archivo
     int cantidad = leerArchivoJuegos(listaJuegos, MAX_JUEGOS);
 
     if (cantidad == 0) {

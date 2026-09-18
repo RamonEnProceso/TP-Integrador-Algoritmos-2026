@@ -8,6 +8,7 @@
 #include "logica/matriz/imprimirMatriz.h"
 #include "logica/matriz/devolverMayorOcupacion.h"
 #include "logica/matriz/devolverJuegoMasUsado.h"
+#include "logica/matriz/reconstruirMatriz.h"
 #include "utiles/matematica/sumaTotal.h"
 #include "constantes/matrizConstantes.h"
 #include "structs/mayorOcupacion.h"
@@ -17,7 +18,7 @@ using namespace std;
 
 void mostrarMenuOcupacion(DatosParque &datos){
     int opcionElegida = 0;
-
+    reconstruirMatriz(datos);
     while (opcionElegida != -1) {
         opcionElegida = 0;
         imprimirTitulo("Menu Ocupacion");

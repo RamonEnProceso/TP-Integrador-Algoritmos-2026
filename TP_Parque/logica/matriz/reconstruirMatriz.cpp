@@ -1,4 +1,4 @@
-#include "matriz/reconstruirMatriz.h"
+#include "logica/matriz/reconstruirMatriz.h"
 
 void reconstruirMatriz(DatosParque &datos) {
     datos.datosMatriz.juegos = datos.cantJuegos;
