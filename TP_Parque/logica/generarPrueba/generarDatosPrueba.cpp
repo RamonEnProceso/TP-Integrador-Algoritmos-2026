@@ -12,18 +12,16 @@ void generarDatosPrueba(DatosParque &datos){
     cout << "Generando datos...\n" ;
     cout << "Generando visitantes...\n" ;
 
-    NodoVisitante *lista = datos.listaVisitantes;
-
-    lista = agregarVisitanteLista({ 1000, "Ramon Ramirez", 23, 1.83f }, lista);
-    lista = agregarVisitanteLista({ 1001, "Joaquin Orsini",   23, 1.83f }, lista);
-    lista = agregarVisitanteLista({ 1002, "Ramiro Szrebka",   27, 1.79f }, lista);
-    lista = agregarVisitanteLista({ 1003, "Ignacio Segovia",  19, 1.71f }, lista);
-    lista = agregarVisitanteLista({ 1004, "Manuel Guevara",   34, 1.68f }, lista);
-    lista = agregarVisitanteLista({ 1005, "Sebastian Longo",  16, 1.65f }, lista);
-    lista = agregarVisitanteLista({ 1006, "Cristian Alvarez", 42, 1.76f }, lista);
-    lista = agregarVisitanteLista({ 1007, "Alexis Nogueira",  22, 1.80f }, lista);
-    lista = agregarVisitanteLista({ 1008, "Rigo Morel",       29, 1.74f }, lista);
-    lista = agregarVisitanteLista({ 1009, "Lucas More",       14, 1.55f }, lista);
+    datos.listaVisitantes = agregarVisitanteLista({ 1000, "Ramon Ramirez", 23, 1.83f }, datos.listaVisitantes);
+    datos.listaVisitantes = agregarVisitanteLista({ 1001, "Joaquin Orsini",   23, 1.83f }, datos.listaVisitantes);
+    datos.listaVisitantes = agregarVisitanteLista({ 1002, "Ramiro Szrebka",   27, 1.79f }, datos.listaVisitantes);
+    datos.listaVisitantes = agregarVisitanteLista({ 1003, "Ignacio Segovia",  19, 1.71f }, datos.listaVisitantes);
+    datos.listaVisitantes = agregarVisitanteLista({ 1004, "Manuel Guevara",   34, 1.68f }, datos.listaVisitantes);
+    datos.listaVisitantes = agregarVisitanteLista({ 1005, "Sebastian Longo",  16, 1.65f }, datos.listaVisitantes);
+    datos.listaVisitantes = agregarVisitanteLista({ 1006, "Cristian Alvarez", 42, 1.76f }, datos.listaVisitantes);
+    datos.listaVisitantes = agregarVisitanteLista({ 1007, "Alexis Nogueira",  22, 1.80f }, datos.listaVisitantes);
+    datos.listaVisitantes = agregarVisitanteLista({ 1008, "Rigo Morel",       29, 1.74f }, datos.listaVisitantes);
+    datos.listaVisitantes = agregarVisitanteLista({ 1009, "Mi amigo lucas",       14, 1.55f }, datos.listaVisitantes);
 
     cout << "Cargando en memoria...\n" ;
 
