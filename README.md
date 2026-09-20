@@ -4,6 +4,8 @@
 
 ## ¿Qué Hace?
 
+Es un programa que simula la administración de un parque de diversiones: juegos, visitantes, filas, ocupación, historial. Permite ver y registrar datos de los visitantes y también la ocupación de los juegos.
+
 ## Cómo compilar y ejecutar
 
 Los siguientes pasos son para compilar el `main.cpp` desde la raíz del proyecto. Para hacerlo, se tiene que tener instalado el compilador `g++` en cualquiera de los dos sistemas operativos.
@@ -74,4 +76,4 @@ Existen 5 carpetas:
 3. **Szrebka, Ramiro Agustín**
     > *Lógica de gestión de Visitantes, Cargar juegos e imprimirlos, filtrar juegos más usados, matriz de visitas*...
 4. **Segovia Soler, Ignacio Matias**
-    > ...
+    > *Verificar altura, Cambiar estado de Juego, Reporte del día*...
