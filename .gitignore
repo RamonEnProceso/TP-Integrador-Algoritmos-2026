@@ -1,4 +1,9 @@
+# Para no mostrar datos de compilación
 *.dat
 *.exe
 .vscode/
 TP_Parque/compile_flags.txt
+
+# Por si alguno usa IA
+/.agent
+/.code
