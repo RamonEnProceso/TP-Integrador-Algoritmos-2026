@@ -1,4 +1,7 @@
 #include "menu/mostrarMenuPrincipal.h"
+#include "logica/cola/encolarVisitante.h"
+#include "logica/cola/mostrarFilaJuego.h"
+#include "logica/cola/atenderSiguienteVisitante.h"
 #include "menu/mostrarMenuJuegos.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
@@ -22,10 +25,11 @@ void mostrarMenuPrincipal(DatosParque &datos){
         imprimirConNumero(3,"Gestionar Ocupacion de juegos");
         imprimirConNumero(4,"Generar Datos De Prueba");
         imprimirConNumero(5,"Salir del programa");
+        imprimirConNumero(9,"[TEST] Probar Colas (Entrega 2)");
 
-        while (opcionElegida < 1 || opcionElegida > 5){
+        while ((opcionElegida < 1 || opcionElegida > 5) && opcionElegida != 9){
             cout << "Ingresa el numero de opcion elegida: "; cin >> opcionElegida; cout<<endl;
-            if (opcionElegida < 1 || opcionElegida > 5){
+            if ((opcionElegida < 1 || opcionElegida > 5) && opcionElegida != 9){
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
             }
         };
@@ -49,6 +53,19 @@ void mostrarMenuPrincipal(DatosParque &datos){
             cout << "\nHasta luego ;)\n\n";
             opcionElegida = -1;
             break;
+        case 9: {
+            Cola filaMontaniaRusa = {nullptr, nullptr};
+            Visitante v1 = {1001, "Joaquin", 20, 1.75f};
+            Visitante v2 = {1002, "Ramiro", 21, 1.80f};
+            cout << "--- ENCOLANDO VISITANTES ---\n";
+            encolarVisitante(filaMontaniaRusa, v1);
+            encolarVisitante(filaMontaniaRusa, v2);
+            mostrarFilaJuego(filaMontaniaRusa);
+            cout << "--- ATENDIENDO AL PRIMERO ---\n";
+            atenderSiguienteVisitante(filaMontaniaRusa);
+            mostrarFilaJuego(filaMontaniaRusa);
+            break;
+        }
         }
     }
 
