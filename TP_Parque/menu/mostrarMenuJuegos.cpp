@@ -13,6 +13,16 @@
 
 using namespace std;
 
+static void imprimirMenu(){
+    imprimirTitulo("Menu Juegos");
+    imprimirConNumero(1, "Mostrar juegos");
+    imprimirConNumero(2, "Ordenar Juegos");
+    imprimirConNumero(3, "Buscar Juego");
+    imprimirConNumero(4, "Administrar archivos de juegos");
+    imprimirConNumero(5, "Volver al Menu Principal");
+    return;
+}
+
 void mostrarMenuJuegos(Juego *listaJuegos) {
     int opcionElegida = 0;
 
@@ -23,25 +33,24 @@ void mostrarMenuJuegos(Juego *listaJuegos) {
         return;
     }
 
+    imprimirMenu();
+
     while (opcionElegida != -1) {
         opcionElegida = 0;
-        imprimirTitulo("Menu Juegos");
-        imprimirConNumero(1, "Mostrar juegos");
-        imprimirConNumero(2, "Ordenar Juegos");
-        imprimirConNumero(3, "Buscar Juego");
-        imprimirConNumero(4, "Administrar archivos de juegos");
-        imprimirConNumero(5, "Volver al Menu Principal");
 
-        while (opcionElegida < 1 || opcionElegida > 5) {
-            cout << "Ingresa el numero de opcion elegida: ";
+        while (opcionElegida < 0 || opcionElegida > 5) {
+            cout << "Ingresa un numero (0 para imprimir menu): ";
             cin >> opcionElegida; cout << endl;
-            if (opcionElegida < 1 || opcionElegida > 5) {
+            if (opcionElegida < 0 || opcionElegida > 5) {
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
             }
         }
 
         switch (opcionElegida) {
 
+            case 0:
+                imprimirMenu();
+                break;
             case 1:
                 mostrarMenuListaJuegos(listaJuegos, cantidad);
                 break;

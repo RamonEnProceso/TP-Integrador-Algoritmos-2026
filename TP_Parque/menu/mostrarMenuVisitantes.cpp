@@ -16,31 +16,41 @@
 
 using namespace std;
 
+void imprimirMenu(){
+    imprimirTitulo("Menu Visitantes");
+    imprimirConNumero(1,"Mostrar Visitantes");
+    imprimirConNumero(2,"Registrar Visitante");
+    imprimirConNumero(3,"Buscar Visitante (Pulsera / Nombre)");
+    imprimirConNumero(4,"Seleccionar Juego (Asignar juego a un visitante)");
+    imprimirConNumero(5,"Eliminar Visitante");
+    imprimirConNumero(6,"Liberar Visitantes");
+    imprimirConNumero(7,"Volver al Menu Principal");
+    return;
+}
+
 void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
     int opcionElegida = 0, numeroIngresado = 0;
     Visitante nuevoVisitante;
 
+    imprimirMenu();
+
     while (opcionElegida != -1)
     {
         opcionElegida = 0; numeroIngresado = 0;
-        imprimirTitulo("Menu Visitantes");
-        imprimirConNumero(1,"Mostrar Visitantes");
-        imprimirConNumero(2,"Registrar Visitante");
-        imprimirConNumero(3,"Buscar Visitante (Pulsera / Nombre)");
-        imprimirConNumero(4,"Seleccionar Juego (Asignar juego a un visitante)");
-        imprimirConNumero(5,"Eliminar Visitante");
-        imprimirConNumero(6,"Liberar Visitantes");
-        imprimirConNumero(7,"Volver al Menu Principal");
+        
 
-        while (opcionElegida < 1 || opcionElegida > 7){
-            cout << "Ingresa el numero de opcion elegida: "; cin >> opcionElegida; cout<<endl;
-            if (opcionElegida < 1 || opcionElegida > 7){
-                cout << "Numero incorrecto. Ingrese uno correcto.\n";
+        while (opcionElegida < 0 || opcionElegida > 7){
+            cout << "Ingresa un numero (0 para imprimir menu): "; cin >> opcionElegida; cout<<endl;
+            if (opcionElegida < 0 || opcionElegida > 7){
+                cout << "Numero incorrecto.\n";
             }
         };
 
         switch (opcionElegida)
         {
+        case 0:
+            imprimirMenu();
+            break;
         case 1:
             mostrarVisitantesActivos(listaVisitantes);
             break;
