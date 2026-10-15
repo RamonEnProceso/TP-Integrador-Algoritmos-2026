@@ -12,4 +12,4 @@ Como resultado, ahora si se ordena la lista, la matriz también. Si se elimina o
 ### ¿Por qué crear una función para mostrar tablas?
 > imprimirTabla()
 
-Facilita la forma de mostrar datos para el usuraio.
+Facilita la forma de mostrar datos para el usuario.
