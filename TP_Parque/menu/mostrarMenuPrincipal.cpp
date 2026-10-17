@@ -1,7 +1,5 @@
 #include "menu/mostrarMenuPrincipal.h"
-#include "logica/cola/encolarVisitante.h"
-#include "logica/cola/mostrarFilaJuego.h"
-#include "logica/cola/atenderSiguienteVisitante.h"
+#include "menu/mostrarMenuFilas.h"
 #include "menu/mostrarMenuJuegos.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
@@ -31,14 +29,20 @@ void mostrarMenuPrincipal(DatosParque &datos){
     while (opcionElegida != -1)
     {
         opcionElegida = 0;
+        imprimirTitulo("Menu Principal");
+        imprimirConNumero(1,"Gestionar Visitantes");
+        imprimirConNumero(2,"Gestionar Juegos");
+        imprimirConNumero(3,"Gestionar Ocupacion de juegos");
+        imprimirConNumero(4,"Gestionar Filas de Juegos (Colas)");
+        imprimirConNumero(5,"Generar Datos De Prueba");
+        imprimirConNumero(6,"Salir del programa");
 
-        while (opcionElegida < 0 || opcionElegida > 5){
-            cout << "Ingresa un numero (0 para imprimir menu): "; cin >> opcionElegida; cout<<endl;
-            if (opcionElegida < 0 || opcionElegida > 5){
+        while (opcionElegida < 1 || opcionElegida > 6){
+            cout << "Ingresa el numero de opcion elegida: "; cin >> opcionElegida; cout<<endl;
+            if (opcionElegida < 1 || opcionElegida > 6){
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
             }
         };
-
 
         switch (opcionElegida)
         {
@@ -55,9 +59,12 @@ void mostrarMenuPrincipal(DatosParque &datos){
             mostrarMenuOcupacion(datos);
             break;
         case 4:
-            generarDatosPrueba(datos);
+            mostrarMenuFilas(datos);
             break;
         case 5:
+            generarDatosPrueba(datos);
+            break;
+        case 6:
             cout << "\nHasta luego ;)\n\n";
             opcionElegida = -1;
             break;
@@ -66,3 +73,4 @@ void mostrarMenuPrincipal(DatosParque &datos){
 
     return;
 };
+

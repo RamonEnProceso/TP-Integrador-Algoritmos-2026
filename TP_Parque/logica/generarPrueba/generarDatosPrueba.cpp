@@ -2,6 +2,8 @@
 #include "logica/archivo/crearArchivoJuegos.h"
 #include "logica/nodo/agregarVisitanteLista.h"
 #include "logica/matriz/reconstruirMatriz.h"
+#include "logica/cola/encolarVisitante.h"
+#include "logica/cola/liberarCola.h"
 #include "structs/nodoVisitante.h"
 #include "structs/juego.h"
 #include <iostream>
@@ -48,6 +50,24 @@ void generarDatosPrueba(DatosParque &datos){
 
     reconstruirMatriz(datos);
 
+    cout << "Generando filas de espera de prueba para los juegos...\n";
+    for (int i = 0; i < MAX_JUEGOS; i++) {
+        liberarCola(datos.filasJuegos[i]);
+    }
+
+    // Encolar visitantes de prueba en Montana Rusa (juegos[0])
+    encolarVisitante(datos.filasJuegos[0], { 1000, "Ramon Ramirez", 23, 1.83f });
+    encolarVisitante(datos.filasJuegos[0], { 1001, "Joaquin Orsini",   23, 1.83f });
+    encolarVisitante(datos.filasJuegos[0], { 1002, "Ramiro Szrebka",   27, 1.79f });
+
+    // Encolar visitantes de prueba en Barco Pirata (juegos[3])
+    encolarVisitante(datos.filasJuegos[3], { 1003, "Ignacio Segovia",  19, 1.71f });
+    encolarVisitante(datos.filasJuegos[3], { 1004, "Manuel Guevara",   34, 1.68f });
+
+    // Encolar visitante en Calesita (juegos[8])
+    encolarVisitante(datos.filasJuegos[8], { 1009, "Mi amigo lucas",   14, 1.55f });
+
     cout << "Datos de prueba generados correctamente.\n\n";
     return;
 };
+
