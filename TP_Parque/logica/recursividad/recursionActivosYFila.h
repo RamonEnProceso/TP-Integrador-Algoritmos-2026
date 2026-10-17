@@ -6,6 +6,6 @@
 
 int contarActivosRec(NodoVisitante* lista);
 
-void atenderFilaRec(void* cola);
+void atenderFilaRec();
 
 #endif

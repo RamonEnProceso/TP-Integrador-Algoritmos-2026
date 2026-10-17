@@ -1,6 +1,5 @@
 #include "./utiles/outputs/imprimirTabla.h"
 #include <iostream>
-#include <cstring>
 
 using namespace std;
 
@@ -21,15 +20,23 @@ int largoEntero(int n){
     return largo;
 }
 
+int largoTexto(const char* texto){
+    int i = 0;
+    while (texto[i] != '\0'){
+        i++;
+    }
+    return i;
+}
+
 // Funciones para alinear datos
 void imprimirIzquierdaChar(const char* texto, int ancho){
     cout << texto;
-    for (int i = strlen(texto); i < ancho; i++){
+    for (int i = largoTexto(texto); i < ancho; i++){
         cout << " ";
     }
 }
 void imprimirDerechaChar(const char* texto, int ancho){
-    for (int i = strlen(texto); i < ancho; i++){
+    for (int i = largoTexto(texto); i < ancho; i++){
         cout << " ";
     }
     cout << texto;
@@ -48,7 +55,7 @@ void imprimirTabla(Tabla datos){
     // Ancho de celdas
     int anchoCelda = 1;
     for (int j = 0; j < datos.columnas; j++){
-        int largo = strlen(datos.nombresColumnas[j]);
+        int largo = largoTexto(datos.nombresColumnas[j]);
         if (largo > anchoCelda){
             anchoCelda = largo;
         }

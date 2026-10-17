@@ -8,6 +8,6 @@ int contarActivosRec(NodoVisitante* lista) {
     return 1 + contarActivosRec(lista->siguiente);
 }
 
-void atenderFilaRec(void* cola) {
+void atenderFilaRec() {
     std::cout << "\n[Recursividad] Ejecutando atencion recursiva de fila...\n";
 }
