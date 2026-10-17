@@ -44,7 +44,7 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
 
     while (opcionElegida != -1)
     {
-        opcionElegida = 0; numeroIngresado = 0;
+        opcionElegida = -2; numeroIngresado = 0;
 
 
         while (opcionElegida < 0 || opcionElegida > 10){

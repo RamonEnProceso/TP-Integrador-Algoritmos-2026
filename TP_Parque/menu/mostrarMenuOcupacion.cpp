@@ -35,7 +35,7 @@ void mostrarMenuOcupacion(DatosParque &datos){
     imprimirMenu();
 
     while (opcionElegida != -1) {
-        opcionElegida = 0;
+        opcionElegida  = -2;;
 
         while (opcionElegida < 0 || opcionElegida > 6) {
             cout << "Ingresa un numero (0 para imprimir menu): ";

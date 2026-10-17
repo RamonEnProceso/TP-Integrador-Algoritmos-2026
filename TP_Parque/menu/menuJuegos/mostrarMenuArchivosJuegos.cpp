@@ -28,7 +28,7 @@ void mostrarMenuArchivosJuegos(Juego *listaJuegos, int cantJuegos) {
     int opcionElegida = 0;
 
     while (opcionElegida != -1) {
-        opcionElegida = 0;
+        opcionElegida  = -2;
 
         imprimirMenu();
 

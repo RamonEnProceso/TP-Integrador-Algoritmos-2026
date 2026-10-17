@@ -28,10 +28,10 @@ void mostrarMenuPrincipal(DatosParque &datos){
 
     while (opcionElegida != -1)
     {
-        opcionElegida = 0;
+        opcionElegida = -2;
 
         while (opcionElegida < 0 || opcionElegida > 6){
-            cout << "Ingresa el numero de opcion elegida: "; cin >> opcionElegida; cout<<endl;
+            cout << "Ingresa un numero (0 para imprimir menu): "; cin >> opcionElegida; cout<<endl;
             if (opcionElegida < 0 || opcionElegida > 6){
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
             }
