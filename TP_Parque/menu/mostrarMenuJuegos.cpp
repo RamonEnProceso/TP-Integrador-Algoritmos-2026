@@ -33,6 +33,8 @@ void mostrarMenuJuegos(Juego *listaJuegos) {
         return;
     }
 
+    imprimirMenu();
+
     while (opcionElegida != -1) {
         opcionElegida = -2;;
 
