@@ -1,5 +1,7 @@
 #include "logica/generarPrueba/generarDatosPrueba.h"
 #include "logica/archivo/crearArchivoJuegos.h"
+#include "logica/archivo/guardarVisitantes.h"
+#include "logica/archivo/generarNovedadesDePrueba.h"
 #include "logica/nodo/agregarVisitanteLista.h"
 #include "logica/matriz/reconstruirMatriz.h"
 #include "logica/cola/encolarVisitante.h"
@@ -42,10 +44,16 @@ void generarDatosPrueba(DatosParque &datos){
     cout << "Generando juegos infantiles...\n" ;
     datos.juegos[8] = {9, "Calesita", 2, 0.80f, 20, true, { 4,  8, 12,  9,  5}};
     datos.juegos[9] = {10, "Tazas Locas", 2, 0.90f, 16, true, { 2,  5,  7,  6,  3}};
-    datos.cantJuegos = 10; 
+    datos.cantJuegos = 10;
     cout << "Grabandolos en archivo binario...\n" << endl ;
     crearArchivoJuegos(datos.juegos, datos.cantJuegos);
-    
+
+    cout << "Guardando visitantes en visitantes.dat...\n";
+    guardarVisitantes(datos.listaVisitantes);
+
+    cout << "Generando novedades de prueba...\n";
+    generarNovedadesDePrueba();
+
     cout << "Generando matriz de ocupacion de Juegos...\n";
 
     reconstruirMatriz(datos);
@@ -55,19 +63,18 @@ void generarDatosPrueba(DatosParque &datos){
         liberarCola(datos.filasJuegos[i]);
     }
 
-    // Encolar visitantes de prueba en Montana Rusa (juegos[0])
+
     encolarVisitante(datos.filasJuegos[0], { 1000, "Ramon Ramirez", 23, 1.83f });
     encolarVisitante(datos.filasJuegos[0], { 1001, "Joaquin Orsini",   23, 1.83f });
     encolarVisitante(datos.filasJuegos[0], { 1002, "Ramiro Szrebka",   27, 1.79f });
 
-    // Encolar visitantes de prueba en Barco Pirata (juegos[3])
+
     encolarVisitante(datos.filasJuegos[3], { 1003, "Ignacio Segovia",  19, 1.71f });
     encolarVisitante(datos.filasJuegos[3], { 1004, "Manuel Guevara",   34, 1.68f });
 
-    // Encolar visitante en Calesita (juegos[8])
+
     encolarVisitante(datos.filasJuegos[8], { 1009, "Mi amigo lucas",   14, 1.55f });
 
     cout << "Datos de prueba generados correctamente.\n\n";
     return;
 };
-

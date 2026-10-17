@@ -1,9 +1,14 @@
 #include "menu/mostrarMenuVisitantes.h"
 #include "menu/seleccionarJuego.h"
 #include "logica/archivo/leerArchivoJuegos.h"
+#include "logica/archivo/guardarVisitantes.h"
+#include "logica/archivo/construirIndice.h"
+#include "logica/archivo/buscarPorIndice.h"
 #include "structs/juego.h"
+#include "structs/indiceVisitante.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
+#include "utiles/outputs/imprimirVisitante.h"
 #include "utiles/inputs/leerInputVisitante.h"
 #include "structs/nodoVisitante.h"
 #include "logica/nodo/mostrarVisitantesActivos.h"
@@ -24,7 +29,10 @@ void imprimirMenu(){
     imprimirConNumero(4,"Seleccionar Juego (Asignar juego a un visitante)");
     imprimirConNumero(5,"Eliminar Visitante");
     imprimirConNumero(6,"Liberar Visitantes");
-    imprimirConNumero(7,"Volver al Menu Principal");
+    imprimirConNumero(7,"Guardar visitantes a archivo");
+    imprimirConNumero(8,"Construir y mostrar indice de visitantes");
+    imprimirConNumero(9,"Buscar visitante por indice");
+    imprimirConNumero(10,"Volver al Menu Principal");
     return;
 }
 
@@ -37,11 +45,11 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
     while (opcionElegida != -1)
     {
         opcionElegida = 0; numeroIngresado = 0;
-        
 
-        while (opcionElegida < 0 || opcionElegida > 7){
+
+        while (opcionElegida < 0 || opcionElegida > 10){
             cout << "Ingresa un numero (0 para imprimir menu): "; cin >> opcionElegida; cout<<endl;
-            if (opcionElegida < 0 || opcionElegida > 7){
+            if (opcionElegida < 0 || opcionElegida > 10){
                 cout << "Numero incorrecto.\n";
             }
         };
@@ -85,6 +93,49 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
             opcionElegida = 0;
             return;
         case 7:
+            guardarVisitantes(listaVisitantes);
+            break;
+        case 8: {
+            IndiceVisitante *indice = nullptr;
+            int cant = 0;
+            construirIndice(indice, cant);
+            if (indice != nullptr && cant > 0) {
+                imprimirTitulo("Indice de visitantes");
+                for (int i = 0; i < cant; i++) {
+                    cout << "Pulsera " << indice[i].pulsera << " -> posicion " << indice[i].posicion << "\n";
+                }
+                cout << "\n";
+                delete[] indice;
+            } else {
+                cout << "No hay visitantes para indexar. Guarda los visitantes primero.\n\n";
+            }
+            break;
+        }
+        case 9: {
+            IndiceVisitante *indice = nullptr;
+            int cant = 0;
+            construirIndice(indice, cant);
+            if (indice == nullptr || cant == 0) {
+                cout << "No hay visitantes para indexar. Guarda los visitantes primero.\n\n";
+                break;
+            }
+            int pulsera = 0;
+            cout << "Ingrese el numero de pulsera a buscar (0 para terminar): ";
+            cin >> pulsera; cout << endl;
+            while (pulsera != 0) {
+                Visitante visitante;
+                if (buscarPorIndice(indice, cant, pulsera, visitante)) {
+                    imprimirVisitante(visitante);
+                } else {
+                    cout << "No se encontro un visitante con la pulsera " << pulsera << ".\n\n";
+                }
+                cout << "Ingrese el numero de pulsera a buscar (0 para terminar): ";
+                cin >> pulsera; cout << endl;
+            }
+            delete[] indice;
+            break;
+        }
+        case 10:
             cout << "Regresando... \n\n";
             opcionElegida = 0;
             return;

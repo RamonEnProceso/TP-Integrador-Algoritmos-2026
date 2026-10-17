@@ -9,6 +9,7 @@
 #include "logica/matriz/devolverMayorOcupacion.h"
 #include "logica/matriz/devolverJuegoMasUsado.h"
 #include "logica/matriz/reconstruirMatriz.h"
+#include "logica/archivo/exportarReporteDia.h"
 #include "utiles/matematica/sumaTotal.h"
 #include "constantes/matrizConstantes.h"
 #include "structs/mayorOcupacion.h"
@@ -92,7 +93,7 @@ void mostrarMenuOcupacion(DatosParque &datos){
             }
 
             case 5: {
-                /**/
+                exportarReporteDia(datos);
                 break;
             }
 

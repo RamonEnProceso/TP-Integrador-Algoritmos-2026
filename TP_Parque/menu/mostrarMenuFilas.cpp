@@ -3,7 +3,7 @@
 #include "logica/cola/encolarVisitante.h"
 #include "logica/cola/mostrarFilaJuego.h"
 #include "logica/cola/atenderSiguienteVisitante.h"
-#include "logica/cola/verificarAcceso.h"
+#include "logica/verificador/verificarAcceso.h"
 #include "logica/cola/estaEnCola.h"
 #include "logica/nodo/obtenerVisitantePorPulsera.h"
 #include "logica/nodo/agregarVisitanteLista.h"
@@ -77,15 +77,15 @@ void mostrarMenuFilas(DatosParque &datos) {
 
                 if (idxJuego >= 0 && idxJuego < datos.cantJuegos) {
                     if (estaEnCola(datos.filasJuegos[idxJuego], v.pulsera)) {
-                        cout << "[ACCESO DENEGADO] El visitante " << v.nombre 
-                             << " (Pulsera: " << v.pulsera << ") ya se encuentra en la fila de '" 
+                        cout << "[ACCESO DENEGADO] El visitante " << v.nombre
+                             << " (Pulsera: " << v.pulsera << ") ya se encuentra en la fila de '"
                              << datos.juegos[idxJuego].nombre << "'.\n\n";
                         break;
                     }
 
                     if (verificarAcceso(datos.juegos[idxJuego], v)) {
                         encolarVisitante(datos.filasJuegos[idxJuego], v);
-                        cout << ">>> " << v.nombre << " ingresó a la fila de '" 
+                        cout << ">>> " << v.nombre << " ingresó a la fila de '"
                              << datos.juegos[idxJuego].nombre << "'. <<<\n\n";
                         mostrarFilaJuego(datos.filasJuegos[idxJuego]);
                     }
