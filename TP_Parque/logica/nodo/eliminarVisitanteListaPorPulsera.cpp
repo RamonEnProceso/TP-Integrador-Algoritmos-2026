@@ -1,4 +1,5 @@
 #include "structs/nodoVisitante.h"
+#include "logica/pila/liberarHistorial.h"
 #include <iostream>
 
 using namespace std;
@@ -27,6 +28,7 @@ NodoVisitante* eliminarVisitanteListaPorPulsera(NodoVisitante *lista, int numPul
 
     cout << "Se procederá a eliminar al visitante " << actual->visitante.nombre << endl;
 
+    liberarHistorial(actual->visitante);
     delete actual;
 
     cout << "Visitante eliminado correctamente.\n\n";

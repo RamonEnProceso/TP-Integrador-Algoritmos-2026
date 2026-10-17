@@ -1,23 +1,24 @@
 #include "menu/mostrarMenuPrincipal.h"
 #include "menu/mostrarMenuFilas.h"
 #include "menu/mostrarMenuJuegos.h"
-#include "utiles/outputs/imprimirTitulo.h"
-#include "utiles/outputs/imprimirConNum.h"
 #include "menu/mostrarMenuVisitantes.h"
 #include "menu/mostrarMenuOcupacion.h"
+#include "menu/mostrarMenuHerramientas.h"
+#include "utiles/outputs/imprimirTitulo.h"
+#include "utiles/outputs/imprimirConNum.h"
 #include "structs/datosParque.h"
-#include "logica/generarPrueba/generarDatosPrueba.h"
 #include <iostream>
 
 using namespace std;
 
 static void imprimirMenu(){
     imprimirTitulo("Menu Principal");
-    imprimirConNumero(1,"Gestionar Visitantes");
-    imprimirConNumero(2,"Gestionar Juegos");
-    imprimirConNumero(3,"Gestionar Ocupacion de juegos");
-    imprimirConNumero(4,"Generar Datos De Prueba");
-    imprimirConNumero(5,"Salir del programa");
+    imprimirConNumero(1,"Visitantes");
+    imprimirConNumero(2,"Juegos");
+    imprimirConNumero(3,"Ocupacion");
+    imprimirConNumero(4,"Filas de espera");
+    imprimirConNumero(5,"Herramientas");
+    imprimirConNumero(6,"Salir");
     return;
 }
 
@@ -52,9 +53,12 @@ void mostrarMenuPrincipal(DatosParque &datos){
             mostrarMenuOcupacion(datos);
             break;
         case 4:
-            generarDatosPrueba(datos);
+            mostrarMenuFilas(datos);
             break;
         case 5:
+            mostrarMenuHerramientas(datos);
+            break;
+        case 6:
             cout << "\nHasta luego ;)\n\n";
             opcionElegida = -1;
             break;
@@ -63,4 +67,3 @@ void mostrarMenuPrincipal(DatosParque &datos){
 
     return;
 };
-

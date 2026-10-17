@@ -3,9 +3,10 @@
 
 
 #include "structs/nodoVisitante.h"
+#include "structs/cola.h"
 
 int contarActivosRec(NodoVisitante* lista);
 
-void atenderFilaRec();
+void atenderFilaRec(Cola &c);
 
 #endif

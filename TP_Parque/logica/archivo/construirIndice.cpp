@@ -34,16 +34,16 @@ void construirIndice(IndiceVisitante*& indice, int &cantidad) {
     }
 
 
-    cantidad = (int)(archivo.tellg() / sizeof(Visitante));
+    cantidad = (int)(archivo.tellg() / sizeof(VisitanteArchivo));
     archivo.seekg(0);
 
 
     indice = new IndiceVisitante[cantidad];
 
-    Visitante v;
+    VisitanteArchivo reg;
     for (int i = 0; i < cantidad; i++) {
-        archivo.read((char*)&v, sizeof(Visitante));
-        indice[i].pulsera = v.pulsera;
+        archivo.read((char*)&reg, sizeof(VisitanteArchivo));
+        indice[i].pulsera = reg.pulsera;
         indice[i].posicion = i;
     }
 

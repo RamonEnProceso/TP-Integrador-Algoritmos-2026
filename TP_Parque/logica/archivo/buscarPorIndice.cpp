@@ -34,9 +34,18 @@ bool buscarPorIndice(const IndiceVisitante indice[], int cantidad, int pulsera, 
     }
 
 
-    archivo.seekg(indice[posIndice].posicion * sizeof(Visitante), ios::beg);
-    archivo.read((char*)&visitante, sizeof(Visitante));
+    VisitanteArchivo reg;
+    archivo.seekg(indice[posIndice].posicion * sizeof(VisitanteArchivo), ios::beg);
+    archivo.read((char*)&reg, sizeof(VisitanteArchivo));
     archivo.close();
+
+    visitante.pulsera = reg.pulsera;
+    for (int k = 0; k < LARGO_NOMBRE; k++) {
+        visitante.nombre[k] = reg.nombre[k];
+    }
+    visitante.edad = reg.edad;
+    visitante.altura = reg.altura;
+    visitante.historial = nullptr;
 
     return true;
 }

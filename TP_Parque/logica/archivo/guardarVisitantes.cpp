@@ -16,7 +16,14 @@ void guardarVisitantes(NodoVisitante *lista) {
     NodoVisitante *actual = lista;
     int cantidad = 0;
     while (actual != nullptr) {
-        archivo.write((char*)&actual->visitante, sizeof(Visitante));
+        VisitanteArchivo reg;
+        reg.pulsera = actual->visitante.pulsera;
+        for (int k = 0; k < LARGO_NOMBRE; k++) {
+            reg.nombre[k] = actual->visitante.nombre[k];
+        }
+        reg.edad = actual->visitante.edad;
+        reg.altura = actual->visitante.altura;
+        archivo.write((char*)&reg, sizeof(VisitanteArchivo));
         cantidad++;
         actual = actual->siguiente;
     }
