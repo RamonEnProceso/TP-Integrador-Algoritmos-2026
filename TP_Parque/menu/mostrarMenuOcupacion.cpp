@@ -2,10 +2,8 @@
 #include "structs/matrizJuegoxHoras.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
-#include "logica/matriz/totalOcupacion.h"
-#include "logica/matriz/totalPorJuego.h"
-#include "logica/matriz/totalPorFranja.h"
 #include "logica/matriz/imprimirMatriz.h"
+#include "logica/matriz/imprimirTotales.h"
 #include "logica/matriz/devolverMayorOcupacion.h"
 #include "logica/matriz/devolverJuegoMasUsado.h"
 #include "logica/matriz/reconstruirMatriz.h"
@@ -71,24 +69,7 @@ void mostrarMenuOcupacion(DatosParque &datos){
             }
 
             case 4: {
-
-                int total = totalOcupacion(datos.datosMatriz);
-                int totalJuegos[MAX_JUEGOS];
-                int totalFranjas[FRANJAS_HORARIAS];
-                totalPorJuego(datos.datosMatriz, totalJuegos);
-                totalPorFranja(datos.datosMatriz, totalFranjas);
-
-                imprimirTitulo("Total de visitas por juego");
-                for (int i = 0; i < datos.datosMatriz.juegos; i++){
-                    imprimirConNumero(totalJuegos[i], datos.juegos[i].nombre);
-                }
-
-                imprimirTitulo("Total de visitas por franja horaria");
-                for (int j = 0; j < datos.datosMatriz.franjas; j++){
-                    imprimirConNumero(totalFranjas[j], FRANJAS_TEXTO[j]);
-                }
-                cout << "La cantidad total de visitas del dia fue de " << total << " accesos.\n\n";
-                cout << "\n";
+                imprimirTotales(datos);
                 break;
             }
 
