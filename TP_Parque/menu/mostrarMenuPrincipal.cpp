@@ -30,9 +30,9 @@ void mostrarMenuPrincipal(DatosParque &datos){
     {
         opcionElegida = 0;
 
-        while (opcionElegida < 1 || opcionElegida > 6){
+        while (opcionElegida < 0 || opcionElegida > 6){
             cout << "Ingresa el numero de opcion elegida: "; cin >> opcionElegida; cout<<endl;
-            if (opcionElegida < 1 || opcionElegida > 6){
+            if (opcionElegida < 0 || opcionElegida > 6){
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
             }
         };
@@ -52,12 +52,9 @@ void mostrarMenuPrincipal(DatosParque &datos){
             mostrarMenuOcupacion(datos);
             break;
         case 4:
-            mostrarMenuFilas(datos);
-            break;
-        case 5:
             generarDatosPrueba(datos);
             break;
-        case 6:
+        case 5:
             cout << "\nHasta luego ;)\n\n";
             opcionElegida = -1;
             break;
