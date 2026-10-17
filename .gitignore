@@ -3,6 +3,7 @@
 *.exe
 .vscode/
 TP_Parque/compile_flags.txt
+TP_Parque/datos
 
 # Por si alguno usa IA
 /.agent
