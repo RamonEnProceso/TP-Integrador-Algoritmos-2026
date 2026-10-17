@@ -11,8 +11,20 @@
 
 using namespace std;
 
+static void imprimirMenu(){
+    imprimirTitulo("Menu Principal");
+    imprimirConNumero(1,"Gestionar Visitantes");
+    imprimirConNumero(2,"Gestionar Juegos");
+    imprimirConNumero(3,"Gestionar Ocupacion de juegos");
+    imprimirConNumero(4,"Generar Datos De Prueba");
+    imprimirConNumero(5,"Salir del programa");
+    return;
+}
+
 void mostrarMenuPrincipal(DatosParque &datos){
     int opcionElegida = 0;
+
+    imprimirMenu();
 
     while (opcionElegida != -1)
     {
@@ -34,6 +46,9 @@ void mostrarMenuPrincipal(DatosParque &datos){
 
         switch (opcionElegida)
         {
+        case 0:
+            imprimirMenu();
+            break;
         case 1:
             mostrarMenuVisitantes(datos.listaVisitantes);
             break;

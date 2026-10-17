@@ -16,28 +16,39 @@
 
 using namespace std;
 
+static void imprimirMenu(){
+    imprimirTitulo("Menu Ocupacion");
+    imprimirConNumero(1, "Mostrar ocupacion de juegos por franja");
+    imprimirConNumero(2, "Mostrar pico maximo de ocupacion");
+    imprimirConNumero(3, "Mostrar juego mas usado");
+    imprimirConNumero(4, "Mostrar total de visitas en el dia" );
+    imprimirConNumero(5, "Exportar Reporte del dia");
+    imprimirConNumero(6, "Volver al Menu Principal");
+    return;
+}
+
 void mostrarMenuOcupacion(DatosParque &datos){
     int opcionElegida = 0;
     reconstruirMatriz(datos);
+
+    imprimirMenu();
+
     while (opcionElegida != -1) {
         opcionElegida = 0;
-        imprimirTitulo("Menu Ocupacion");
-        imprimirConNumero(1, "Mostrar ocupacion de juegos por franja");
-        imprimirConNumero(2, "Mostrar pico maximo de ocupacion");
-        imprimirConNumero(3, "Mostrar juego mas usado");
-        imprimirConNumero(4, "Mostrar total de visitas en el dia" );
-        imprimirConNumero(5, "Exportar Reporte del dia");
-        imprimirConNumero(6, "Volver al Menu Principal");
 
-        while (opcionElegida < 1 || opcionElegida > 6) {
-            cout << "Ingresa el numero de opcion elegida: ";
+        while (opcionElegida < 0 || opcionElegida > 6) {
+            cout << "Ingresa un numero (0 para imprimir menu): ";
             cin >> opcionElegida; cout << endl;
-            if (opcionElegida < 1 || opcionElegida > 6) {
+            if (opcionElegida < 0 || opcionElegida > 6) {
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
             }
         }
 
         switch (opcionElegida) {
+
+            case 0:
+                imprimirMenu();
+                break;
 
             case 1:
                 imprimirMatriz(datos);
@@ -59,7 +70,7 @@ void mostrarMenuOcupacion(DatosParque &datos){
             }
 
             case 4: {
-                
+
                 int total = totalOcupacion(datos.datosMatriz);
                 int totalJuegos[MAX_JUEGOS];
                 int totalFranjas[FRANJAS_HORARIAS];
