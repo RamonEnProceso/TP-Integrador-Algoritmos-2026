@@ -21,7 +21,7 @@
 
 using namespace std;
 
-void imprimirMenu(){
+static void imprimirMenu(){
     imprimirTitulo("Menu Visitantes");
     imprimirConNumero(1,"Mostrar Visitantes");
     imprimirConNumero(2,"Registrar Visitante");

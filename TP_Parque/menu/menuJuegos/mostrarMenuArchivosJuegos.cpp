@@ -13,29 +13,37 @@
 
 using namespace std;
 
+static void imprimirMenu(){
+    imprimirTitulo("Administrar archivos de juegos");
+    imprimirConNumero(1, "Cargar juegos desde archivos");
+    imprimirConNumero(2, "Guardar juegos a archivos");
+    imprimirConNumero(3, "Consultar juego N");
+    imprimirConNumero(4, "Cambiar estado del juego N");
+    imprimirConNumero(5, "Listado por tipo con corte de control");
+    imprimirConNumero(6, "Actualizar juegos con novedades");
+    imprimirConNumero(7, "Volver al Menu de Juegos");
+}
+
 void mostrarMenuArchivosJuegos(Juego *listaJuegos, int cantJuegos) {
     int opcionElegida = 0;
 
     while (opcionElegida != -1) {
         opcionElegida = 0;
-        imprimirTitulo("Administrar archivos de juegos");
-        imprimirConNumero(1, "Cargar juegos desde archivos");
-        imprimirConNumero(2, "Guardar juegos a archivos");
-        imprimirConNumero(3, "Consultar juego N");
-        imprimirConNumero(4, "Cambiar estado del juego N");
-        imprimirConNumero(5, "Listado por tipo con corte de control");
-        imprimirConNumero(6, "Actualizar juegos con novedades");
-        imprimirConNumero(7, "Volver al Menu de Juegos");
 
-        while (opcionElegida < 1 || opcionElegida > 7) {
+        imprimirMenu();
+
+        while (opcionElegida < 0 || opcionElegida > 7) {
             cout << "Ingresa el numero de opcion elegida: ";
             cin >> opcionElegida; cout << endl;
-            if (opcionElegida < 1 || opcionElegida > 7) {
+            if (opcionElegida < 0 || opcionElegida > 7) {
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
             }
         }
 
         switch (opcionElegida) {
+            case 0:
+                imprimirMenu();
+                break;
             case 1:
                 leerArchivoJuegos(listaJuegos,cantJuegos);
                 break;

@@ -16,6 +16,15 @@
 
 using namespace std;
 
+static void imprimirMenu(){
+    imprimirTitulo("Menu Filas y Colas de Juegos");
+    imprimirConNumero(1, "Encolar visitante en un juego");
+    imprimirConNumero(2, "Ver fila de un juego");
+    imprimirConNumero(3, "Atender siguiente visitante en un juego");
+    imprimirConNumero(4, "Ver estado de todas las filas");
+    imprimirConNumero(5, "Volver al Menu Principal");
+}
+
 void mostrarMenuFilas(DatosParque &datos) {
     if (datos.cantJuegos == 0) {
         datos.cantJuegos = leerArchivoJuegos(datos.juegos, MAX_JUEGOS);
@@ -28,24 +37,24 @@ void mostrarMenuFilas(DatosParque &datos) {
 
     int opcionElegida = 0;
 
+    imprimirMenu();
+
     while (opcionElegida != -1) {
         opcionElegida = 0;
-        imprimirTitulo("Menu Filas y Colas de Juegos");
-        imprimirConNumero(1, "Encolar visitante en un juego");
-        imprimirConNumero(2, "Ver fila de un juego");
-        imprimirConNumero(3, "Atender siguiente visitante en un juego");
-        imprimirConNumero(4, "Ver estado de todas las filas");
-        imprimirConNumero(5, "Volver al Menu Principal");
 
-        while (opcionElegida < 1 || opcionElegida > 5) {
-            cout << "Ingresa el numero de opcion elegida: ";
+        while (opcionElegida < 0 || opcionElegida > 5) {
+            cout << "Ingresa un numero (0 para imprimir menu): ";
             cin >> opcionElegida; cout << endl;
-            if (opcionElegida < 1 || opcionElegida > 5) {
+            if (opcionElegida < 0 || opcionElegida > 5) {
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
             }
         }
 
         switch (opcionElegida) {
+            case 0: {
+                imprimirMenu();
+                break;
+            }
             case 1: {
                 int pulseraBuscada = 0;
                 cout << "Ingrese el numero de pulsera del visitante: ";

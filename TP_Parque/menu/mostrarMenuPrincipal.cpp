@@ -29,13 +29,6 @@ void mostrarMenuPrincipal(DatosParque &datos){
     while (opcionElegida != -1)
     {
         opcionElegida = 0;
-        imprimirTitulo("Menu Principal");
-        imprimirConNumero(1,"Gestionar Visitantes");
-        imprimirConNumero(2,"Gestionar Juegos");
-        imprimirConNumero(3,"Gestionar Ocupacion de juegos");
-        imprimirConNumero(4,"Gestionar Filas de Juegos (Colas)");
-        imprimirConNumero(5,"Generar Datos De Prueba");
-        imprimirConNumero(6,"Salir del programa");
 
         while (opcionElegida < 1 || opcionElegida > 6){
             cout << "Ingresa el numero de opcion elegida: "; cin >> opcionElegida; cout<<endl;
