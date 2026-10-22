@@ -70,10 +70,10 @@ Existen 5 carpetas:
 
 ## Integrantes y responsabilidades
 1. **Ramírez, Juan Ramón Agustín**
-    > *Encargado, Arquitecura del proyecto, Interfaz, Nodos, Datos de prueba, creación y lectura de archivos de Juegos*...
+    > *Encargado, Arquitecura del proyecto, Interfaz, Nodos, Datos de prueba, creación y lectura de archivos de Juegos, Indices e Interfaz (menu)*.
 2. **Orsini, Joaquín**
-    > *Ordenamiento de Juegos, búsqueda de Juegos por Código o Nombre*...
+    > *Ordenamiento de Juegos, búsqueda de Juegos por Código o Nombre y Colas*.
 3. **Szrebka, Ramiro Agustín**
-    > *Lógica de gestión de Visitantes, Cargar juegos e imprimirlos, filtrar juegos más usados, matriz de visitas*...
+    > *Lógica de gestión de Visitantes, Cargar juegos e imprimirlos, Filtrar juegos más usados, Matriz de visitas y Pilas*.
 4. **Segovia Soler, Ignacio Matias**
-    > *Verificar altura, Cambiar estado de Juego, Reporte del día*...
+    > *Verificar altura, Cambiar estado de Juego, Reporte del día y Recursión*.
