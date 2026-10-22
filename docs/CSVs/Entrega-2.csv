@@ -1,6 +1,6 @@
 ,,,,,,,,
-,"Etapa 2 - Pila, Cola, Apareo y Recursión",,,,Fecha de entrega,10/10/2026,Entrega en (días):,-6
-,,,,,FALTAN: -6 DÍAS,,,
+,"Etapa 2 - Pila, Cola, Apareo y Recursión",,,,Fecha de entrega,10/10/2026,Entrega en (días):,-12
+,,,,,FALTAN: -12 DÍAS,,,
 ,¿Qué debe tener?,Estado,Encargado,,,,,
 ,Cola,,,,,,,
 1,encolarVisitante(),TRUE,Joaquin,,,,,
@@ -12,9 +12,9 @@
 6,desapilarJuegoVisitado(),TRUE,Ramiro,,,,,
 7,mostrarHistorialVisitante(),TRUE,Ramiro,,,,,
 ,Archivos,,,,,,,
-8,actualizarJuegosConNovedades(),FALSE,Ramón,,,,,
-9,construirIndice(),FALSE,Ramón,,,,,
-10,buscarPorIndice(),FALSE,Ramón,,,,,
+8,actualizarJuegosConNovedades(),TRUE,Ramón,,,,,
+9,construirIndice(),TRUE,Ramón,,,,,
+10,buscarPorIndice(),TRUE,Ramón,,,,,
 ,Recursión,,,,,,,
 11,contarActivosRec(),TRUE,Nacho,,,,,
 12,atenderFilaRec(),TRUE,Nacho,,,,,

@@ -13,3 +13,12 @@ Como resultado, ahora si se ordena la lista, la matriz también. Si se elimina o
 > imprimirTabla()
 
 Facilita la forma de mostrar datos para el usuario.
+
+### ¿Por qué tantos menúes?
+> /menu
+
+Facilita la legibilidad para el usuario, separando tareas por su funcionalidad. Así en vez de tener 20 funciones en una sola pantalla, se distribuyen en menúes secundarios.
+
+##### ¿Por qué el menú se imprime una sola vez por ingreso?
+
+Nuevamente, por un tema de experiencia de usuario. Estar reimprimiendo el menu al terminar cada función, no permite al usuario leer correctamente lo que pidio porque se vuelve a imprimir el menu.
