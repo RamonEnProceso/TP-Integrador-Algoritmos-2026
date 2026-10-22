@@ -1,4 +1,15 @@
-# Pregunta de diseño
+# Preguntas de diseño
+
+### ¿Por qué los datos del parque están en un registro?
+> struct DatosParque
+
+Se compacto las variables importantes del proyectos en un solo registro para pasarlo por referencia a los menús y a toda función que lo modifique:
+- la lista enlazada de visitantes activos;
+- el arreglo de juegos y **cuántos** hay cargados (`cantJuegos`);
+- la matriz de ocupación `ocupacion[juego][franja]`.
+- las filas de los juegos
+
+Así se evitan tener que pasar como parametro muchas variables en cada menu y en cada funcion. Solo se llama lo necesario. Por ejemplo: `seleccionarJuego(datos.juegos, datos.cantJuegos)`
 
 ### ¿Por qué la matriz se genera en el momento?
 > reconstruirMatriz()
@@ -14,11 +25,11 @@ Como resultado, ahora si se ordena la lista, la matriz también. Si se elimina o
 
 Facilita la forma de mostrar datos para el usuario.
 
-### ¿Por qué tantos menúes?
+### ¿Por qué tantos menús?
 > /menu
 
-Facilita la legibilidad para el usuario, separando tareas por su funcionalidad. Así en vez de tener 20 funciones en una sola pantalla, se distribuyen en menúes secundarios.
+Facilita la legibilidad para el usuario, separando tareas por su funcionalidad. Así en vez de tener 20 funciones en una sola pantalla, se distribuyen en menús secundarios.
 
 ##### ¿Por qué el menú se imprime una sola vez por ingreso?
 
-Nuevamente, por un tema de experiencia de usuario. Estar reimprimiendo el menu al terminar cada función, no permite al usuario leer correctamente lo que pidio porque se vuelve a imprimir el menu.
+Nuevamente, por un tema de experiencia de usuario. Estar reimprimiendo el menu al terminar cada función, no permite al usuario leer correctamente lo que pidio. Para ello, se decidió que el mismo usuario pueda reimprimir el menu ingresando `0` a la consola.
