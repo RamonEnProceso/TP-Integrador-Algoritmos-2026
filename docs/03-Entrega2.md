@@ -10,8 +10,8 @@ Sobre la Entrega 1 (ya corregida) se suman: **cola** (fila de un juego), **pila*
 sobre `visitantes.dat` y **dos funciones recursivas**.
 
 ### Estado
-- [ ] Cola (ítems 1-4)
-- [ ] Pila (ítems 5-7)
-- [ ] Archivos: novedades + índice (ítems 8-10)
-- [ ] Recursión (ítems 11-12)
-- [ ] Observaciones (ítems 13-14)
+- [x] Cola (ítems 1-4)
+- [x] Pila (ítems 5-7)
+- [x] Archivos: novedades + índice (ítems 8-10)
+- [x] Recursión (ítems 11-12)
+- [x] Observaciones (ítems 13-14)
