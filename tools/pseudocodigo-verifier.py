@@ -13,6 +13,13 @@ def cambiarAsignacionesPorLinea(linea: str):
         nuevaLinea = linea.replace("=","<-")
     return nuevaLinea
 
+def corregirPara(linea:str):
+    if "- Para i ->" in linea:
+        nuevaLinea = linea.replace("- Para i ->","- Para i <-")
+        return nuevaLinea
+    else:
+        return linea
+
 def colocarEspacioEntreFunciones(linea:str):
     if linea[0] == "-" and "(" in linea and "main" not in linea:
         nuevaLinea = '\n\n' + linea
@@ -28,6 +35,7 @@ def corregirTxt(ruta:str):
     
     for linea in lineas:
         nuevaLinea = cambiarAsignacionesPorLinea(linea)
+        nuevaLinea = corregirPara(nuevaLinea)
         nuevaLinea = colocarEspacioEntreFunciones(nuevaLinea)
         print(nuevaLinea)
         lineas_corregidas.append(nuevaLinea)
