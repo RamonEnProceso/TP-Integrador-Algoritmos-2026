@@ -1,20 +1,14 @@
 ## ENTREGA FINAL
 > 31/10/2026
 
-Todo integrado, corregido y demostrable de punta a punta. Incluye la Entrega 1 y la
-Entrega 2 corregidas, la tabla de complejidad, las preguntas de diseño, el README y la
-demo grupal.
-
 ### Qué tiene que estar
 - [x] Entrega 1 completa y corregida.
-- [ ] Entrega 2 completa y corregida.
-- [ ] Flujo completo: registrar visitante → fila → atender → historial → ocupación → reporte.
-- [ ] Memoria liberada (`delete` de todos los `new`).
-- [ ] Archivos cerrados.
-- [ ] Compila limpio con `g++ -std=c++17 -Wall -Wextra`.
-- [ ] `README` actualizado (qué hace, compilar, ejecutar, módulos, integrantes).
-- [ ] [Tabla de complejidad](F-tablaDeComplejidad.md).
-- [ ] [Preguntas de diseño](F-preguntaDeDiseño.md).
+- [x] Entrega 2 completa y corregida.
+- [x] Flujo completo: registrar visitante → fila → atender → historial → ocupación → reporte.
+- [x] Memoria liberada (`delete` de todos los `new`).
+- [x] Archivos cerrados.
+- [x] Compila limpio con `g++ -std=c++17 -Wall -Wextra`.
+- [x] `README` actualizado (qué hace, compilar, ejecutar, módulos, integrantes).
 - [ ] Demo grupal.
 
 ### Tabla de complejidad
