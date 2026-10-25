@@ -1,11 +1,11 @@
 - main()
     - datos.listaVisitantes <- crearLista()
     - datos.cantJuegos <- 0
-    - Para i <- 0 mientras i < MAX_JUEGOS - 1
+    - Para i <- 0 hasta MAX_JUEGOS - 1
         - datos.filasJuegos[i].frente <- nulo
         - datos.filasJuegos[i].fin <- nulo
     - mostrarMenuPrincipal(datos)
-    - Para i <- 0 mientras i < MAX_JUEGOS - 1
+    - Para i <- 0 hasta MAX_JUEGOS - 1
         - liberarCola(datos.filasJuegos[i])
     - liberarVisitanteLista( datos.listaVisitantes v^)
 
@@ -61,10 +61,10 @@
 
 
 - imprimirMenuPrincipal()
-    - imprimirTitulo("Menu Principal")
+    - imprimirTitulo("Menu Principal" v)
     - listaMenu[6] <- {"Visitantes","Juegos","Ocupacion","Fila de espera","Herramientas","Salir"}
-    - Para i <- 0 hasta i < 6
-        imprimirConNumero(i+1, listaMenu[i])
+    - Para i <- 0 hasta 5
+        imprimirConNumero(i+1 v, listaMenu[i] v)
 
 
 - imprimirTitulo(texto v)
@@ -92,21 +92,17 @@
             - 0
                 - imprimirMenuVisitantes()
             - 1
-                - mostrarVisitantesActivos(listaVisitantes)
+                - mostrarVisitantesActivos(listaVisitantes v)
             - 2
                 - leerInputVisitante(nuevoVisitante)
-                - listaVisitantes <- agregarVisitanteLista(nuevoVisitante, listaVisitantes)
+                - agregarVisitanteLista(nuevoVisitante v, listaVisitantes v^)
                 - Imprimir "Visitante registrado correctamente."
             - 3
                 - Imprimir "Ingrese el numero de pulsera del visitante que desea buscar: "
                 - Leer numeroIngresado
                 - buscarVisitanteActivoPorPulsera(listaVisitantes, numeroIngresado)
             - 4
-                - cantJuegos <- leerArchivoJuegos(juegosParaSeleccion, 50)
-                - Si cantJuegos > 0
-                    - seleccionarJuego(juegosParaSeleccion, cantJuegos)
-                - Sino
-                    - Imprimir "No hay juegos disponibles en el sistema."
+                - asignarJuegoVisitante()
             - 5
                 - mostrarMenuEliminarLiberar(listaVisitantes)
             - 6
@@ -118,13 +114,23 @@
                 - opcionElegida <- -1
 
 
+- imprimirMenuVisitantes()
+    - imprimirTitulo("Menu Principal > Visitantes" v)
+    - listaMenu[8] <- {"Mostrar Visitantes","Registrar Visitante","Buscar Visitante",
+        "Asignar juego a visitante","Eliminar y liberar", "Historial de juegos","Archivos e indice","Volver al menu anterior"}
+    - Para i <- 0 hasta 7
+        - imprimirConNumero(i+1 v, listaMenu[i] v)
+
+
 - mostrarVisitantesActivos(lista v)
+    - imprimirTitulo("Lista de Visitantes Activos" v)
     - actual <- lista
-    - imprimirTitulo("Lista de Visitantes Activos")
     - contador <- 0
     - Mientras actual != nulo
         - contador <- contador + 1
-        - imprimirConNumero(actual.visitante.pulsera, actual.visitante.nombre)
+        - pulsera <- actual -> visitante.pulsera
+        - nombre <- actual -> visitante.nombre
+        - imprimirConNumero(pulsera v, nombre v)
         - actual <- actual.siguiente
     - Si contador = 0
         - Imprimir "No se encontraron visitantes."
@@ -140,16 +146,71 @@
     - Devolver nuevo
 
 
-- imprimirMenuVisitantes()
-    - imprimirTitulo("Menu Principal > Visitantes")
-    - imprimirConNumero(1, "Mostrar Visitantes")
-    - imprimirConNumero(2, "Registrar Visitante")
-    - imprimirConNumero(3, "Buscar Visitante (Pulsera / Nombre)")
-    - imprimirConNumero(4, "Asignar juego a visitante")
-    - imprimirConNumero(5, "Eliminar y liberar")
-    - imprimirConNumero(6, "Historial de juegos")
-    - imprimirConNumero(7, "Archivos e indice")
-    - imprimirConNumero(8, "Volver al menu anterior")
+- agregarVisitanteLista(dato v, lista v^)
+    - nuevo <- nuevo nodo visitante
+    - nuevo -> visitante <- dato
+    - nuevo -> siguiente <- lista
+    - Devolver nuevo
+
+
+- asignarJuegoVisitante()
+    - Iniciar vector juegosParaSeleccion[MAX_JUEGOS]
+    - cantJuegos <- leerArchivoJuegos(juegosParaSeleccion, MAX_JUEGOS)
+    - Si cantJuegos > 0
+        - seleccionarJuego(juegosParaSeleccion, cantJuegos)
+    - Sino
+        - Imprimir "No hay juegos disponibles en el sistema."
+
+
+- leerArchivoJuegos(lista v, n v, cantidad ^)
+    - Abrir archivo rutaArchivoJuegos
+    - Si no arch abierto
+        - Imprimir "Error al leer archivo de Juegos."
+        - Devolver 0
+    - cantidad <- 0
+    - Mientras cantidad < n y haya registro juegoLeido
+        - juegos[cantidad] <- juegoLeido
+        - cantidad <- cantidad + 1
+    - Si cantidad = 0
+        - Imprimir "No se encontraron juegos guardados"
+    - Cerrar arch
+    - Devolver cantidad
+
+
+- seleccionarJuego(juegos v^, n v)
+    - imprimirMenuSeleccionarJuego()
+    - indiceEncontrado = -1
+    - opcionElegida <- -2
+    - Mientras opcionElegida != 1
+        - opcionElegida <- -2
+        - leerInputMenu(0 v, 3 v, opcionElegida v)
+        - Cuando opcionElegida sea
+            - 0
+                - imprimirMenuSeleccionarJuego()
+            - 1
+                - Leer codigo
+                - ordenarPorCodigo(juegos v^, n v)
+                - buscarJuegoPorCodigoBinaria(juegos v, n v, cod v, indiceEncontrado ^);
+            - 2
+                - Leer nombre
+                - buscarJuegoPorNombre(juego v, n v, nombre v, indiceEncontrado^)
+            - 3
+                - Devolver -1
+        - Si indiceEncontrado != 1
+            - imprimirJuego(juegos[indiceEncontrado])
+            - Si juegos[indiceEncontrado].operativo
+                - Devolver indiceEncontrado
+            - Sino
+                - Imprimir "JUEGO FUERA DE SERVICIO"
+        - Sino
+            - Imprimir "Juego no encontrado"
+            - Devolver -1
+
+- imprimirMenuSeleccionarJuego()
+    - imprimirTitulo("Seleccionar Juego")
+    - listaMenu <-{"Buscar por Codigo","Buscar por Nombre", "Cancelar"}
+    - Para i<-0 hasta 2
+        - imprimirConNumero(i+1, listaMenu[i])
 
 
 - sumaTotalV(vec v, n v, total ^)
@@ -609,13 +670,6 @@
     - Devolver pila.codigoJuego
 
 
-- agregarVisitanteLista(dato v, lista v, resultado ^)
-    - nuevo <- nuevo nodo visitante
-    - nuevo.visitante <- dato
-    - nuevo.siguiente <- lista
-    - Devolver nuevo
-
-
 - buscarVisitanteActivoPorPulsera(lista v, pulseraNum v)
     - actual <- lista
     - Mientras actual != nulo y actual.visitante.pulsera != pulseraNum
@@ -927,20 +981,6 @@
     - Imprimir "Se guardaron " + cantidad + " visitantes en visitantes.dat."
 
 
-- leerArchivoJuegos(juegos ^, n v, resultado ^)
-    - Abrir archivo arch rutaArchivoJuegos
-    - Si no arch abierto
-        - Imprimir "Error al leer archivo de Juegos."
-        - Devolver 0
-    - cantidad <- 0
-    - Mientras cantidad < n y lectura exitosa de arch en juegoLeido
-        - juegos[cantidad] <- juegoLeido
-        - cantidad <- cantidad + 1
-    - Si cantidad = 0
-        - Imprimir "No se encontraron juegos guardados"
-    - Cerrar arch
-    - Devolver cantidad
-
 
 - listadoPorTipoConCorte()
     - cantidad <- leerArchivoJuegos(juegos, MAX_JUEGOS)
@@ -1012,39 +1052,6 @@
     - encolarVisitante(datos.filasJuegos[3], visitante_1004)
     - encolarVisitante(datos.filasJuegos[8], visitante_1009)
     - Imprimir "Datos de prueba generados correctamente."
-
-
-- seleccionarJuego(juegos ^, n v, resultado ^)
-    - imprimirTitulo("SELECCIONAR JUEGO")
-    - Imprimir "1. Buscar por Codigo"
-    - Imprimir "2. Buscar por Nombre"
-    - Imprimir "3. Cancelar"
-    - Imprimir "Opcion: "
-    - Leer opcion
-    - indiceEncontrado <- -1
-    - Si opcion = 1
-        - Imprimir "Ingrese el codigo: "
-        - Leer cod
-        - ordenarPorCodigo(juegos, n)
-        - indiceEncontrado <- buscarJuegoPorCodigoBinaria(juegos, n, cod)
-    - Sino
-        - Si opcion = 2
-            - Imprimir "Ingrese el nombre (puede ser parcial): "
-            - Leer nom
-            - indiceEncontrado <- buscarJuegoPorNombre(juegos, n, nom)
-        - Sino
-            - Devolver -1
-    - Si indiceEncontrado != -1
-        - Imprimir "Juego encontrado:"
-        - imprimirJuego(juegos[indiceEncontrado])
-        - Si juegos[indiceEncontrado].operativo
-            - Devolver indiceEncontrado
-        - Sino
-            - Imprimir "El juego se encuentra FUERA DE SERVICIO."
-            - Devolver -1
-    - Sino
-        - Imprimir "Juego no encontrado."
-        - Devolver -1
 
 
 - imprimirMenuArchivosJuegos()
