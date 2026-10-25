@@ -8,18 +8,17 @@
 #include "utiles/outputs/imprimirConNum.h"
 #include "structs/datosParque.h"
 #include "utiles/inputs/leerInputMenu.h"
+#include "constantes/generales.h"
 #include <iostream>
 
 using namespace std;
 
 static void imprimirMenu(){
     imprimirTitulo("Menu Principal");
-    imprimirConNumero(1,"Visitantes");
-    imprimirConNumero(2,"Juegos");
-    imprimirConNumero(3,"Ocupacion");
-    imprimirConNumero(4,"Filas de espera");
-    imprimirConNumero(5,"Herramientas");
-    imprimirConNumero(6,"Salir");
+    char listaMenu[6][LARGO_NOMBRE] = {"Visitantes","Juegos","Ocupacion","Fila de Espera","Herramientas","Salir"};
+    for (int i = 0; i < 6; i++){
+        imprimirConNumero(i+1,listaMenu[i]);
+    }
     return;
 }
 

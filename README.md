@@ -2,6 +2,14 @@
 
 >UTN FRBA · Algoritmos y Estructuras de Datos · Cátedra Ing. Ariel García
 
+## Índice
+- [¿Qué Hace?](#qué-hace)
+- [Cómo compilar y ejecutar](#cómo-compilar-y-ejecutar)
+- [Módulos](#módulos)
+- [Preguntas de diseño](#preguntas-de-diseño)
+- [Tabla de complejidad](#tabla-de-complejidad)
+- [Integrantes y responsabilidades](#integrantes-y-responsabilidades)
+
 ## ¿Qué Hace?
 
 Es un programa que simula la administración de un parque de diversiones: juegos, visitantes, filas, ocupación, historial. Permite ver y registrar datos de los visitantes y también la ocupación de los juegos.

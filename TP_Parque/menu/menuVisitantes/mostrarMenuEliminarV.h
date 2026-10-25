@@ -2,6 +2,6 @@
 #define MOSTRAR_MENU_ELIMINAR_LIBERAR_H
 #include "structs/nodoVisitante.h"
 
-void mostrarMenuEliminarLiberar(NodoVisitante *&listaVisitantes);
+void mostrarMenuEliminarV(NodoVisitante *&listaVisitantes);
 
 #endif

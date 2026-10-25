@@ -1,6 +1,6 @@
 #include "menu/mostrarMenuVisitantes.h"
-#include "menu/seleccionarJuego.h"
-#include "menu/menuVisitantes/mostrarMenuEliminarLiberar.h"
+#include "menu/menuJuegos/seleccionarJuego.h"
+#include "menu/menuVisitantes/mostrarMenuEliminarV.h"
 #include "menu/menuVisitantes/mostrarMenuHistorial.h"
 #include "menu/menuVisitantes/mostrarMenuArchivosVisitantes.h"
 #include "logica/archivo/leerArchivoJuegos.h"
@@ -13,21 +13,30 @@
 #include "utiles/outputs/imprimirConNum.h"
 #include "utiles/inputs/leerInputVisitante.h"
 #include "utiles/inputs/leerInputMenu.h"
+#include "constantes/generales.h"
+#include "constantes/matrizConstantes.h"
 #include <iostream>
 
 using namespace std;
 
 static void imprimirMenu(){
     imprimirTitulo("Menu Principal > Visitantes");
-    imprimirConNumero(1, "Mostrar Visitantes");
-    imprimirConNumero(2, "Registrar Visitante");
-    imprimirConNumero(3, "Buscar Visitante (Pulsera / Nombre)");
-    imprimirConNumero(4, "Asignar juego a visitante");
-    imprimirConNumero(5, "Eliminar y liberar");
-    imprimirConNumero(6, "Historial de juegos");
-    imprimirConNumero(7, "Archivos e indice");
-    imprimirConNumero(8, "Volver al menu anterior");
+    char listaMenu[8][LARGO_NOMBRE] = {"Mostrar Visitantes","Registrar Visitante","Buscar Visitante",
+        "Asignar juego a visitante","Eliminar y liberar","Historial de juegos","Archivos e indice","Volver al menu anterior"};
+    for (int i = 0; i < 8; i++){
+        imprimirConNumero(i+1,listaMenu[i]);
+    }
     return;
+}
+
+void asignarJuegoVisitante (){
+    Juego juegosParaSeleccion[MAX_JUEGOS];
+    int cantJuegos = leerArchivoJuegos(juegosParaSeleccion, MAX_JUEGOS);
+    if (cantJuegos > 0) {
+        seleccionarJuego(juegosParaSeleccion, cantJuegos);
+    } else {
+        cout << "No hay juegos disponibles en el sistema.\n\n";
+    }
 }
 
 void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
@@ -61,17 +70,11 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
             buscarVisitanteActivoPorPulsera(listaVisitantes, numeroIngresado);
             break;
         case 4: {
-            Juego juegosParaSeleccion[50];
-            int cantJuegos = leerArchivoJuegos(juegosParaSeleccion, 50);
-            if (cantJuegos > 0) {
-                seleccionarJuego(juegosParaSeleccion, cantJuegos);
-            } else {
-                cout << "No hay juegos disponibles en el sistema.\n\n";
-            }
+            asignarJuegoVisitante();
             break;
         }
         case 5:
-            mostrarMenuEliminarLiberar(listaVisitantes);
+            mostrarMenuEliminarV(listaVisitantes);
             break;
         case 6:
             mostrarMenuHistorial(listaVisitantes);

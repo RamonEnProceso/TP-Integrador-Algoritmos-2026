@@ -1,5 +1,5 @@
 #include "menu/mostrarMenuRecursividad.h"
-#include "menu/seleccionarJuego.h"
+#include "menu/menuJuegos/seleccionarJuego.h"
 #include "logica/recursividad/recursionActivosYFila.h"
 #include "logica/recursividad/mostrarVisitantesActivosRec.h"
 #include "logica/archivo/leerArchivoJuegos.h"

@@ -213,6 +213,18 @@
         - imprimirConNumero(i+1, listaMenu[i])
 
 
+- ordenarPorCodigo(juegos ^, n v)
+    - huboCambios <- verdadero
+    - Para i <- 0 mientras i < n - 1 y huboCambios
+        - huboCambios <- falso
+        - Para j -> 0 mientras j < n - 1 - i
+            - Si juegos[j].codigo > juegos[j + 1].codigo
+                - aux <- juegos[j]
+                - juegos[j] <- juegos[j + 1]
+                - juegos[j + 1] <- aux
+                - huboCambios <- verdadero
+
+
 - sumaTotalV(vec v, n v, total ^)
     - total <- 0
     - Para i <- 0 mientras i < n
@@ -494,17 +506,6 @@
                 - swapString(nombres[j], nombres[j + 1])
                 - huboCambios <- verdadero
 
-
-- ordenarPorCodigo(juegos ^, n v)
-    - huboCambios <- verdadero
-    - Para i <- 0 mientras i < n - 1 y huboCambios
-        - huboCambios <- falso
-        - Para j -> 0 mientras j < n - 1 - i
-            - Si juegos[j].codigo > juegos[j + 1].codigo
-                - aux <- juegos[j]
-                - juegos[j] <- juegos[j + 1]
-                - juegos[j + 1] <- aux
-                - huboCambios <- verdadero
 
 
 - compararTextos(a v, b v, resultado ^)

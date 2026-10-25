@@ -1,4 +1,4 @@
-#include "menu/menuVisitantes/mostrarMenuEliminarLiberar.h"
+#include "menu/menuVisitantes/mostrarMenuEliminarV.h"
 #include "logica/nodo/eliminarVisitanteListaPorPulsera.h"
 #include "logica/nodo/liberarVisitanteLista.h"
 #include "utiles/outputs/imprimirTitulo.h"
@@ -15,7 +15,7 @@ static void imprimirMenu(){
     imprimirConNumero(3, "Volver al menu anterior");
 }
 
-void mostrarMenuEliminarLiberar(NodoVisitante *&listaVisitantes){
+void mostrarMenuEliminarV(NodoVisitante *&listaVisitantes){
     int opcionElegida = 0, numeroIngresado = 0;
 
     imprimirMenu();

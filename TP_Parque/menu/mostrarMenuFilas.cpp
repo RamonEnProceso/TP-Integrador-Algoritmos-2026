@@ -1,5 +1,5 @@
 #include "menu/mostrarMenuFilas.h"
-#include "menu/seleccionarJuego.h"
+#include "menu/menuJuegos/seleccionarJuego.h"
 #include "logica/cola/encolarVisitante.h"
 #include "logica/cola/mostrarFilaJuego.h"
 #include "logica/cola/atenderSiguienteVisitante.h"

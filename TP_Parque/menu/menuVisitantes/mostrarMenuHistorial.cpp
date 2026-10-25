@@ -1,5 +1,5 @@
 #include "menu/menuVisitantes/mostrarMenuHistorial.h"
-#include "menu/seleccionarJuego.h"
+#include "menu/menuJuegos/seleccionarJuego.h"
 #include "logica/nodo/obtenerNodoVisitantePorPulsera.h"
 #include "logica/pila/apilarJuego.h"
 #include "logica/pila/desapilarJuego.h"
