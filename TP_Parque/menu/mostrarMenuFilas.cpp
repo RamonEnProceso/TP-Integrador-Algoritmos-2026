@@ -12,6 +12,8 @@
 #include "utiles/outputs/imprimirVisitante.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
+#include "utiles/inputs/leerInputMenu.h"
+#include "utiles/inputs/leerInputMenu.h"
 #include <iostream>
 
 using namespace std;
@@ -42,13 +44,7 @@ void mostrarMenuFilas(DatosParque &datos) {
     while (opcionElegida != -1) {
         opcionElegida = -2;;
 
-        while (opcionElegida < 0 || opcionElegida > 5) {
-            cout << "Ingresa un numero (0 para imprimir menu): ";
-            cin >> opcionElegida; cout << endl;
-            if (opcionElegida < 0 || opcionElegida > 5) {
-                cout << "Numero incorrecto. Ingrese uno correcto.\n";
-            }
-        }
+        leerInputMenu(0, 8, opcionElegida);
 
         switch (opcionElegida) {
             case 0: {

@@ -1,13 +1,13 @@
 #include "menu/mostrarMenuJuegos.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
-#include "utiles/outputs/imprimirJuego.h"
 #include "logica/archivo/leerArchivoJuegos.h"
 #include "menu/menuJuegos/mostrarMenuListaJuegos.h"
 #include "menu/menuJuegos/mostrarMenuOrdenarJuegos.h"
 #include "menu/menuJuegos/mostrarMenuBuscarJuegos.h"
 #include "menu/menuJuegos/mostrarMenuArchivosJuegos.h"
 #include "constantes/matrizConstantes.h"
+#include "utiles/inputs/leerInputMenu.h"
 #include "structs/juego.h"
 #include <iostream>
 
@@ -38,13 +38,7 @@ void mostrarMenuJuegos(Juego *listaJuegos) {
     while (opcionElegida != -1) {
         opcionElegida = -2;;
 
-        while (opcionElegida < 0 || opcionElegida > 5) {
-            cout << "Ingresa un numero (0 para imprimir menu): ";
-            cin >> opcionElegida; cout << endl;
-            if (opcionElegida < 0 || opcionElegida > 5) {
-                cout << "Numero incorrecto. Ingrese uno correcto.\n";
-            }
-        }
+        leerInputMenu(0, 5, opcionElegida);
 
         switch (opcionElegida) {
 

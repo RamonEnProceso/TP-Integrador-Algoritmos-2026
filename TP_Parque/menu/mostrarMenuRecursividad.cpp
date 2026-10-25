@@ -5,6 +5,7 @@
 #include "logica/archivo/leerArchivoJuegos.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
+#include "utiles/inputs/leerInputMenu.h"
 #include <iostream>
 
 using namespace std;
@@ -24,13 +25,7 @@ void mostrarMenuRecursividad(DatosParque &datos){
     while (opcionElegida != -1) {
         opcionElegida = -2;
 
-        while (opcionElegida < 0 || opcionElegida > 3) {
-            cout << "Ingresa un numero (0 para imprimir menu): ";
-            cin >> opcionElegida; cout << endl;
-            if (opcionElegida < 0 || opcionElegida > 3) {
-                cout << "Numero incorrecto. Ingrese uno correcto.\n";
-            }
-        }
+        leerInputMenu(0, 3, opcionElegida);
 
         switch (opcionElegida) {
             case 0:

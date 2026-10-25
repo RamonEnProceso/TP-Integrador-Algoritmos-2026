@@ -8,6 +8,7 @@
 #include "structs/juego.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
+#include "utiles/inputs/leerInputMenu.h"
 #include <iostream>
 
 using namespace std;
@@ -28,13 +29,7 @@ void mostrarMenuHistorial(NodoVisitante *&listaVisitantes){
     while (opcionElegida != -1) {
         opcionElegida = -2; pulsera = 0;
 
-        while (opcionElegida < 0 || opcionElegida > 4) {
-            cout << "Ingresa un numero (0 para imprimir menu): ";
-            cin >> opcionElegida; cout << endl;
-            if (opcionElegida < 0 || opcionElegida > 4) {
-                cout << "Numero incorrecto. Ingrese uno correcto.\n";
-            }
-        }
+        leerInputMenu(0, 4, opcionElegida);
 
         switch (opcionElegida) {
             case 0:

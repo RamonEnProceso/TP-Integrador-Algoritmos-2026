@@ -11,6 +11,7 @@
 #include "utiles/matematica/sumaTotal.h"
 #include "constantes/matrizConstantes.h"
 #include "structs/mayorOcupacion.h"
+#include "utiles/inputs/leerInputMenu.h"
 #include <iostream>
 
 using namespace std;
@@ -35,13 +36,7 @@ void mostrarMenuOcupacion(DatosParque &datos){
     while (opcionElegida != -1) {
         opcionElegida  = -2;;
 
-        while (opcionElegida < 0 || opcionElegida > 6) {
-            cout << "Ingresa un numero (0 para imprimir menu): ";
-            cin >> opcionElegida; cout << endl;
-            if (opcionElegida < 0 || opcionElegida > 6) {
-                cout << "Numero incorrecto. Ingrese uno correcto.\n";
-            }
-        }
+        leerInputMenu(0, 6, opcionElegida);
 
         switch (opcionElegida) {
 

@@ -5,6 +5,7 @@
 #include "logica/vector/ordenarPorCodigo.h"
 #include "utiles/outputs/imprimirJuego.h"
 #include "utiles/outputs/imprimirTitulo.h"
+#include "utiles/inputs/leerInputMenu.h"
 
 using namespace std;
 
@@ -16,8 +17,7 @@ int seleccionarJuego(Juego juegos[], int n) {
     cout << "Opcion: ";
     
     int opcion;
-    cin >> opcion;
-
+    leerInputMenu(1, 3, opcion);
     int indiceEncontrado = -1;
 
     if (opcion == 1) {

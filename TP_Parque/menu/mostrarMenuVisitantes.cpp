@@ -12,6 +12,7 @@
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "utiles/inputs/leerInputVisitante.h"
+#include "utiles/inputs/leerInputMenu.h"
 #include <iostream>
 
 using namespace std;
@@ -39,13 +40,7 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
     {
         opcionElegida = -2; numeroIngresado = 0;
 
-
-        while (opcionElegida < 0 || opcionElegida > 8){
-            cout << "Ingresa un numero (0 para imprimir menu): "; cin >> opcionElegida; cout<<endl;
-            if (opcionElegida < 0 || opcionElegida > 8){
-                cout << "Numero incorrecto.\n";
-            }
-        };
+        leerInputMenu(0, 8, opcionElegida);
 
         switch (opcionElegida)
         {
