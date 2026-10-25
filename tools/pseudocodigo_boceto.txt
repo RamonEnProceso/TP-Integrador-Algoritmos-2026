@@ -10,28 +10,121 @@
     - datos.listaVisitantes <- liberarVisitanteLista(datos.listaVisitantes)
 
 
+- mostrarMenuPrincipal(datos ^)
+    - opcionElegida <- 0
+    - imprimirMenuPrincipal()
+    - Mientras opcionElegida != -1
+        - opcionElegida <- -2
+        - leerInputMenu(0 v, 6 v, &opcionElegida v^)
+        - Cuando opcionElegida sea
+            - 0
+                - imprimirMenuPrincipal()
+            - 1
+                - mostrarMenuVisitantes(datos.listaVisitantes)
+            - 2
+                - mostrarMenuJuegos(datos.juegos)
+            - 3
+                - mostrarMenuOcupacion(datos)
+            - 4
+                - mostrarMenuFilas(datos)
+            - 5
+                - mostrarMenuHerramientas(datos)
+            - 6
+                - Imprimir "Hasta luego"
+                - opcionElegida <- -1
+
+
+- imprimirMenuPrincipal()
+    - imprimirTitulo("Menu Principal")
+    - imprimirConNumero(1, "Visitantes")
+    - imprimirConNumero(2, "Juegos")
+    - imprimirConNumero(3, "Ocupacion")
+    - imprimirConNumero(4, "Filas de espera")
+    - imprimirConNumero(5, "Herramientas")
+    - imprimirConNumero(6, "Salir")
+
+
+
+- imprimirTitulo(texto v)
+    - Imprimir "----------" + texto + "----------"
+
+
+- imprimirConNumero(n v, texto v)
+    - Imprimir n + ". " + texto
+
+
+- leerInputMenu(min v, max v, &opcionElegida v^)
+    - Mientras opcionElegida < min o opcionElegida > max
+        - Leer opcionElegida
+        - Si opcionElegida < min o opcionElegida > max
+            - Imprimir "Numero incorrecto."
+        - Sino
+
+
+- mostrarMenuVisitantes(listaVisitantes ^)
+    - opcionElegida <- 0
+    - numeroIngresado <- 0
+    - imprimirMenuVisitantes()
+    - Mientras opcionElegida != -1
+        - opcionElegida <- -2
+        - numeroIngresado <- 0
+        - leerInputMenu(0 v, 8 v, &opcionElegida v^)
+        - Cuando opcionElegida sea
+            - 0
+                - imprimirMenuVisitantes()
+            - 1
+                - mostrarVisitantesActivos(listaVisitantes)
+            - 2
+                - leerInputVisitante(nuevoVisitante)
+                - listaVisitantes <- agregarVisitanteLista(nuevoVisitante, listaVisitantes)
+                - Imprimir "Visitante registrado correctamente."
+            - 3
+                - Imprimir "Ingrese el numero de pulsera del visitante que desea buscar: "
+                - Leer numeroIngresado
+                - buscarVisitanteActivoPorPulsera(listaVisitantes, numeroIngresado)
+            - 4
+                - cantJuegos <- leerArchivoJuegos(juegosParaSeleccion, 50)
+                - Si cantJuegos > 0
+                    - seleccionarJuego(juegosParaSeleccion, cantJuegos)
+                - Sino
+                    - Imprimir "No hay juegos disponibles en el sistema."
+            - 5
+                - mostrarMenuEliminarLiberar(listaVisitantes)
+            - 6
+                - mostrarMenuHistorial(listaVisitantes)
+            - 7
+                - mostrarMenuArchivosVisitantes(listaVisitantes)
+            - 8
+                - Imprimir "Regresando..."
+                - opcionElegida <- -1
+
+
+- imprimirMenuVisitantes()
+    - imprimirTitulo("Menu Principal > Visitantes")
+    - imprimirConNumero(1, "Mostrar Visitantes")
+    - imprimirConNumero(2, "Registrar Visitante")
+    - imprimirConNumero(3, "Buscar Visitante (Pulsera / Nombre)")
+    - imprimirConNumero(4, "Asignar juego a visitante")
+    - imprimirConNumero(5, "Eliminar y liberar")
+    - imprimirConNumero(6, "Historial de juegos")
+    - imprimirConNumero(7, "Archivos e indice")
+    - imprimirConNumero(8, "Volver al menu anterior")
+
+
 - leerInputVisitante(nuevo ^)
-    - imprimirTitulo("Ingrese los datos del visitante")
-    - Imprimir "Nombre: "
     - Leer nuevo.nombre
-    - Imprimir "Numero de pulsera: "
     - Leer nuevo.pulsera
-    - Imprimir "Edad: "
     - Leer nuevo.edad
-    - Imprimir "Altura: "
     - Leer nuevo.altura
-    - Imprimir "Leyendo datos..."
+    - Devolver nuevo
 
 
-- sumaTotalV(vec v, n v, resultado ^)
+- sumaTotalV(vec v, n v, total ^)
     - total <- 0
     - Para i -> 0 mientras i < n
         - total <- total + vec[i]
     - Devolver total
 
-
-- imprimirConNumero(n v, texto v)
-    - Imprimir n + ". " + texto
 
 
 - imprimirDatos(texto v, datos v, total v)
@@ -39,7 +132,7 @@
         - Imprimir texto[i] + ": " + datos[i]
 
 
-- devolverOperativo(estado v, resultado ^)
+- devolverOperativo(estado v, texto ^)
     - Si estado
         - Devolver "Funcionando"
     - Sino
@@ -118,9 +211,6 @@
             - Imprimir " | "
             - imprimirDerechaInt(datos.contenido[i][j], anchoCelda)
 
-
-- imprimirTitulo(texto v)
-    - Imprimir "----------" + texto + "----------"
 
 
 - imprimirVisitante(datos v)
@@ -1486,94 +1576,6 @@
                 - opcionElegida <- -1
 
 
-- imprimirMenuVisitantes()
-    - imprimirTitulo("Menu Principal > Visitantes")
-    - imprimirConNumero(1, "Mostrar Visitantes")
-    - imprimirConNumero(2, "Registrar Visitante")
-    - imprimirConNumero(3, "Buscar Visitante (Pulsera / Nombre)")
-    - imprimirConNumero(4, "Asignar juego a visitante")
-    - imprimirConNumero(5, "Eliminar y liberar")
-    - imprimirConNumero(6, "Historial de juegos")
-    - imprimirConNumero(7, "Archivos e indice")
-    - imprimirConNumero(8, "Volver al menu anterior")
 
 
-- mostrarMenuVisitantes(listaVisitantes ^)
-    - opcionElegida <- 0
-    - numeroIngresado <- 0
-    - imprimirMenuVisitantes()
-    - Mientras opcionElegida != -1
-        - opcionElegida <- -2
-        - numeroIngresado <- 0
-        - Mientras opcionElegida < 0 o opcionElegida > 8
-            - Imprimir "Ingresa un numero (0 para imprimir menu): "
-            - Leer opcionElegida
-            - Si opcionElegida < 0 o opcionElegida > 8
-                - Imprimir "Numero incorrecto."
-        - Cuando opcionElegida sea
-            - 0
-                - imprimirMenuVisitantes()
-            - 1
-                - mostrarVisitantesActivos(listaVisitantes)
-            - 2
-                - leerInputVisitante(nuevoVisitante)
-                - listaVisitantes <- agregarVisitanteLista(nuevoVisitante, listaVisitantes)
-                - Imprimir "Visitante registrado correctamente."
-            - 3
-                - Imprimir "Ingrese el numero de pulsera del visitante que desea buscar: "
-                - Leer numeroIngresado
-                - buscarVisitanteActivoPorPulsera(listaVisitantes, numeroIngresado)
-            - 4
-                - cantJuegos <- leerArchivoJuegos(juegosParaSeleccion, 50)
-                - Si cantJuegos > 0
-                    - seleccionarJuego(juegosParaSeleccion, cantJuegos)
-                - Sino
-                    - Imprimir "No hay juegos disponibles en el sistema."
-            - 5
-                - mostrarMenuEliminarLiberar(listaVisitantes)
-            - 6
-                - mostrarMenuHistorial(listaVisitantes)
-            - 7
-                - mostrarMenuArchivosVisitantes(listaVisitantes)
-            - 8
-                - Imprimir "Regresando..."
-                - opcionElegida <- -1
-
-
-- imprimirMenuPrincipal()
-    - imprimirTitulo("Menu Principal")
-    - imprimirConNumero(1, "Visitantes")
-    - imprimirConNumero(2, "Juegos")
-    - imprimirConNumero(3, "Ocupacion")
-    - imprimirConNumero(4, "Filas de espera")
-    - imprimirConNumero(5, "Herramientas")
-    - imprimirConNumero(6, "Salir")
-
-
-- mostrarMenuPrincipal(datos ^)
-    - opcionElegida <- 0
-    - imprimirMenuPrincipal()
-    - Mientras opcionElegida != -1
-        - opcionElegida <- -2
-        - Mientras opcionElegida < 0 o opcionElegida > 6
-            - Imprimir "Ingresa un numero (0 para imprimir menu): "
-            - Leer opcionElegida
-            - Si opcionElegida < 0 o opcionElegida > 6
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
-        - Cuando opcionElegida sea
-            - 0
-                - imprimirMenuPrincipal()
-            - 1
-                - mostrarMenuVisitantes(datos.listaVisitantes)
-            - 2
-                - mostrarMenuJuegos(datos.juegos)
-            - 3
-                - mostrarMenuOcupacion(datos)
-            - 4
-                - mostrarMenuFilas(datos)
-            - 5
-                - mostrarMenuHerramientas(datos)
-            - 6
-                - Imprimir "Hasta luego"
-                - opcionElegida <- -1
 
