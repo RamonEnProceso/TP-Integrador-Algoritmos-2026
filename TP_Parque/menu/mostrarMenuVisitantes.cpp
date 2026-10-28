@@ -9,6 +9,8 @@
 #include "logica/nodo/buscarVisitanteActivoPorPulsera.h"
 #include "structs/juego.h"
 #include "structs/visitante.h"
+#include "structs/nodoVisitante.h"
+#include "structs/datosParque.h"
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "utiles/inputs/leerInputVisitante.h"
@@ -29,19 +31,21 @@ static void imprimirMenu(){
     return;
 }
 
-void asignarJuegoVisitante (){
-    Juego juegosParaSeleccion[MAX_JUEGOS];
-    int cantJuegos = leerArchivoJuegos(juegosParaSeleccion, MAX_JUEGOS);
-    if (cantJuegos > 0) {
-        seleccionarJuego(juegosParaSeleccion, cantJuegos);
+void asignarJuegoVisitante (DatosParque &datos){
+    if (datos.cantJuegos == 0) {
+        datos.cantJuegos = leerArchivoJuegos(datos.juegos, MAX_JUEGOS);
+    }
+    if (datos.cantJuegos > 0) {
+        seleccionarJuego(datos.juegos, datos.cantJuegos);
     } else {
         cout << "No hay juegos disponibles en el sistema.\n\n";
     }
 }
 
-void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
+void mostrarMenuVisitantes(DatosParque &datos){
     int opcionElegida = 0, numeroIngresado = 0;
     Visitante nuevoVisitante;
+    NodoVisitante *&listaVisitantes = datos.listaVisitantes;
 
     imprimirMenu();
 
@@ -70,14 +74,14 @@ void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes){
             buscarVisitanteActivoPorPulsera(listaVisitantes, numeroIngresado);
             break;
         case 4: {
-            asignarJuegoVisitante();
+            asignarJuegoVisitante(datos);
             break;
         }
         case 5:
             mostrarMenuEliminarV(listaVisitantes);
             break;
         case 6:
-            mostrarMenuHistorial(listaVisitantes);
+            mostrarMenuHistorial(datos);
             break;
         case 7:
             mostrarMenuArchivosVisitantes(listaVisitantes);

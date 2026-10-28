@@ -1,7 +1,7 @@
 #ifndef MOSTRAR_MENU_VISITANTES_H
 #define MOSTRAR_MENU_VISITANTES_H
-#include "structs/nodoVisitante.h"
+#include "structs/datosParque.h"
 
-void mostrarMenuVisitantes(NodoVisitante *&listaVisitantes);
+void mostrarMenuVisitantes(DatosParque &datos);
 
 #endif

@@ -82,12 +82,13 @@
             - Imprimir "Numero incorrecto."
 
 
-- mostrarMenuVisitantes(listaVisitantes ^)
+- mostrarMenuVisitantes(datos v^)
     - opcionElegida <- -2
     - imprimirMenuVisitantes()
     - Mientras opcionElegida != -1
         - numeroIngresado <- 0
         - leerInputMenu(0 v, 8 v, &opcionElegida v^)
+        - *listaVisitantes <- datos.listaVisitantes
         - Cuando opcionElegida sea
             - 0
                 - imprimirMenuVisitantes()
@@ -102,13 +103,13 @@
                 - Leer numeroIngresado
                 - buscarVisitanteActivoPorPulsera(listaVisitantes, numeroIngresado)
             - 4
-                - asignarJuegoVisitante()
+                - asignarJuegoVisitante(datos v^)
             - 5
-                - mostrarMenuEliminarLiberar(listaVisitantes)
+                - mostrarMenuEliminarV(listaVisitantes v^)
             - 6
-                - mostrarMenuHistorial(listaVisitantes)
+                - mostrarMenuHistorial(datos v^)
             - 7
-                - mostrarMenuArchivosVisitantes(listaVisitantes)
+                - mostrarMenuArchivosVisitantes(listaVisitantes v^)
             - 8
                 - Imprimir "Regresando..."
                 - opcionElegida <- -1
@@ -206,6 +207,7 @@
             - Imprimir "Juego no encontrado"
             - Devolver -1
 
+
 - imprimirMenuSeleccionarJuego()
     - imprimirTitulo("Seleccionar Juego")
     - listaMenu <-{"Buscar por Codigo","Buscar por Nombre", "Cancelar"}
@@ -213,36 +215,64 @@
         - imprimirConNumero(i+1, listaMenu[i])
 
 
-- ordenarPorCodigo(juegos ^, n v)
+- ordenarPorCodigo(juegos v^, n v)
     - huboCambios <- verdadero
-    - Para i <- 0 mientras i < n - 1 y huboCambios
+    - Para i <- 0 hasta n - 1 y huboCambios
         - huboCambios <- falso
-        - Para j -> 0 mientras j < n - 1 - i
+        - Para j -> 0 hasta n - 1 - i
             - Si juegos[j].codigo > juegos[j + 1].codigo
-                - aux <- juegos[j]
-                - juegos[j] <- juegos[j + 1]
-                - juegos[j + 1] <- aux
+                - Swap juegos[j] y juegos[j+1]
                 - huboCambios <- verdadero
 
 
-- sumaTotalV(vec v, n v, total ^)
-    - total <- 0
+- buscarJuegoPorNombre(juegos v, n v, nombreBuscado v, indice ^)
+    - convertirAMinuscula(buscadoMin v^, nombreBuscado v)
     - Para i <- 0 mientras i < n
-        - total <- total + vec[i]
-    - Devolver total
+        - convertirAMinuscula(nombreMin v^, juegos[i].nombre v)
+        - Si contieneSubtexto(nombreMin v, buscadoMin v)
+            - Devolver i
+        - Sino
+            - Devolver -1
 
 
+- convertirAMinuscula(destino v^, origen v)
+    - i <- 0
+    - Mientras i < LARGO_NOMBRE - 1 y origen[i] != nulo
+        - destino[i] <- aMinuscula(origen[i] v)
+        - i <- i + 1
+    - destino[i] <- nulo
 
-- imprimirDatos(texto v, datos v, total v)
-    - Para i <- 0 mientras i < total
-        - Imprimir texto[i] + ": " + datos[i]
+
+- aMinuscula(letra)
+    - Si letra >= 'A' y letra <= 'Z'
+        - Devolver letra + ('a' - 'A')
+    -Sino
+        - Devolver letra
 
 
-- devolverOperativo(estado v, texto ^)
-    - Si estado
-        - Devolver "Funcionando"
-    - Sino
-        - Devolver "No disponible"
+- contieneSubtexto(texto v, subtexto v)
+    - Para i <- 0 mientras texto[i] != nulo
+        - j <- 0
+        - Mientras subtexto[j] != nulo y texto[i + j] = subtexto[j]
+            - j <- j + 1
+            - Si subtexto[j] = nulo
+                - Devolver verdadero
+    - Devolver falso
+
+
+- buscarJuegoPorCodigoBinaria(juegos v, n v, codigoBuscado v, medio ^)
+    - inicio <- 0
+    - fin <- n - 1
+    - Mientras inicio <= fin
+        - medio <- inicio + (fin - inicio) / 2
+        - Si juegos[medio].codigo = codigoBuscado
+            - Devolver medio
+        - Sino
+            - Si juegos[medio].codigo < codigoBuscado
+                - inicio <- medio + 1
+            - Sino
+                - fin <- medio - 1
+    - Devolver -1
 
 
 - imprimirJuego(juego v)
@@ -252,6 +282,190 @@
     - Imprimir "Capacidad: " + juego.capacidad
     - Imprimir "Altura Minima: " + juego.alturaMinima
     - Imprimir "Estado: " + devolverOperativo(juego.operativo)
+
+
+- devolverOperativo(estado v, texto ^)
+    - Si estado
+        - Devolver "Funcionando"
+    - Sino
+        - Devolver "No disponible"
+
+
+- mostrarMenuEliminarV(listaVisitantes ^)
+    - opcionElegida <- 0
+    - numeroIngresado <- 0
+    - imprimirMenuEliminarV()
+
+    - Mientras opcionElegida != -1
+        - opcionElegida <- -2
+        - numeroIngresado <- 0
+
+        -leerInputMenu(0 v, 3 v, opcionElegida)
+
+        - Cuando opcionElegida sea
+            - 0
+                - imprimirMenuEliminarV()
+            - 1
+                - Leer numeroIngresado
+                - eliminarVisitanteListaPorPulsera(listaVisitantes v^, numeroIngresado v)
+            - 2
+                - liberarVisitanteLista(listaVisitantes v^)
+                - opcionElegida <- -1
+            - 3
+                - opcionElegida <- -1
+
+
+- imprimirMenuEliminarV()
+    - imprimirTitulo("Menu Principal > Visitantes > Eliminar y liberar")
+    - listaMenu <- {"Eliminar un visitante", "Liberar todos los visitantes", "Volver al menu anterior"}
+    - Para i <- 0 hasta 3
+        - imprimirConNumero(i+1, listaMenu[i])
+
+
+- eliminarVisitanteListaPorPulsera(lista v^, numPulsera v)
+    - anterior <- nulo
+    - actual <- lista
+    - Mientras actual != nulo y actual.visitante.pulsera != numPulsera
+        - anterior <- actual
+        - actual <- actual.siguiente
+    - Si actual = nulo
+        - Imprimir "No se encontro un visitante con esa pulsera."
+        - Devolver lista
+    - Si anterior = nulo
+        - lista <- actual.siguiente
+    - Sino
+        - anterior.siguiente <- actual.siguiente
+    - Imprimir "Se procedera a eliminar al visitante " + actual.visitante.nombre
+    - liberarHistorial(actual.visitante)
+    - liberar actual
+    - Devolver lista
+
+
+- mostrarMenuHistorial(datos v^)
+    - opcionElegida <- 0
+    - pulsera <- 0
+    - imprimirMenuHistorial()
+    - *listaVisitantes <- datos -> listaVisitantes
+    - Mientras opcionElegida != -1
+        - opcionElegida <- -2
+        - pulsera <- 0
+        - leerInputMenu(0 v, 4 v, opcionElegida v^)
+        - Cuando opcionElegida sea
+            - 0
+                - imprimirMenuHistorial()
+            - 1
+                - apilarVisitanteJuego(listaVisitantes)
+            - 2
+                - desapilarVisitanteJuego(listaVisitantes)
+            - 3
+                - obtenerHistorialVisitante(datos)
+            - 4
+                - opcionElegida <- -1
+
+
+- imprimirMenuHistorial()
+    - imprimirTitulo("Menu Principal > Visitantes > Historial de juegos")
+    - listaMenu <- {"Apilar juego visitado", "Deshacer ultimo juego (desapilar)","Ver historial", "Volver al menu anterior"}
+    - Para i <- 0 hasta 3
+        - imprimirConNumero(i+1,listaMenu[i])
+
+
+- apilarVisitanteJuego(listaVisitantes v^)
+    - Leer pulsera
+    - nodo <- obtenerNodoVisitantePorPulsera(listaVisitantes, pulsera)
+    - Si nodo = nulo
+        - Imprimir "No se encontro un visitante activo con esa pulsera"
+    - Sino
+        - cantJuegos <- leerArchivoJuegos(juegos, 50)
+        - Si cantJuegos = 0
+            - Imprimir "No hay juegos cargados en el sistema."
+        - Sino
+            - idx <- seleccionarJuego(juegos, cantJuegos)
+            - Si idxJuego >= 0 y idx < cantJuegos
+                - apilarJuego(nodo.visitante v^, juegos[idx] v)
+
+
+- desapilarVisitanteJuego(listaVisitantes v^)
+    - Imprimir "Ingrese el numero de pulsera del visitante: "
+    - Leer pulsera
+    - nodo <- obtenerNodoVisitantePorPulsera(listaVisitantes, pulsera)
+    - Si nodo = nulo
+        - Imprimir "No se encontro un visitante activo con la pulsera " << pulsera
+    - Sino
+        - desapilarJuego(nodo.visitante)
+        - Imprimir "Se deshizo el ultimo juego del historial."
+
+
+- obtenerHistorialVisitante(datos v)
+    - Imprimir "Ingrese el numero de pulsera del visitante: "
+    - Leer pulsera
+    - nodo <- obtenerNodoVisitantePorPulsera(datos->listaVisitantes, pulsera)
+    - Si nodo = nulo
+        - Imprimir "No se encontro un visitante activo con la pulsera " + pulsera
+    - Sino
+        - mostrarHistorialVisitante(nodo->visitante.historial v, datos.juegos v, datos.cantJuegos v)
+
+
+- obtenerNodoVisitantePorPulsera(lista v, pulsera v, actual ^)
+    - actual <- lista
+    - Mientras actual != nulo y actual.visitante.pulsera != pulsera
+        - actual <- actual.siguiente
+    - Devolver actual
+
+
+- apilarJuego(visitante v^, juego v)
+    - apilarJuegoVisitado(visitante.historial v^, juego.codigo v)
+
+
+- apilarJuegoVisitado(pila v^, codigoJuego v)
+    - nuevo <- nuevo nodo
+    - nuevo -> codigoJuego <- codigoJuego
+    - nuevo -> siguiente <- pila
+    - Devolver nuevo
+
+
+- desapilarJuego(visitante v^)
+    - ultimo <- topeHistorial(visitante.historial v)
+    - Si  ultimo = -1
+        - Imprimir "No hay juego en el historial"
+    - Sino
+        - visitante.historial <- desapilarJuegoVisitado(visitante.historial)
+        - Imprimir "Se deshizo el ultimo juego del historial"
+
+
+- topeHistorial(pila v, resultado ^)
+    - Si pila = nulo
+        - Devolver -1
+    - Devolver pila.codigoJuego
+    
+
+- mostrarHistorialVisitante(pila v, juegos v, cant v)
+    - ultimo <- topeHistorial(pila v)
+    - Si ultimo = -1
+        - Imprimir "El visitante todavia no uso ningun juego."
+        - Devolver
+    - Sino
+        - Imprimir "Historial (del mas reciente al mas viejo):"
+        - actual <- pila
+        - Mientras actual != nulo
+            - idx <- buscarJuegoPorCodigoBinaria(juegos v, cant v, actual.codigoJuego v)
+            - Imprimir "- " << juegos[idx].nombre
+            - actual <- actual.siguiente
+
+
+
+
+
+- sumaTotalV(vec v, n v, total ^)
+    - total <- 0
+    - Para i <- 0 mientras i < n
+        - total <- total + vec[i]
+    - Devolver total
+
+
+- imprimirDatos(texto v, datos v, total v)
+    - Para i <- 0 mientras i < total
+        - Imprimir texto[i] + ": " + datos[i]
 
 
 - largoEntero(n v, resultado ^)
@@ -449,21 +663,6 @@
         - vectorSumaJuego[i] <- total
 
 
-- buscarJuegoPorCodigoBinaria(juegos v, n v, codigoBuscado v, resultado ^)
-    - inicio <- 0
-    - fin <- n - 1
-    - Mientras inicio <= fin
-        - medio <- inicio + (fin - inicio) / 2
-        - Si juegos[medio].codigo = codigoBuscado
-            - Devolver medio
-        - Sino
-            - Si juegos[medio].codigo < codigoBuscado
-                - inicio <- medio + 1
-            - Sino
-                - fin <- medio - 1
-    - Devolver -1
-
-
 - devolverMayorPosV(v v, n v, resultado ^)
     - pos <- 0
     - Para i <- 1 mientras i < n
@@ -525,41 +724,6 @@
                 - juegos[j] <- juegos[j + 1]
                 - juegos[j + 1] <- aux
                 - huboCambios <- verdadero
-
-
-- aMinuscula(c v, resultado ^)
-    - Si c >= 'A' y c <= 'Z'
-        - Devolver c + ('a' - 'A')
-    - Devolver c
-
-
-- contieneSubtexto(texto v, subtexto v, resultado ^)
-    - i <- 0
-    - Mientras texto[i] != nulo
-        - j <- 0
-        - Mientras subtexto[j] != nulo y texto[i + j] != nulo y texto[i + j] == subtexto[j]
-            - j <- j + 1
-        - Si subtexto[j] = nulo
-            - Devolver verdadero
-        - i <- i + 1
-    - Devolver falso
-
-
-- buscarJuegoPorNombre(juegos v, n v, nombreBuscado v, resultado ^)
-    - i <- 0
-    - Mientras nombreBuscado[i] != nulo y i < LARGO_NOMBRE - 1
-        - buscadoMin[i] <- aMinuscula(nombreBuscado[i])
-        - i <- i + 1
-    - buscadoMin[i] <- nulo
-    - Para j -> 0 mientras j < n
-        - k <- 0
-        - Mientras juegos[j].nombre[k] != nulo y k < LARGO_NOMBRE - 1
-            - nombreJuegoMin[k] <- aMinuscula(juegos[j].nombre[k])
-            - k <- k + 1
-        - nombreJuegoMin[k] <- nulo
-        - Si contieneSubtexto(nombreJuegoMin, buscadoMin)
-            - Devolver j
-    - Devolver -1
 
 
 - verificarAcceso(juego v, visitante v, resultado ^)
@@ -635,42 +799,6 @@
         - posicion <- posicion + 1
 
 
-- apilarJuego(visitante ^, juego v)
-    - visitante.historial <- apilarJuegoVisitado(visitante.historial, juego.codigo)
-
-
-- apilarJuegoVisitado(pila v, codigoJuego v, resultado ^)
-    - nuevo <- nuevo nodo juego visitado
-    - nuevo.codigoJuego <- codigoJuego
-    - nuevo.siguiente <- pila
-    - Devolver nuevo
-
-
-- desapilarJuego(visitante ^)
-    - visitante.historial <- desapilarJuegoVisitado(visitante.historial)
-
-
-- mostrarHistorial(visitante v)
-    - mostrarHistorialVisitante(visitante.historial)
-
-
-- mostrarHistorialVisitante(pila v)
-    - Si pila = nulo
-        - Imprimir "El visitante todavia no uso ningun juego."
-        - Devolver
-    - Imprimir "Historial (del mas reciente al mas viejo):"
-    - actual <- pila
-    - Mientras actual != nulo
-        - Imprimir " - Juego codigo " + actual.codigoJuego
-        - actual <- actual.siguiente
-
-
-- topeHistorial(pila v, resultado ^)
-    - Si pila = nulo
-        - Devolver -1
-    - Devolver pila.codigoJuego
-
-
 - buscarVisitanteActivoPorPulsera(lista v, pulseraNum v)
     - actual <- lista
     - Mientras actual != nulo y actual.visitante.pulsera != pulseraNum
@@ -679,37 +807,6 @@
         - imprimirVisitante(actual.visitante)
         - Devolver
     - Imprimir "No se encontro a un Visitante con esa pulsera."
-
-
-
-- eliminarVisitanteListaPorPulsera(lista v, numPulsera v, resultado ^)
-    - anterior <- nulo
-    - actual <- lista
-    - Imprimir "Buscando Visitante..."
-    - Mientras actual != nulo y actual.visitante.pulsera != numPulsera
-        - anterior <- actual
-        - actual <- actual.siguiente
-    - Si actual = nulo
-        - Imprimir "No se encontro un visitante con esa numero de pulsera."
-        - Devolver lista
-    - Si anterior = nulo
-        - lista <- actual.siguiente
-    - Sino
-        - anterior.siguiente <- actual.siguiente
-    - Imprimir "Se procedera a eliminar al visitante " + actual.visitante.nombre
-    - liberarHistorial(actual.visitante)
-    - liberar actual
-    - Imprimir "Visitante eliminado correctamente."
-    - Devolver lista
-
-
-
-
-- obtenerNodoVisitantePorPulsera(lista v, pulseraNum v, resultado ^)
-    - actual <- lista
-    - Mientras actual != nulo y actual.visitante.pulsera != pulseraNum
-        - actual <- actual.siguiente
-    - Devolver actual
 
 
 - obtenerVisitantePorPulsera(lista v, pulseraNum v, v ^, resultado ^)
@@ -1203,146 +1300,6 @@
     - imprimirConNumero(2, "Construir y mostrar indice")
     - imprimirConNumero(3, "Buscar visitante por indice")
     - imprimirConNumero(4, "Volver al menu anterior")
-
-
-- mostrarMenuArchivosVisitantes(listaVisitantes ^)
-    - opcionElegida <- 0
-    - imprimirMenuArchivosVisitantes()
-    - Mientras opcionElegida != -1
-        - opcionElegida <- -2
-        - Mientras opcionElegida < 0 o opcionElegida > 4
-            - Imprimir "Ingresa un numero (0 para imprimir menu): "
-            - Leer opcionElegida
-            - Si opcionElegida < 0 o opcionElegida > 4
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
-        - Cuando opcionElegida sea
-            - 0
-                - imprimirMenuArchivosVisitantes()
-            - 1
-                - guardarVisitantes(listaVisitantes)
-            - 2
-                - indice <- nulo
-                - cant <- 0
-                - construirIndice(indice, cant)
-                - Si indice != nulo y cant > 0
-                    - imprimirTitulo("Indice de visitantes (ordenado por pulsera)")
-                    - Para i <- 0 mientras i < cant
-                        - Imprimir "Pulsera: " + indice[i].pulsera + " -> Posicion en archivo: " + indice[i].posicion
-                - Sino
-                    - Imprimir "No hay datos en el archivo para indexar."
-            - 3
-                - indice <- nulo
-                - cant <- 0
-                - construirIndice(indice, cant)
-                - Si indice = nulo o cant = 0
-                    - Imprimir "No se pudo construir el indice."
-                - Sino
-                    - Imprimir "Ingrese el numero de pulsera a buscar: "
-                    - Leer pulseraBuscada
-                    - Si buscarPorIndice(indice, cant, pulseraBuscada, v)
-                        - Imprimir "Visitante encontrado en visitantes.dat mediante el indice:"
-                        - imprimirVisitante(v)
-                    - Sino
-                        - Imprimir "No se encontro ningun visitante con la pulsera " + pulseraBuscada
-            - 4
-                - Imprimir "Regresando..."
-                - opcionElegida <- -1
-
-
-- imprimirMenuEliminarLiberar()
-    - imprimirTitulo("Menu Principal > Visitantes > Eliminar y liberar")
-    - imprimirConNumero(1, "Eliminar un visitante")
-    - imprimirConNumero(2, "Liberar todos los visitantes")
-    - imprimirConNumero(3, "Volver al menu anterior")
-
-
-- mostrarMenuEliminarLiberar(listaVisitantes ^)
-    - opcionElegida <- 0
-    - numeroIngresado <- 0
-    - imprimirMenuEliminarLiberar()
-    - Mientras opcionElegida != -1
-        - opcionElegida <- -2
-        - numeroIngresado <- 0
-        - Mientras opcionElegida < 0 o opcionElegida > 3
-            - Imprimir "Ingresa un numero (0 para imprimir menu): "
-            - Leer opcionElegida
-            - Si opcionElegida < 0 o opcionElegida > 3
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
-        - Cuando opcionElegida sea
-            - 0
-                - imprimirMenuEliminarLiberar()
-            - 1
-                - Imprimir "Ingrese el numero de pulsera del visitante que desea eliminar: "
-                - Leer numeroIngresado
-                - listaVisitantes <- eliminarVisitanteListaPorPulsera(listaVisitantes, numeroIngresado)
-            - 2
-                - listaVisitantes <- liberarVisitanteLista(listaVisitantes)
-                - Imprimir "Liberando lista de visitantes..."
-                - opcionElegida <- -1
-            - 3
-                - Imprimir "Regresando..."
-                - opcionElegida <- -1
-
-
-- imprimirMenuHistorial()
-    - imprimirTitulo("Menu Principal > Visitantes > Historial de juegos")
-    - imprimirConNumero(1, "Apilar juego visitado")
-    - imprimirConNumero(2, "Deshacer ultimo juego (desapilar)")
-    - imprimirConNumero(3, "Ver historial")
-    - imprimirConNumero(4, "Volver al menu anterior")
-
-
-- mostrarMenuHistorial(listaVisitantes ^)
-    - opcionElegida <- 0
-    - pulsera <- 0
-    - imprimirMenuHistorial()
-    - Mientras opcionElegida != -1
-        - opcionElegida <- -2
-        - pulsera <- 0
-        - Mientras opcionElegida < 0 o opcionElegida > 4
-            - Imprimir "Ingresa un numero (0 para imprimir menu): "
-            - Leer opcionElegida
-            - Si opcionElegida < 0 o opcionElegida > 4
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
-        - Cuando opcionElegida sea
-            - 0
-                - imprimirMenuHistorial()
-            - 1
-                - Imprimir "Ingrese el numero de pulsera del visitante: "
-                - Leer pulsera
-                - nodo <- obtenerNodoVisitantePorPulsera(listaVisitantes, pulsera)
-                - Si nodo = nulo
-                    - Imprimir "No se encontro un visitante activo con la pulsera " + pulsera
-                - Sino
-                    - cantJuegos <- leerArchivoJuegos(juegos, 50)
-                    - Si cantJuegos = 0
-                        - Imprimir "No hay juegos cargados en el sistema."
-                    - Sino
-                        - Imprimir "Seleccione el juego que el visitante visito:"
-                        - idxJuego <- seleccionarJuego(juegos, cantJuegos)
-                        - Si idxJuego >= 0 y idxJuego < cantJuegos
-                            - apilarJuego(nodo.visitante, juegos[idxJuego])
-                            - Imprimir "Se apilo en su historial el juego " + juegos[idxJuego].nombre
-            - 2
-                - Imprimir "Ingrese el numero de pulsera del visitante: "
-                - Leer pulsera
-                - nodo <- obtenerNodoVisitantePorPulsera(listaVisitantes, pulsera)
-                - Si nodo = nulo
-                    - Imprimir "No se encontro un visitante activo con la pulsera " + pulsera
-                - Sino
-                    - desapilarJuego(nodo.visitante)
-                    - Imprimir "Se deshizo el ultimo juego del historial."
-            - 3
-                - Imprimir "Ingrese el numero de pulsera del visitante: "
-                - Leer pulsera
-                - nodo <- obtenerNodoVisitantePorPulsera(listaVisitantes, pulsera)
-                - Si nodo = nulo
-                    - Imprimir "No se encontro un visitante activo con la pulsera " + pulsera
-                - Sino
-                    - mostrarHistorial(nodo.visitante)
-            - 4
-                - Imprimir "Regresando..."
-                - opcionElegida <- -1
 
 
 - imprimirMenuFilas()

@@ -5,6 +5,7 @@
 #include "logica/pila/apilarVisitanteJuego.h"
 #include "logica/pila/desapilarVisitanteJuego.h"
 #include "logica/pila/obtenerHistorialVisitante.h"
+#include "structs/datosParque.h"
 #include "structs/nodoVisitante.h"
 #include "constantes/generales.h"
 #include <iostream>
@@ -19,9 +20,9 @@ static void imprimirMenu(){
     }
 }
 
-void mostrarMenuHistorial(NodoVisitante *&listaVisitantes){
+void mostrarMenuHistorial(DatosParque &datos){
     int opcionElegida = 0, pulsera = 0;
-
+    NodoVisitante *&listaVisitantes = datos.listaVisitantes;
     imprimirMenu();
 
     while (opcionElegida != -1) {
@@ -42,7 +43,7 @@ void mostrarMenuHistorial(NodoVisitante *&listaVisitantes){
                 break;
             }
             case 3: {
-                obtenerHistorialVisitante(listaVisitantes, pulsera);
+                obtenerHistorialVisitante(datos, pulsera);
                 break;
             }
             case 4:

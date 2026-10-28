@@ -15,6 +15,5 @@ void desapilarVisitanteJuego(NodoVisitante *&listaVisitantes,int &pulsera){
         return;
     }
     desapilarJuego(nodo->visitante);
-    cout << "Se deshizo el ultimo juego del historial.\n\n";
    return;
 }

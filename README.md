@@ -99,6 +99,12 @@ Facilita la legibilidad para el usuario, separando tareas por su funcionalidad. 
 
 Nuevamente, por un tema de experiencia de usuario. Estar reimprimiendo el menu al terminar cada función, no permite al usuario leer correctamente lo que pidio. Para ello, se decidió que el mismo usuario pueda reimprimir el menu ingresando `0` a la consola.
 
+### ¿Por qué hay constantes con vectores de nombres?
+> TIPOS_JUEGOS y FRANJAS_TEXTO
+
+Para agilizar la lectura variables y categorización de registros. A la hora de escribir el tipo de juego, solo se coloca un número en lugar de escribir el texto. Esto facilita su comparación para poder filtrarlo fácilmente y luego para leer el tipo, solo se usa ese numero como indice en su vector nombre.
+Por ejemplo: juego.tipo = 1, entonces para imprimir se usa TIPOS_JUEGOS[juego.tipo].
+
 ## Tabla de complejidad
 
 ### 1. Constantes

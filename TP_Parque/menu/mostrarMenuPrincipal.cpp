@@ -39,7 +39,7 @@ void mostrarMenuPrincipal(DatosParque &datos){
             imprimirMenu();
             break;
         case 1:
-            mostrarMenuVisitantes(datos.listaVisitantes);
+            mostrarMenuVisitantes(datos);
             break;
         case 2:
             mostrarMenuJuegos(datos.juegos);
