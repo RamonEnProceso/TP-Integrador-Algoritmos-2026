@@ -4,15 +4,17 @@
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "utiles/inputs/leerInputMenu.h"
+#include "constantes/generales.h"
 #include <iostream>
 
 using namespace std;
 
 static void imprimirMenu(){
     imprimirTitulo("Menu Principal > Visitantes > Eliminar y liberar");
-    imprimirConNumero(1, "Eliminar visitante");
-    imprimirConNumero(2, "Liberar visitantes");
-    imprimirConNumero(3, "Volver al menu anterior");
+    const char listaMenu[3][LARGO_NOMBRE] = {"Eliminar un visitante", "Liberar todos los visitantes", "Volver al menu anterior"};
+    for (size_t i = 0; i < 3; i++){
+        imprimirConNumero(i+1, listaMenu[i]);
+    }
 }
 
 void mostrarMenuEliminarV(NodoVisitante *&listaVisitantes){
