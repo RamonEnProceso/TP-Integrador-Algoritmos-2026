@@ -1,5 +1,21 @@
 # Historial de Cambios
 
+## v1.1 - (26/10/2026)
+- Ramón | *Refactorizar menus*
+    - Modificar el menú de Juegos
+    - Modificar la forma en la que se imprimen los menus
+    - Agregar función para leer inputs para los distintos menus
+- Ramón | *Refactorizar función para JuegoPorNombre*
+    - Eliminar librería no permitida
+    - Separar obligaciones de funcion original en `convertirAMinuscula()`
+- Ramón | *Refactorizar menu: Historial de Visitante*
+    - Separar obligaciones de menu en `apilarVisitanteJuego()`, `desapilarVisitanteJuego()`, `obtenerHistorialVisitante()`
+    - Eliminar función redundante: `mostrarHistorial()`
+    - Corregir `desapilarJuego()` para utilizar `topeHistorial()` como verificador
+- Ramón | *Refactorizar menu visitante*
+    - Pasar datos de juegos para poder leerse en las funciones necesarias
+    - Agregar punteros para facilitar lectura de variables
+
 ## v0.0.6 - (18/09/2026)
 - Ramón | *Refactorizar matriz y vector de Juegos*
     - Incluir vector de ocupaciones de juegos dentro de esta
