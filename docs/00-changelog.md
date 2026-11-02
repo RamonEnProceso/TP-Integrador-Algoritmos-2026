@@ -15,6 +15,8 @@
 - Ramón | *Refactorizar menu visitante*
     - Pasar datos de juegos para poder leerse en las funciones necesarias
     - Agregar punteros para facilitar lectura de variables
+- Ramón | *Refactorizar menu archivos visitante*
+    - Modificar funciones de índice
 
 ## v0.0.6 - (18/09/2026)
 - Ramón | *Refactorizar matriz y vector de Juegos*

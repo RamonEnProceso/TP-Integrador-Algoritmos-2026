@@ -6,5 +6,7 @@ const char rutaArchivoVisitantes[] = "datos/visitantes.dat";
 const char rutaArchivoReporteDia[] = "datos/reporte_dia.txt";
 const char rutaArchivoNovedades[] = "datos/novedades.dat";
 const char rutaArchivoJuegosActualizados[] = "datos/juegos_act.dat";
+const char rutaArchivoVisitantes[] = "visitantes.dat";
+const char rutaArchivoIndice[] = "pulseras.idx";
 
 #endif
