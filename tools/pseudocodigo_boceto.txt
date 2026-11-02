@@ -454,6 +454,114 @@
 
 
 
+- mostrarMenuArchivosVisitantes(listaVisitantes ^)
+    - opcionElegida <- 0
+    - imprimirMenuArchivosVisitantes()
+    - Mientras opcionElegida != -1
+        - opcionElegida <- -2
+        - Mientras leerInputMenu(0 v, 4 v, opcionElegida v^)
+        - Cuando opcionElegida sea
+            - 0
+                - imprimirMenuArchivosVisitantes()
+            - 1
+                - guardarVisitantes(listaVisitantes)
+            - 2
+                - construirArchivoIndice()
+            - 3
+                - buscarVisitantePorIndice()
+            - 4
+                - Imprimir "Regresando..."
+                - opcionElegida <- -1
+
+
+- imprimirMenuArchivosVisitantes()
+    - imprimirTitulo("Menu Principal > Visitantes > Archivos e indice")
+    - listaMenu <- {"Guardar visitantes a archivo", "Construir visitantes a archivo", "Buscar visitante por indice", "Volver al menu anterior"}
+    - Para i <- 0 hasta 4
+        - imprimirConNumero(i+1,listaMenu[i])
+
+- buscarVisitantePorIndice
+    - indice <- nulo
+    - cant <- 0
+    - construirIndice(indice, cant)
+    - Si indice = nulo o cant = 0
+        - Imprimir "No se pudo construir el indice."
+    - Sino
+        - Imprimir "Ingrese el numero de pulsera a buscar: "
+        - Leer pulseraBuscada
+        - Si buscarPorIndice(indice, cant, pulseraBuscada, v)
+            - Imprimir "Visitante encontrado en visitantes.dat mediante el indice:"
+            - imprimirVisitante(v)
+        - Sino
+            - Imprimir "No se encontro ningun visitante con la pulsera " + pulseraBuscada
+
+- guardarVisitantes(lista v)
+    - Crear archivo rutaArchivoVisitantes
+    - Si no archivo abierto
+        - Imprimir "No se pudo crear visitantes.dat."
+        - Devolver
+    - actual <- lista
+    - cantidad <- 0
+    - Mientras actual != nulo
+        - reg.pulsera <- actual.visitante.pulsera
+        - Para k -> 0 mientras k < LARGO_NOMBRE
+            - reg.nombre[k] <- actual.visitante.nombre[k]
+        - reg.edad <- actual.visitante.edad
+        - reg.altura <- actual.visitante.altura
+        - Escribir en archivo registro reg
+        - cantidad <- cantidad + 1
+        - actual <- actual.siguiente
+    - Cerrar archivo
+    - Imprimir "Se guardaron " + cantidad + " visitantes en visitantes.dat."
+
+- construirArchivoIndice()
+    - indice <- nulo
+    - cant <- 0
+    - construirIndice(indice, cant)
+    - Si indice != nulo y cant > 0
+        - imprimirTitulo("Indice de visitantes (ordenado por pulsera)")
+        - Para i <- 0 mientras i < cant
+            - Imprimir "Pulsera: " + indice[i].pulsera + " -> Posicion en archivo: " + indice[i].posicion
+    - Sino
+        - Imprimir "No hay datos en el archivo para indexar."
+
+
+- construirIndice(indice ^, cantidad ^)
+    - Abrir archivo rutaArchivoVisitantes al final
+    - Si no archivo abierto
+        - indice <- nulo
+        - cantidad <- 0
+        - Imprimir "No se pudo abrir visitantes.dat."
+        - Devolver
+    - cantidad <- tamaño del archivo dividido tamaño de VisitanteArchivo
+    - Posicionar lectura al inicio del archivo
+    - indice <- arreglo de IndiceVisitante de tamaño cantidad
+    - Para i <- 0 mientras i < cantidad
+        - Leer de archivo registro reg
+        - indice[i].pulsera <- reg.pulsera
+        - indice[i].posicion <- i
+    - Cerrar archivo
+    - ordenarIndicePorPulsera(indice, cantidad)
+
+
+- buscarPorIndice(indice v, cantidad v, pulsera v, visitante ^, resultado ^)
+    - posIndice <- buscarBinariaIndice(indice, cantidad, pulsera)
+    - Si posIndice = -1
+        - Devolver falso
+    - Abrir archivo rutaArchivoVisitantes
+    - Si no archivo abierto
+        - Devolver falso
+    - Posicionar lectura en registro indice[posIndice].posicion
+    - Leer de archivo registro reg
+    - Cerrar archivo
+    - visitante.pulsera <- reg.pulsera
+    - Para k -> 0 mientras k < LARGO_NOMBRE
+        - visitante.nombre[k] <- reg.nombre[k]
+    - visitante.edad <- reg.edad
+    - visitante.altura <- reg.altura
+    - visitante.historial <- nulo
+    - Devolver verdadero
+
 
 
 - sumaTotalV(vec v, n v, total ^)
@@ -936,25 +1044,6 @@
     - Devolver -1
 
 
-- buscarPorIndice(indice v, cantidad v, pulsera v, visitante ^, resultado ^)
-    - posIndice <- buscarBinariaIndice(indice, cantidad, pulsera)
-    - Si posIndice = -1
-        - Devolver falso
-    - Abrir archivo rutaArchivoVisitantes
-    - Si no archivo abierto
-        - Devolver falso
-    - Posicionar lectura en registro indice[posIndice].posicion
-    - Leer de archivo registro reg
-    - Cerrar archivo
-    - visitante.pulsera <- reg.pulsera
-    - Para k -> 0 mientras k < LARGO_NOMBRE
-        - visitante.nombre[k] <- reg.nombre[k]
-    - visitante.edad <- reg.edad
-    - visitante.altura <- reg.altura
-    - visitante.historial <- nulo
-    - Devolver verdadero
-
-
 - cambiarEstadoJuegoN(n v, nuevoEstado v, resultado ^)
     - Si n <= 0
         - Devolver falso
@@ -983,23 +1072,6 @@
                 - indice[j + 1] <- aux
                 - huboCambios <- verdadero
 
-
-- construirIndice(indice ^, cantidad ^)
-    - Abrir archivo rutaArchivoVisitantes al final
-    - Si no archivo abierto
-        - indice <- nulo
-        - cantidad <- 0
-        - Imprimir "No se pudo abrir visitantes.dat."
-        - Devolver
-    - cantidad <- tamaño del archivo dividido tamaño de VisitanteArchivo
-    - Posicionar lectura al inicio del archivo
-    - indice <- arreglo de IndiceVisitante de tamaño cantidad
-    - Para i <- 0 mientras i < cantidad
-        - Leer de archivo registro reg
-        - indice[i].pulsera <- reg.pulsera
-        - indice[i].posicion <- i
-    - Cerrar archivo
-    - ordenarIndicePorPulsera(indice, cantidad)
 
 
 - consultarJuegoN(n v, juego ^, resultado ^)
@@ -1057,27 +1129,6 @@
     - Para i <- 0 mientras i < 4
         - Escribir en archivo registro novedades[i]
     - Cerrar archivo
-
-
-- guardarVisitantes(lista v)
-    - Crear archivo rutaArchivoVisitantes
-    - Si no archivo abierto
-        - Imprimir "No se pudo crear visitantes.dat."
-        - Devolver
-    - actual <- lista
-    - cantidad <- 0
-    - Mientras actual != nulo
-        - reg.pulsera <- actual.visitante.pulsera
-        - Para k -> 0 mientras k < LARGO_NOMBRE
-            - reg.nombre[k] <- actual.visitante.nombre[k]
-        - reg.edad <- actual.visitante.edad
-        - reg.altura <- actual.visitante.altura
-        - Escribir en archivo registro reg
-        - cantidad <- cantidad + 1
-        - actual <- actual.siguiente
-    - Cerrar archivo
-    - Imprimir "Se guardaron " + cantidad + " visitantes en visitantes.dat."
-
 
 
 - listadoPorTipoConCorte()
@@ -1292,14 +1343,6 @@
             - 3
                 - Imprimir "Regresando..."
                 - opcionElegida <- -1
-
-
-- imprimirMenuArchivosVisitantes()
-    - imprimirTitulo("Menu Principal > Visitantes > Archivos e indice")
-    - imprimirConNumero(1, "Guardar visitantes a archivo")
-    - imprimirConNumero(2, "Construir y mostrar indice")
-    - imprimirConNumero(3, "Buscar visitante por indice")
-    - imprimirConNumero(4, "Volver al menu anterior")
 
 
 - imprimirMenuFilas()
