@@ -1,88 +1,37 @@
-
 #include "logica/indice/buscarPorIndice.h"
 #include "constantes/rutasArchivos.h"
 #include "constantes/generales.h"
+#include "constantes/visitantes.h"
+#include "utiles/copiarTexto.h"
 #include "structs/visitante.h"
 #include <fstream>
 
 using namespace std;
 
-bool buscarPorIndice(int pulsera, Visitante& visitante) {
-
-    // Verificar que la pulsera este dentro del rango.
-    if (pulsera < 1 || pulsera > MAXP) {
-        return false;
-    }
-
-    // 1. Abrir los archivos.
+bool buscarPorIndice(int indice, Visitante& visitante) {
+    if (indice < 1 || indice > MAX_PULSERAS) {
+        return false;}
     ifstream archivoIndice(rutaArchivoIndice, ios::binary);
-
-    if (!archivoIndice) {
-        return false;
-    }
-
+    if (!archivoIndice) return false;
     ifstream archivoVisitantes(rutaArchivoVisitantes, ios::binary);
+    if (!archivoVisitantes) return false;
 
-    if (!archivoVisitantes) {
-        archivoIndice.close();
-        return false;
-    }
+    int posicion = -1;
 
-    int posicion;
+    archivoIndice.seekg((indice - 1) * sizeof(int), ios::beg);
+    archivoIndice.read(reinterpret_cast<char*>(&posicion), sizeof(int));
 
-    // 2. Saltar directamente al casillero de la pulsera.
-    archivoIndice.seekg(
-        (pulsera - 1) * sizeof(int),
-        ios::beg
-    );
+    if (!archivoIndice || posicion < 0) {
+        return false;}
 
-    archivoIndice.read(
-        (char*)&posicion,
-        sizeof(int)
-    );
-
-    if (!archivoIndice) {
-        archivoIndice.close();
-        archivoVisitantes.close();
-        return false;
-    }
-
-    // 3. Comprobar si la pulsera fue utilizada.
-    if (posicion == -1) {
-        archivoIndice.close();
-        archivoVisitantes.close();
-        return false;
-    }
-
-    // 4. Saltar directamente al registro del visitante.
-    archivoVisitantes.seekg(
-        posicion * sizeof(VisitanteArchivo),
-        ios::beg
-    );
-
+    archivoVisitantes.seekg(posicion * sizeof(VisitanteArchivo), ios::beg);
     VisitanteArchivo reg;
-
-    archivoVisitantes.read(
-        (char*)&reg,
-        sizeof(VisitanteArchivo)
-    );
-
+    archivoVisitantes.read(reinterpret_cast<char*>(&reg), sizeof(VisitanteArchivo));
     if (!archivoVisitantes) {
-        archivoIndice.close();
-        archivoVisitantes.close();
-        return false;
-    }
+        return false;}
 
-    archivoIndice.close();
-    archivoVisitantes.close();
-
-    // 5. Recuperar los datos del visitante.
     visitante.pulsera = reg.pulsera;
-
-    for (int k = 0; k < LARGO_NOMBRE; k++) {
-        visitante.nombre[k] = reg.nombre[k];
-    }
-
+    copiarTexto(reg.nombre, visitante.nombre);
     visitante.edad = reg.edad;
     visitante.altura = reg.altura;
     visitante.historial = nullptr;

@@ -1,6 +1,7 @@
 
 #include "logica/archivo/guardarVisitantes.h"
 #include "constantes/rutasArchivos.h"
+#include "utiles/copiarTexto.h"
 #include <fstream>
 #include <iostream>
 
@@ -17,9 +18,7 @@ void guardarVisitantes(NodoVisitante* lista) {
     while (actual != nullptr) {
         VisitanteArchivo reg{};
         reg.pulsera = actual->visitante.pulsera;
-        for (int k = 0; k < LARGO_NOMBRE; k++) {
-            reg.nombre[k] = actual->visitante.nombre[k];
-        }
+        copiarTexto(reg.nombre, actual -> visitante.nombre);
         reg.edad = actual->visitante.edad;
         reg.altura = actual->visitante.altura;
 

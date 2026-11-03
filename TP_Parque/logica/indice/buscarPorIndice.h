@@ -3,6 +3,6 @@
 #include "structs/visitante.h"
 
 
-bool buscarPorIndice(int pulsera, Visitante& visitante);
+bool buscarPorIndice(int indice, Visitante& visitante);
 
 #endif
