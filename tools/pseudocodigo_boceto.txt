@@ -459,7 +459,7 @@
     - imprimirMenuArchivosVisitantes()
     - Mientras opcionElegida != -1
         - opcionElegida <- -2
-        - Mientras leerInputMenu(0 v, 4 v, opcionElegida v^)
+        - leerInputMenu(0 v, 4 v, opcionElegida v^)
         - Cuando opcionElegida sea
             - 0
                 - imprimirMenuArchivosVisitantes()
@@ -476,92 +476,143 @@
 
 - imprimirMenuArchivosVisitantes()
     - imprimirTitulo("Menu Principal > Visitantes > Archivos e indice")
-    - listaMenu <- {"Guardar visitantes a archivo", "Construir visitantes a archivo", "Buscar visitante por indice", "Volver al menu anterior"}
-    - Para i <- 0 hasta 4
-        - imprimirConNumero(i+1,listaMenu[i])
+    - listaMenu <- {"Guardar visitantes a archivo", "Construir y mostrar indice", "Buscar visitante por indice", "Volver al menu anterior"}
+    - Para i <- 0 hasta 3
+        - imprimirConNumero(i + 1 v, listaMenu[i] v)
 
-- buscarVisitantePorIndice
-    - indice <- nulo
-    - cant <- 0
-    - construirIndice(indice, cant)
-    - Si indice = nulo o cant = 0
-        - Imprimir "No se pudo construir el indice."
-    - Sino
-        - Imprimir "Ingrese el numero de pulsera a buscar: "
-        - Leer pulseraBuscada
-        - Si buscarPorIndice(indice, cant, pulseraBuscada, v)
-            - Imprimir "Visitante encontrado en visitantes.dat mediante el indice:"
-            - imprimirVisitante(v)
-        - Sino
-            - Imprimir "No se encontro ningun visitante con la pulsera " + pulseraBuscada
 
 - guardarVisitantes(lista v)
-    - Crear archivo rutaArchivoVisitantes
-    - Si no archivo abierto
+    - Crear archivo rutaArchivoVisitantes en binario y truncar
+    - Si no arch abierto
         - Imprimir "No se pudo crear visitantes.dat."
         - Devolver
     - actual <- lista
     - cantidad <- 0
     - Mientras actual != nulo
-        - reg.pulsera <- actual.visitante.pulsera
-        - Para k -> 0 mientras k < LARGO_NOMBRE
-            - reg.nombre[k] <- actual.visitante.nombre[k]
-        - reg.edad <- actual.visitante.edad
-        - reg.altura <- actual.visitante.altura
-        - Escribir en archivo registro reg
+        - reg.pulsera <- actual->visitante.pulsera
+        - reg.edad <- actual->visitante.edad
+        - reg.altura <- actual->visitante.altura
+        - copiarTexto(reg.nombre v^, actual.visitante.nombre v)
+        - Escribir reg en arch
         - cantidad <- cantidad + 1
-        - actual <- actual.siguiente
+        - actual <- actual->siguiente
     - Cerrar archivo
-    - Imprimir "Se guardaron " + cantidad + " visitantes en visitantes.dat."
+    - Crear archivo rutaArchivoIndice en modo binario y truncar
+    - Si no se pudo abrir el archivo índice
+        - Imprimir "No se pudo invalidar pulseras.idx."
+        - Devolver
+    - Cerrar archivo índice
+
+- copiarTexto(destino v^, origen v)
+    - Para i <-0 hasta LARGO_NOMBRE -1
+        - destino[i] <- origen[i]
 
 - construirArchivoIndice()
-    - indice <- nulo
-    - cant <- 0
-    - construirIndice(indice, cant)
-    - Si indice != nulo y cant > 0
-        - imprimirTitulo("Indice de visitantes (ordenado por pulsera)")
-        - Para i <- 0 mientras i < cant
-            - Imprimir "Pulsera: " + indice[i].pulsera + " -> Posicion en archivo: " + indice[i].posicion
+    - estado <- construirIndice()
+    - Si estado
+        - mostrarIndice()
     - Sino
-        - Imprimir "No hay datos en el archivo para indexar."
+        - Imprimir "No se pudo construir el indice."
 
 
-- construirIndice(indice ^, cantidad ^)
-    - Abrir archivo rutaArchivoVisitantes al final
-    - Si no archivo abierto
-        - indice <- nulo
-        - cantidad <- 0
+- construirIndice()
+    - Abrir archivo rutaArchivoVisitantes en binario
+    - Si no se pudo abrir el archivo
         - Imprimir "No se pudo abrir visitantes.dat."
-        - Devolver
-    - cantidad <- tamaño del archivo dividido tamaño de VisitanteArchivo
-    - Posicionar lectura al inicio del archivo
-    - indice <- arreglo de IndiceVisitante de tamaño cantidad
-    - Para i <- 0 mientras i < cantidad
-        - Leer de archivo registro reg
-        - indice[i].pulsera <- reg.pulsera
-        - indice[i].posicion <- i
-    - Cerrar archivo
-    - ordenarIndicePorPulsera(indice, cantidad)
+        - Devolver falso
+    - Crear archivo rutaArchivoIndice en modo binario y truncar
+    - Si no se pudo crear el archivo índice
+        - Imprimir "No se pudo crear pulseras.idx."
+        - Cerrar archivo de visitantes
+        - Devolver falso
+    - vacio <- -1
+    - posicion <- 0
+    
+    - Para k <- 0 hasta MAX_PULSERAS-1
+        - Escribir vacio en indx
+    - Mientras se pueda leer un registro reg de arch
+        - Si reg.pulsera < 1 o reg.pulsera > MAX_PULSERAS
+            - Imprimir "Numero de pulsera fuera de rango."
+            - Cerrar ambos archivos
+            - Devolver falso
+        - Sino
+            - fila <- reg.pulsera - 1
+            - Posicionar escritura en fila * tamaño de entero del archivo índice
+            - Escribir posicion en el archivo índice
+            - Si ocurrió un error al escribir
+                - Imprimir "Error al escribir en pulseras.idx."
+                - Cerrar ambos archivos
+                - Devolver falso
+            - posicion <- posicion + 1
+
+    - Cerrar ambos archivos
+    - Imprimir "Indice construido correctamente."
+    - Imprimir "Visitantes indexados: " + posicion
+    - Devolver verdadero
 
 
-- buscarPorIndice(indice v, cantidad v, pulsera v, visitante ^, resultado ^)
-    - posIndice <- buscarBinariaIndice(indice, cantidad, pulsera)
-    - Si posIndice = -1
-        - Devolver falso
-    - Abrir archivo rutaArchivoVisitantes
-    - Si no archivo abierto
-        - Devolver falso
-    - Posicionar lectura en registro indice[posIndice].posicion
-    - Leer de archivo registro reg
+- mostrarIndice()
+    - arch <- Abrir rutaArchivoIndice en modo binario
+    - Si no se pudo abrir el archivo
+        - Imprimir "No se pudo abrir pulseras.idx."
+        - Terminar funcion
+    - imprimirTitulo("Indice de visitantes")
+    - Para i <- 0 hasta MAX_PULSERAS-1
+        - Leer del archivo índice un entero posicion
+        - Si ocurrió un error al leer
+            - Imprimir "Error al leer el indice."
+        - Sino
+            - Si posicion != -1
+                - Imprimir "Pulsera " + (i + 1) + " -> posicion " + posicion
     - Cerrar archivo
+
+
+- buscarVisitantePorIndice()
+    - Imprimir "Ingrese el numero de pulsera a buscar (0 para terminar): "
+    - Leer pulsera
+    - Mientras pulsera != 0
+        - Crear visitante
+        - Si buscarPorIndice(pulsera, visitante)
+            - imprimirVisitante(visitante)
+        - Sino
+            - Imprimir "No se encontro un visitante con la pulsera " + pulsera
+        - Imprimir "Ingrese el numero de pulsera a buscar (0 para terminar): "
+        - Leer pulsera
+
+
+- buscarPorIndice(indice,v visitante ^)
+    - Si indice < 1 o indice > MAX_PULSERAS
+        - Devolver falso
+    - Abrir archivo rutaArchivoIndice en modo binario como idx
+    - Si no se pudo abrir idx
+        - Devolver falso
+    - Abrir archivo rutaArchivoVisitantes en modo binario como arch
+    - Si no se pudo abrir arch
+        - Cerrar idx
+        - Devolver falso
+
+    - posicion <- -1
+    - Posicionar lectura en (indice - 1) * tamaño de entero del idx
+    - Leer entero posicion del idx
+    - Si ocurrió un error al leer o posicion < 0
+        - Cerrar idx y arch
+        - Devolver falso
+
+    - Posicionar lectura en posicion * tamaño de VisitanteArchivo del arch
+    - Leer registro reg del arch
+    - Si ocurrió un error al leer
+        - Cerrar idx y arch
+        - Devolver falso
+
+    - Cerrar idx y arch
+
     - visitante.pulsera <- reg.pulsera
-    - Para k -> 0 mientras k < LARGO_NOMBRE
-        - visitante.nombre[k] <- reg.nombre[k]
+    - copiarTexto(reg.nombre, visitante.nombre)
     - visitante.edad <- reg.edad
     - visitante.altura <- reg.altura
     - visitante.historial <- nulo
-    - Devolver verdadero
 
+    - Devolver verdadero
 
 
 - sumaTotalV(vec v, n v, total ^)
@@ -1029,21 +1080,6 @@
     - Imprimir "Maestro de juegos actualizado correctamente."
 
 
-- buscarBinariaIndice(indice v, cantidad v, pulsera v, resultado ^)
-    - inicio <- 0
-    - fin <- cantidad - 1
-    - Mientras inicio <= fin
-        - medio <- inicio + (fin - inicio) / 2
-        - Si indice[medio].pulsera = pulsera
-            - Devolver medio
-        - Sino
-            - Si indice[medio].pulsera < pulsera
-                - inicio <- medio + 1
-            - Sino
-                - fin <- medio - 1
-    - Devolver -1
-
-
 - cambiarEstadoJuegoN(n v, nuevoEstado v, resultado ^)
     - Si n <= 0
         - Devolver falso
@@ -1059,19 +1095,6 @@
     - Escribir en archivo registro juego
     - Cerrar archivo
     - Devolver verdadero
-
-
-- ordenarIndicePorPulsera(indice ^, cantidad v)
-    - huboCambios <- verdadero
-    - Para i <- 0 mientras i < cantidad - 1 y huboCambios
-        - huboCambios <- falso
-        - Para j -> 0 mientras j < cantidad - 1 - i
-            - Si indice[j].pulsera > indice[j + 1].pulsera
-                - aux <- indice[j]
-                - indice[j] <- indice[j + 1]
-                - indice[j + 1] <- aux
-                - huboCambios <- verdadero
-
 
 
 - consultarJuegoN(n v, juego ^, resultado ^)
