@@ -2,6 +2,6 @@
 #define LEER_ARCHIVO_JUEGOS_H
 #include "structs/juego.h"
 
-int leerArchivoJuegos(Juego juegos[], int n);
+int leerArchivoJuegos(Juego juegos[]);
 
 #endif

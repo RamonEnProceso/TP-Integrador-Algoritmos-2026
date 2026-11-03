@@ -1,11 +1,12 @@
 #include "logica/archivo/leerArchivoJuegos.h"
 #include "constantes/rutasArchivos.h"
+#include "constantes/matrizConstantes.h"
 #include <fstream>
 #include <iostream>
 
 using namespace std;
 
-int leerArchivoJuegos(Juego juegos[], int n) {
+int leerArchivoJuegos(Juego juegos[]) {
     ifstream arch(rutaArchivoJuegos, ios::binary);
     if (!arch) {
         cerr<<"Error al leer archivo de Juegos.";
@@ -15,7 +16,7 @@ int leerArchivoJuegos(Juego juegos[], int n) {
     Juego juegoLeido;
     int cantidad = 0;
 
-    while (cantidad < n && arch.read((char*)&juegoLeido, sizeof(juegoLeido))) {
+    while (cantidad < MAX_JUEGOS && arch.read((char*)&juegoLeido, sizeof(juegoLeido))) {
         juegos[cantidad] = juegoLeido;
         cantidad++;
     }
