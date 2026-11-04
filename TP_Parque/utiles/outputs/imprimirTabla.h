@@ -1,6 +1,6 @@
 #ifndef IMPRIMIR_TABLA_H
 #define IMPRIMIR_TABLA_H
-#include "./constantes/generales.h"
+#include "constantes/generales.h"
 
 struct Tabla{
     int largoNombre = LARGO_NOMBRE;
