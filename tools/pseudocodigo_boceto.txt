@@ -615,55 +615,89 @@
     - Devolver verdadero
 
 
-- sumaTotalV(vec v, n v, total ^)
-    - total <- 0
-    - Para i <- 0 mientras i < n
-        - total <- total + vec[i]
-    - Devolver total
+- mostrarMenuJuegos(listaJuegos v^)
+    - cantidad <- leerArchivoJuegos(listaJuegos v^)
+    - Si cantidad = 0
+        - Imprimir "No hay juegos cargados. Genera los datos de prueba desde el Menu Principal."
+        - Devolver
+    - opcionElegida <- 0
+    - imprimirMenuJuegos()
+    - Mientras opcionElegida != -1
+        - opcionElegida <- -2
+        - leerInputMenu(0,5,opcionElegida)
+        - Cuando opcionElegida sea
+            - 0
+                - imprimirMenuJuegos()
+            - 1
+                - mostrarMenuListaJuegos(listaJuegos, cantidad)
+            - 2
+                - mostrarMenuOrdenarJuegos(listaJuegos, cantidad)
+            - 3
+                - mostrarMenuBuscarJuegos(listaJuegos, cantidad)
+            - 4
+                - mostrarMenuArchivosJuegos(listaJuegos, cantidad)
+            - 5
+                - Imprimir "Regresando..."
+                - opcionElegida <- -1
 
 
-- imprimirDatos(texto v, datos v, total v)
-    - Para i <- 0 mientras i < total
-        - Imprimir texto[i] + ": " + datos[i]
+- imprimirMenuJuegos()
+    - imprimirTitulo("Menu Juegos")
+    - listaMenu <- {"Mostrar juegos", "Ordenar Juegos", "Buscar juego", "Administrar archivos de juegos", "Volver al Menu Principal"}
+    - Para i <- 0 hasta 5
+        - imprimirConNumero(i + 1 v, listaMenu[i] v)
 
 
-- largoEntero(n v, resultado ^)
-    - Si n = 0
-        - Devolver 1
-    - largo <- 0
-    - valor <- n
-    - Si valor < 0
-        - largo <- 1
-        - valor <- -valor
-    - Mientras valor > 0
-        - largo <- largo + 1
-        - valor <- valor / 10
-    - Devolver largo
+- mostrarMenuListaJuegos(listaJuegos v, cantJuegos v)
+    - opcionElegida <- 0
+    - imprimirMenuListaJuegos()
+    - Mientras opcionElegida != -1
+        - opcionElegida <- -2
+        - leerInputMenu(0, 3, opcionElegida)
+        - Cuando opcionElegida sea
+            - 0
+                - imprimirMenuListaJuegos() 
+            - 1
+                - mostrarListaJuegos(listaJuegos, cantJuegos)
+            - 2
+                - mostrarListaJuegosDisponibles(listaJuegos, cantJuegos)
+            - 3
+                - Imprimir "Regresando..."
+                - opcionElegida <- -1
+                
+- imprimirMenuListaJuegos()
+    - imprimirTitulo("Mostrar lista de Juegos")
+    - listaMenu <- {"Mostrar lista de juegos", "Completa", "Solo disponibles, "Volver al Menu de Juegos"}
+    - Para i <- 0 hasta 5
+        - imprimirConNumero(i + 1 v, listaMenu[i] v)
 
 
-- largoTexto(texto v, resultado ^)
-    - i <- 0
-    - Mientras texto[i] != nulo
-        - i <- i + 1
-    - Devolver i
+- mostrarListaJuegos(listaJuegos v, cantJuegos v)
+    - imprimirTitulo("Lista de Juegos")
+    - Si cantJuegos < 1
+        - Imprimir "No hay juegos en lista."
+    - Sino
+        - Para i <- 0 hasta cantJuegos -1
+            - nombres <- listaJuegos[i].nombre
+            - codigos <- listaJuegos[i].codigos
+        - imprimirTablaMonoColum("Codigo" v, nombres v, codigos v, cantJuegos v)
+    - Imprimir "Fin de lista de Juegos."
 
 
-- imprimirIzquierdaChar(texto v, ancho v)
-    - Imprimir texto
-    - Para i <- largoTexto(texto) mientras i < ancho
-        - Imprimir " "
-
-
-- imprimirDerechaChar(texto v, ancho v)
-    - Para i <- largoTexto(texto) mientras i < ancho
-        - Imprimir " "
-    - Imprimir texto
-
-
-- imprimirDerechaInt(n v, ancho v)
-    - Para i <- largoEntero(n) mientras i < ancho
-        - Imprimir " "
-    - Imprimir n
+-  imprimirTablaMonoColum(encabezado v, nombres v, num v, cant v)
+    - nombresPtr <- nuevo vector punteros a caracter
+    - numPtr <- nuevo vector punteros a entero
+    - encabezadoPtr <- encabezado v
+    - Para i <- 0 hasta cant-1
+        - nombresPtr[i] <- nombres[i]
+        - numPtr[i] <- &num[i]
+    - nueva.columnas <- 1
+    - nueva.filas <- cant
+    - nueva.nombresColumnas <- dirección de encabezadoPtr
+    - nueva.nombresFilas <- nombresPtr
+    - nueva.contenido <- numPtr
+    - imprimirTabla(nueva v)
+    - liberar nombresPtr y numPtr
 
 
 - imprimirTabla(datos v)
@@ -690,6 +724,122 @@
             - Imprimir " | "
             - imprimirDerechaInt(datos.contenido[i][j], anchoCelda)
 
+
+- largoTexto(texto v, resultado ^)
+    - i <- 0
+    - Mientras texto[i] != nulo
+        - i <- i + 1
+    - Devolver i
+
+
+- largoEntero(n v, resultado ^)
+    - Si n = 0
+        - Devolver 1
+    - largo <- 0
+    - valor <- n
+    - Si valor < 0
+        - largo <- 1
+        - valor <- -valor
+    - Mientras valor > 0
+        - largo <- largo + 1
+        - valor <- valor / 10
+    - Devolver largo
+
+
+- imprimirIzquierdaChar(texto v, ancho v)
+    - Imprimir texto
+    - largo <- largoTexto(texto)
+    - Para i <- largo hasta ancho-1
+        - Imprimir " "
+
+
+- imprimirDerechaChar(texto v, ancho v)
+    - largo <- largoTexto(texto)
+    - Para i <- largo hasta ancho-1
+        - Imprimir " "
+    - Imprimir texto
+
+
+- imprimirDerechaInt(n v, ancho v)
+    - largo <- largoEntero(n)
+    - Para i <- largo hasta ancho-1
+        - Imprimir " "
+    - Imprimir n
+
+
+- mostrarListaJuegosDisponibles(listaJuegos v, cantJuegos v)
+    - imprimirTitulo("Lista de Juegos Disponibles")
+    - Si cantJuegos < 1
+        - Imprimir "No hay juegos en lista."
+    - Sino
+        - contador <- 0
+        - Para i <- 0 hasta cantJuegos -1
+            - Si listaJuegos[i].operativo
+                - copiarTexto (listaJuegos[i].nombre, nombres[contador])
+                - codigos[contador] <- listaJuegos[i].codigo
+                - contador <- contador + 1
+        - imprimirTablaMonoColum("Codigo" v, nombres v, codigos v, cantJuegos v)
+    - Imprimir "Fin de lista de Juegos."
+
+
+
+- sumaTotalV(vec v, n v, total ^)
+    - total <- 0
+    - Para i <- 0 mientras i < n
+        - total <- total + vec[i]
+    - Devolver total
+
+
+- imprimirDatos(texto v, datos v, total v)
+    - Para i <- 0 mientras i < total
+        - Imprimir texto[i] + ": " + datos[i]
+
+
+- mostrarMenuOrdenarJuegos(listaJuegos ^, cantJuegos v)
+    - opcionElegida <- 0
+    - imprimirMenuOrdenar()
+    - Mientras opcionElegida != -1
+        - opcionElegida <- -2
+        - leerInputMenu(0,3,opcionElegida)
+        - Cuando opcionElegida sea
+            - 0
+                - imprimirMenuOrdenar()
+            - 1
+                - ordenarPorCodigo(listaJuegos, cantJuegos)
+                - Imprimir "Juegos ordenados por codigo exitosamente."
+            - 2
+                - ordenarPorNombre(listaJuegos, cantJuegos)
+                - Imprimir "Juegos ordenados alfabeticamente exitosamente."
+            - 3
+                - Imprimir "Regresando..."
+                - opcionElegida <- -1
+
+
+- imprimirMenuOrdenar
+    - imprimirTitulo("Ordenar Juegos de Menor a Mayor")
+    - listaMenu <- {"Por Codigo", "Alfabeticamente", "Volver al Menu de Juegos"}
+    - Para i <- 0 hasta 2
+        -  imprimirConNumero(i+1 v, listaMenu v)
+
+
+- ordenarPorNombre(juegos ^, n v)
+    - huboCambios <- verdadero
+    - Para i <- 0 hasta n - 2 y huboCambios
+        - huboCambios <- falso
+        - Para j -> 0 hasta n - 2 - i
+            - comparacion <- compararTextos(juegos[j].nombre, juegos[j + 1].nombre) 
+            - Si comparacion > 0
+                - aux <- juegos[j]
+                - juegos[j] <- juegos[j + 1]
+                - juegos[j + 1] <- aux
+                - huboCambios <- verdadero
+
+
+- compararTextos(a v, b v, resultado ^)
+    - i <- 0
+    - Mientras a[i] != nulo y b[i] != nulo y a[i] == b[i]
+        - i <- i + 1
+    - Devolver a[i] - b[i]
 
 
 - imprimirVisitante(datos v)
@@ -830,30 +980,6 @@
     - Devolver pos
 
 
-- mostrarListaJuegos(listaJuegos v, cantJuegos v)
-    - imprimirTitulo("Lista de Juegos")
-    - Si cantJuegos < 1
-        - Imprimir "No hay juegos en lista."
-    - Para i <- 0 mientras i < cantJuegos
-        - imprimirConNumero(listaJuegos[i].codigo, listaJuegos[i].nombre)
-    - Imprimir "Fin de lista de Juegos."
-
-
-- mostrarListaJuegosDisponibles(listaJuegos v, cantJuegos v)
-    - imprimirTitulo("Lista de Juegos Disponibles")
-    - Si cantJuegos < 1
-        - Imprimir "No hay juegos en lista."
-    - contador <- 0
-    - Para i <- 0 mientras i < cantJuegos
-        - Si listaJuegos[i].operativo
-            - imprimirConNumero(listaJuegos[i].codigo, listaJuegos[i].nombre)
-            - contador <- contador + 1
-    - Si contador > 0
-        - Imprimir "Hay " + contador + " juegos disponibles."
-    - Sino
-        - Imprimir "No hay juegos disponibles."
-
-
 - ordenarDatosMinMax(nombres ^, datos ^, tamaño v)
     - huboCambios <- verdadero
     - Para i <- 0 mientras i < tamaño - 1 y huboCambios
@@ -864,25 +990,6 @@
                 - swapString(nombres[j], nombres[j + 1])
                 - huboCambios <- verdadero
 
-
-
-- compararTextos(a v, b v, resultado ^)
-    - i <- 0
-    - Mientras a[i] != nulo y b[i] != nulo y a[i] == b[i]
-        - i <- i + 1
-    - Devolver a[i] - b[i]
-
-
-- ordenarPorNombre(juegos ^, n v)
-    - huboCambios <- verdadero
-    - Para i <- 0 mientras i < n - 1 y huboCambios
-        - huboCambios <- falso
-        - Para j -> 0 mientras j < n - 1 - i
-            - Si compararTextos(juegos[j].nombre, juegos[j + 1].nombre) > 0
-                - aux <- juegos[j]
-                - juegos[j] <- juegos[j + 1]
-                - juegos[j + 1] <- aux
-                - huboCambios <- verdadero
 
 
 - verificarAcceso(juego v, visitante v, resultado ^)
@@ -1320,54 +1427,6 @@
                 - opcionElegida <- -1
 
 
-- mostrarMenuListaJuegos(listaJuegos v, cantJuegos v)
-    - opcionElegida <- 0
-    - Mientras opcionElegida != -1
-        - opcionElegida <- -2
-        - imprimirTitulo("Mostrar lista de Juegos")
-        - imprimirConNumero(1, "Completa")
-        - imprimirConNumero(2, "Solo disponibles")
-        - imprimirConNumero(3, "Volver al Menu de Juegos")
-        - Mientras opcionElegida < 1 o opcionElegida > 3
-            - Imprimir "Ingresa el numero de opcion elegida: "
-            - Leer opcionElegida
-            - Si opcionElegida < 1 o opcionElegida > 3
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
-        - Cuando opcionElegida sea
-            - 1
-                - mostrarListaJuegos(listaJuegos, cantJuegos)
-            - 2
-                - mostrarListaJuegosDisponibles(listaJuegos, cantJuegos)
-            - 3
-                - Imprimir "Regresando..."
-                - opcionElegida <- -1
-
-
-- mostrarMenuOrdenarJuegos(listaJuegos ^, cantJuegos v)
-    - opcionElegida <- 0
-    - Mientras opcionElegida != -1
-        - opcionElegida <- -2
-        - imprimirTitulo("Ordenar Juegos de Menor a Mayor")
-        - imprimirConNumero(1, "Por Codigo")
-        - imprimirConNumero(2, "Alfabeticamente")
-        - imprimirConNumero(3, "Volver al Menu de Juegos")
-        - Mientras opcionElegida < 1 o opcionElegida > 3
-            - Imprimir "Ingresa el numero de opcion elegida: "
-            - Leer opcionElegida
-            - Si opcionElegida < 1 o opcionElegida > 3
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
-        - Cuando opcionElegida sea
-            - 1
-                - ordenarPorCodigo(listaJuegos, cantJuegos)
-                - Imprimir "Juegos ordenados por codigo exitosamente."
-            - 2
-                - ordenarPorNombre(listaJuegos, cantJuegos)
-                - Imprimir "Juegos ordenados alfabeticamente exitosamente."
-            - 3
-                - Imprimir "Regresando..."
-                - opcionElegida <- -1
-
-
 - imprimirMenuFilas()
     - imprimirTitulo("Menu Filas y Colas de Juegos")
     - imprimirConNumero(1, "Encolar visitante en un juego")
@@ -1474,45 +1533,6 @@
             - 2
                 - mostrarMenuRecursividad(datos)
             - 3
-                - Imprimir "Regresando..."
-                - opcionElegida <- -1
-
-
-- imprimirMenuJuegos()
-    - imprimirTitulo("Menu Juegos")
-    - imprimirConNumero(1, "Mostrar juegos")
-    - imprimirConNumero(2, "Ordenar Juegos")
-    - imprimirConNumero(3, "Buscar Juego")
-    - imprimirConNumero(4, "Administrar archivos de juegos")
-    - imprimirConNumero(5, "Volver al Menu Principal")
-
-
-- mostrarMenuJuegos(listaJuegos ^)
-    - cantidad <- leerArchivoJuegos(listaJuegos, MAX_JUEGOS)
-    - Si cantidad = 0
-        - Imprimir "No hay juegos cargados. Genera los datos de prueba desde el Menu Principal."
-        - Devolver
-    - opcionElegida <- 0
-    - imprimirMenuJuegos()
-    - Mientras opcionElegida != -1
-        - opcionElegida <- -2
-        - Mientras opcionElegida < 0 o opcionElegida > 5
-            - Imprimir "Ingresa un numero (0 para imprimir menu): "
-            - Leer opcionElegida
-            - Si opcionElegida < 0 o opcionElegida > 5
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
-        - Cuando opcionElegida sea
-            - 0
-                - imprimirMenuJuegos()
-            - 1
-                - mostrarMenuListaJuegos(listaJuegos, cantidad)
-            - 2
-                - mostrarMenuOrdenarJuegos(listaJuegos, cantidad)
-            - 3
-                - mostrarMenuBuscarJuegos(listaJuegos, cantidad)
-            - 4
-                - mostrarMenuArchivosJuegos(listaJuegos, cantidad)
-            - 5
                 - Imprimir "Regresando..."
                 - opcionElegida <- -1
 
