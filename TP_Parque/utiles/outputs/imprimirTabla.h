@@ -14,4 +14,6 @@ struct Tabla{
 
 void imprimirTabla(Tabla datos);
 
+void imprimirTablaMonoColum(const char* encabezado, char nombres[][LARGO_NOMBRE], int* num, int cant);
+
 #endif

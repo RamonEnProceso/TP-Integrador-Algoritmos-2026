@@ -1,4 +1,5 @@
 #include "./utiles/outputs/imprimirTabla.h"
+#include "constantes/generales.h"
 #include <iostream>
 
 using namespace std;
@@ -93,4 +94,29 @@ void imprimirTabla(Tabla datos){
         }
         cout << endl;
     }
+}
+
+
+// Imprimir Mono Colum
+void imprimirTablaMonoColum(const char* encabezado, char nombres[][LARGO_NOMBRE], int* num, int cant){
+    char** nombresPtr = new char*[cant];
+    int** numPtr = new int*[cant];
+    char* encabezadoPtr = (char*)encabezado;
+    
+    for(int i = 0; i < cant; i++){
+        nombresPtr[i] = nombres[i];
+        numPtr[i] = &num[i];
+    }
+    
+    Tabla nueva;
+    nueva.columnas = 1;
+    nueva.filas = cant;
+    nueva.nombresColumnas = &encabezadoPtr;
+    nueva.nombresFilas = nombresPtr;
+    nueva.contenido = numPtr;
+    
+    imprimirTabla(nueva);
+    
+    delete[] nombresPtr;
+    delete[] numPtr;
 }
