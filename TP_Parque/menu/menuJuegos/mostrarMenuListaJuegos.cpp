@@ -2,30 +2,31 @@
 #include "utiles/outputs/imprimirTitulo.h"
 #include "utiles/outputs/imprimirConNum.h"
 #include "logica/vector/mostrarListaJuegos.h"
+#include "utiles/inputs/leerInputMenu.h"
+#include "constantes/generales.h"
 #include "structs/juego.h"
 #include <iostream>
 
 using namespace std;
 
+static void imprimirMenu(){
+    imprimirTitulo("Menu Principal > Juegos > Mostrar");
+    char listaMenu[3][LARGO_NOMBRE] = {"Completa","Solo disponibles", "Volver al Menu de Juegos"};
+    for (int i = 0; i < 3; i++){
+        imprimirConNumero(i+1, listaMenu[i]);
+    }
+}
+
 void mostrarMenuListaJuegos(Juego *listaJuegos, int cantJuegos) {
     int opcionElegida = 0;
-
+    imprimirMenu();
     while (opcionElegida != -1) {
         opcionElegida  = -2;
-        imprimirTitulo("Mostrar lista de Juegos");
-        imprimirConNumero(1, "Completa");
-        imprimirConNumero(2, "Solo disponibles");
-        imprimirConNumero(3, "Volver al Menu de Juegos");
-
-        while (opcionElegida < 1 || opcionElegida > 3) {
-            cout << "Ingresa el numero de opcion elegida: "; 
-            cin >> opcionElegida; cout << endl;
-            if (opcionElegida < 1 || opcionElegida > 3) {
-                cout << "Numero incorrecto. Ingrese uno correcto.\n";
-            }
-        }
-
+        leerInputMenu(0,3,opcionElegida);
         switch (opcionElegida) {
+            case 0:
+                imprimirMenu();
+                break;
             case 1:
                 mostrarListaJuegos(listaJuegos, cantJuegos);
                 break;

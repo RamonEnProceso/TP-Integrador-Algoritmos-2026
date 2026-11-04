@@ -6,27 +6,25 @@
 #include "menu/menuJuegos/mostrarMenuOrdenarJuegos.h"
 #include "menu/menuJuegos/mostrarMenuBuscarJuegos.h"
 #include "menu/menuJuegos/mostrarMenuArchivosJuegos.h"
-#include "constantes/matrizConstantes.h"
 #include "utiles/inputs/leerInputMenu.h"
+#include "constantes/generales.h"
 #include "structs/juego.h"
 #include <iostream>
 
 using namespace std;
 
 static void imprimirMenu(){
-    imprimirTitulo("Menu Juegos");
-    imprimirConNumero(1, "Mostrar juegos");
-    imprimirConNumero(2, "Ordenar Juegos");
-    imprimirConNumero(3, "Buscar Juego");
-    imprimirConNumero(4, "Administrar archivos de juegos");
-    imprimirConNumero(5, "Volver al Menu Principal");
+    imprimirTitulo("Menu Principal > Juegos");
+    char listaMenu[5][LARGO_NOMBRE] = {"Mostrar juegos", "Ordenar Juegos", "Buscar Juego", "Administrar archivos de juegos", "Volver al Menu Principal"};
+    for (int i = 0; i < 5; i++){
+        imprimirConNumero(i+1, listaMenu[i]);}
     return;
 }
 
 void mostrarMenuJuegos(Juego *listaJuegos) {
     int opcionElegida = 0;
 
-    int cantidad = leerArchivoJuegos(listaJuegos, MAX_JUEGOS);
+    int cantidad = leerArchivoJuegos(listaJuegos);
 
     if (cantidad == 0) {
         cout << "No hay juegos cargados. Genera los datos de prueba desde el Menu Principal.\n\n";
