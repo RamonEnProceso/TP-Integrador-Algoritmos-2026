@@ -182,7 +182,7 @@
     - imprimirMenuSeleccionarJuego()
     - indiceEncontrado = -1
     - opcionElegida <- -2
-    - Mientras opcionElegida != 1
+    - Mientras opcionElegida != -1
         - opcionElegida <- -2
         - leerInputMenu(0 v, 3 v, opcionElegida v)
         - Cuando opcionElegida sea
@@ -782,19 +782,6 @@
     - Imprimir "Fin de lista de Juegos."
 
 
-
-- sumaTotalV(vec v, n v, total ^)
-    - total <- 0
-    - Para i <- 0 mientras i < n
-        - total <- total + vec[i]
-    - Devolver total
-
-
-- imprimirDatos(texto v, datos v, total v)
-    - Para i <- 0 mientras i < total
-        - Imprimir texto[i] + ": " + datos[i]
-
-
 - mostrarMenuOrdenarJuegos(listaJuegos ^, cantJuegos v)
     - opcionElegida <- 0
     - imprimirMenuOrdenar()
@@ -840,6 +827,223 @@
     - Mientras a[i] != nulo y b[i] != nulo y a[i] == b[i]
         - i <- i + 1
     - Devolver a[i] - b[i]
+
+
+- mostrarMenuBuscarJuegos(listaJuegos ^, cantJuegos v)
+    - opcionElegida <- 0
+    - imprimirMenuBuscarJuegos
+    - Mientras opcionElegida != -1
+        - opcionElegida <- -2
+        - leerInputMenu(0,3,opcionElegida)
+        - Cuando opcionElegida sea
+            - 0
+                - imprimirMenuBuscarJuegos()
+            - 1
+                - Leer cod
+                - ordenarPorCodigo(listaJuegos, cantJuegos)
+                - posCod <- buscarJuegoPorCodigoBinaria(listaJuegos, cantJuegos, cod)
+                - Si posCod != -1
+                    - Imprimir "Juego encontrado:"
+                    - imprimirJuego(listaJuegos[posCod])
+                - Sino
+                    - Imprimir "No se encontro un juego con ese codigo."
+            - 2
+                - Leer nombreBuscado
+                - posNom <- buscarJuegoPorNombre(listaJuegos, cantJuegos, nombreBuscado)
+                - Si posNom != -1
+                    - Imprimir "Juego encontrado:"
+                    - imprimirJuego(listaJuegos[posNom])
+                - Sino
+                    - Imprimir "No se encontro ningun juego que contenga ese nombre."
+            - 3
+                - Imprimir "Regresando..."
+                - opcionElegida <- -1
+
+
+- imprimirMenuBuscarJuegos()
+    - imprimirTitulo("Buscar Juego")
+    - listaMenu <- {"Por Codigo", "Por Nombre", "Volver al Menu de Juegos"}
+    - Para i <- 0 hasta 2
+        - imprimirConNumero(i+1 v, listaMenu[i] v)
+
+
+- mostrarMenuArchivosJuegos(listaJuegos v^, cantJuegos v)
+    - opcionElegida <- 0
+    - imprimirMenuArchivosJuegos()
+    - Mientras opcionElegida != -1
+        - opcionElegida <- -2
+        - leerInputMenu(0 v,7 v,opcionElegida v^)
+        - Cuando opcionElegida sea
+            - 0
+                - imprimirMenuArchivosJuegos()
+            - 1
+                - leerArchivoJuegos(listaJuegos, cantJuegos)
+            - 2
+                - crearArchivoJuegos(listaJuegos, cantJuegos)
+            - 3
+                - menuConsultarJuegoN()
+            - 4
+                - menuCambiarEstadoJuegoN()
+            - 5
+                - listadoPorTipoConCorte()
+            - 6
+                - actualizarJuegosConNovedades()
+            - 7
+                - Imprimir "Regresando..."
+                - opcionElegida <- -1
+
+
+- imprimirMenuArchivosJuegos()
+    - imprimirTitulo("Administrar archivos de juegos")
+    - listaMenu <- {"Cargar juegos desde archivos", "Guardar juegos a archivos", "Consultar juego N", "Cambiar estado del juego N", "Listado por tipo con corte de control", "Actualizar juegos con novedades","Volver al Menu de Juegos"}
+    - Para i<-0 hasta 6
+        - imprimirConNumero (i+1 v, listaMenu[i])
+
+
+- crearArchivoJuegos(juegos v, n v, resultado ^)
+    - Crear archivo arch rutaArchivoJuegos
+    - Si no arch abierto
+        - Imprimir "Error al crear el archivo juegos.dat"
+        - Devolver 1
+    - Para i <- 0 hasta n-1
+        - Escribir en arch registro juegos[i]
+    - Cerrar arch
+    - Devolver 0
+
+
+- menuConsultarJuegoN()
+    - n <- 0
+    - Imprimir "Ingrese el numero de juego a consultar (N): "
+    - Leer n
+    - Si consultarJuegoN(n, juego)
+        - imprimirJuego(juego)
+    - Sino
+        - Imprimir "No se encontro un juego en la posicion " + n
+
+
+- consultarJuegoN(n v, juego ^, resultado ^)
+    - Abrir archivo rutaArchivoJuegos
+    - Si no archivo abierto o n <= 0
+        - Devolver falso
+    - Posicionar lectura en registro n - 1
+    - Si no lectura exitosa de registro juego
+        - Cerrar archivo
+        - Devolver falso
+    - Cerrar archivo
+    - Devolver verdadero
+
+
+- menuCambiarEstadoJuegoN()
+    - n <- 0
+    - estado <- 0
+    - Imprimir "Ingrese el numero de juego a modificar (N): "
+    - Leer n
+    - Imprimir "Nuevo estado (1: operativo / 0: fuera de servicio): "
+    - Leer estado
+    - Si cambiarEstadoJuegoN(n v, estado v)
+        - Imprimir "Estado actualizado correctamente."
+    - Sino
+        - Imprimir "No se pudo actualizar el juego en la posicion " + n
+
+
+- cambiarEstadoJuegoN(n v, nuevoEstado v, resultado ^)
+    - Si n <= 0
+        - Devolver falso
+    - Abrir archivo rutaArchivoJuegos
+    - Si no archivo abierto
+        - Devolver falso
+    - Posicionar lectura en registro n - 1
+    - Si no lectura exitosa de registro juego
+        - Cerrar archivo
+        - Devolver falso
+    - juego.operativo <- nuevoEstado
+    - Posicionar escritura en registro n - 1
+    - Escribir en archivo registro juego
+    - Cerrar archivo
+    - Devolver verdadero
+
+
+- listadoPorTipoConCorte()
+    - cantidad <- leerArchivoJuegos(juegos ^)
+    - Si cantidad = 0
+        - Devolver
+    - tipoActual <- juegos[0].tipo
+    - subtotal <- 0
+    - totalGeneral <- 0
+    - imprimirTitulo(LISTADO DE JUEGOS POR TIPO)
+    - Para i <- 0 hasta cantidad -1
+        - Si juegos[i].tipo != tipoActual
+            - Imprimir "Subtotal de accesos: " + subtotal
+            - totalGeneral <- totalGeneral + subtotal
+            - subtotal <- 0
+            - tipoActual <- juegos[i].tipo
+            - Imprimir "TIPO: " + TIPOS_JUEGOS[tipoActual]
+        - Sino
+            - Si i = 0
+                - Imprimir "TIPO: " + TIPOS_JUEGOS[tipoActual]
+            - Imprimir " - " + juegos[i].nombre
+            - Para j <- 0 hasta FRANJAS_HORARIAS -1
+                - subtotal <- subtotal + juegos[i].franjas[j]
+    - Imprimir "Subtotal de accesos: " + subtotal
+    - totalGeneral <- totalGeneral + subtotal
+    - Imprimir "TOTAL GENERAL: " + totalGeneral
+    - Imprimir "========================"
+
+
+- actualizarJuegosConNovedades()
+    - Abrir archivo maestro rutaArchivoJuegos
+    - Abrir archivo novedades rutaArchivoNovedades
+    - Si maestro o novedades no abrió
+        - Imprimir error
+        - Cerrar archivos
+        - Terminar funcion
+    - Crear archivo actualizado rutaArchivoJuegosActualizados
+    - Si no actualizado abierto
+        - Imprimir error
+        - Cerrar archivos
+        - Terminar funcion
+    - hayMaestro <- leerJuego(maestro, m)
+    - hayNovedad <- leerNovedad(novedades, n)
+    - Mientras hayMaestro y hayNovedad
+        - Si m.codigo < n.datos.codigo
+            - grabarJuego(actualizado, m)
+            - hayMaestro <- leerJuego(maestro, m)
+        - Sino
+            - Si n.datos.codigo < m.codigo
+                - sinMaestro(actualizado, n)
+                - hayNovedad <- leerNovedad(novedades, n)
+            - Sino
+                - conMaestro(actualizado, m, n)
+                - hayMaestro <- leerJuego(maestro, m)
+                - hayNovedad <- leerNovedad(novedades, n)
+    - Mientras hayMaestro
+        - grabarJuego(actualizado, m)
+        - hayMaestro <- leerJuego(maestro, m)
+    - Mientras hayNovedad
+        - sinMaestro(actualizado, n)
+        - hayNovedad <- leerNovedad(novedades, n)
+    - Cerrar maestro, novedades y actualizado
+    - Abrir archivo temporal rutaArchivoJuegosActualizados
+    - Abrir archivo maestroNuevo rutaArchivoJuegos
+    - Si no temporal abierto o no maestroNuevo abierto
+        - Imprimir "No se pudo reemplazar el maestro actualizado."
+        - Devolver
+    - Mientras leerJuego(temporal, j)
+        - grabarJuego(maestroNuevo, j)
+    - Cerrar temporal y maestroNuevo
+    - Imprimir "Maestro de juegos actualizado correctamente."
+
+
+- sumaTotalV(vec v, n v, total ^)
+    - total <- 0
+    - Para i <- 0 mientras i < n
+        - total <- total + vec[i]
+    - Devolver total
+
+
+- imprimirDatos(texto v, datos v, total v)
+    - Para i <- 0 mientras i < total
+        - Imprimir texto[i] + ": " + datos[i]
 
 
 - imprimirVisitante(datos v)
@@ -1136,95 +1340,11 @@
             - grabarJuego(actualizado, maestro)
 
 
-- actualizarJuegosConNovedades()
-    - Abrir archivo maestro rutaArchivoJuegos
-    - Abrir archivo novedades rutaArchivoNovedades
-    - Si no maestro abierto
-        - Imprimir "No se pudo abrir el maestro juegos.dat."
-        - Devolver
-    - Si no novedades abierto
-        - Imprimir "No se pudo abrir novedades.dat."
-        - Cerrar maestro
-        - Devolver
-    - Crear archivo actualizado rutaArchivoJuegosActualizados
-    - Si no actualizado abierto
-        - Imprimir "No se pudo crear el archivo temporal de actualizacion."
-        - Cerrar maestro
-        - Cerrar novedades
-        - Devolver
-    - hayMaestro <- leerJuego(maestro, m)
-    - hayNovedad <- leerNovedad(novedades, n)
-    - Mientras hayMaestro y hayNovedad
-        - Si m.codigo < n.datos.codigo
-            - grabarJuego(actualizado, m)
-            - hayMaestro <- leerJuego(maestro, m)
-        - Sino
-            - Si n.datos.codigo < m.codigo
-                - sinMaestro(actualizado, n)
-                - hayNovedad <- leerNovedad(novedades, n)
-            - Sino
-                - conMaestro(actualizado, m, n)
-                - hayMaestro <- leerJuego(maestro, m)
-                - hayNovedad <- leerNovedad(novedades, n)
-    - Mientras hayMaestro
-        - grabarJuego(actualizado, m)
-        - hayMaestro <- leerJuego(maestro, m)
-    - Mientras hayNovedad
-        - sinMaestro(actualizado, n)
-        - hayNovedad <- leerNovedad(novedades, n)
-    - Cerrar maestro
-    - Cerrar novedades
-    - Cerrar actualizado
-    - Abrir archivo temporal rutaArchivoJuegosActualizados
-    - Abrir archivo maestroNuevo rutaArchivoJuegos
-    - Si no temporal abierto o no maestroNuevo abierto
-        - Imprimir "No se pudo reemplazar el maestro actualizado."
-        - Devolver
-    - Mientras leerJuego(temporal, j)
-        - grabarJuego(maestroNuevo, j)
-    - Cerrar temporal
-    - Cerrar maestroNuevo
-    - Imprimir "Maestro de juegos actualizado correctamente."
 
 
-- cambiarEstadoJuegoN(n v, nuevoEstado v, resultado ^)
-    - Si n <= 0
-        - Devolver falso
-    - Abrir archivo rutaArchivoJuegos
-    - Si no archivo abierto
-        - Devolver falso
-    - Posicionar lectura en registro n - 1
-    - Si no lectura exitosa de registro juego
-        - Cerrar archivo
-        - Devolver falso
-    - juego.operativo <- nuevoEstado
-    - Posicionar escritura en registro n - 1
-    - Escribir en archivo registro juego
-    - Cerrar archivo
-    - Devolver verdadero
 
 
-- consultarJuegoN(n v, juego ^, resultado ^)
-    - Abrir archivo rutaArchivoJuegos
-    - Si no archivo abierto o n <= 0
-        - Devolver falso
-    - Posicionar lectura en registro n - 1
-    - Si no lectura exitosa de registro juego
-        - Cerrar archivo
-        - Devolver falso
-    - Cerrar archivo
-    - Devolver verdadero
 
-
-- crearArchivoJuegos(juegos v, n v, resultado ^)
-    - Crear archivo arch rutaArchivoJuegos
-    - Si no arch abierto
-        - Imprimir "Error al crear el archivo juegos.dat"
-        - Devolver 1
-    - Para i <- 0 mientras i < n
-        - Escribir en arch registro juegos[i]
-    - Cerrar arch
-    - Devolver 0
 
 
 - exportarReporteDia(datos v)
@@ -1260,31 +1380,6 @@
         - Escribir en archivo registro novedades[i]
     - Cerrar archivo
 
-
-- listadoPorTipoConCorte()
-    - cantidad <- leerArchivoJuegos(juegos, MAX_JUEGOS)
-    - Si cantidad = 0
-        - Devolver
-    - tipoActual <- juegos[0].tipo
-    - subtotal <- 0
-    - totalGeneral <- 0
-    - Imprimir "===== LISTADO DE JUEGOS POR TIPO ====="
-    - Para i <- 0 mientras i < cantidad
-        - Si juegos[i].tipo != tipoActual
-            - Imprimir "Subtotal de accesos: " + subtotal
-            - totalGeneral <- totalGeneral + subtotal
-            - subtotal <- 0
-            - tipoActual <- juegos[i].tipo
-            - Imprimir "TIPO: " + TIPOS_JUEGOS[tipoActual]
-        - Si i = 0
-            - Imprimir "TIPO: " + TIPOS_JUEGOS[tipoActual]
-        - Imprimir " - " + juegos[i].nombre
-        - Para j -> 0 mientras j < FRANJAS_HORARIAS
-            - subtotal <- subtotal + juegos[i].franjas[j]
-    - Imprimir "Subtotal de accesos: " + subtotal
-    - totalGeneral <- totalGeneral + subtotal
-    - Imprimir "TOTAL GENERAL: " + totalGeneral
-    - Imprimir "========================"
 
 
 - generarDatosPrueba(datos ^)
@@ -1333,98 +1428,6 @@
     - Imprimir "Datos de prueba generados correctamente."
 
 
-- imprimirMenuArchivosJuegos()
-    - imprimirTitulo("Administrar archivos de juegos")
-    - imprimirConNumero(1, "Cargar juegos desde archivos")
-    - imprimirConNumero(2, "Guardar juegos a archivos")
-    - imprimirConNumero(3, "Consultar juego N")
-    - imprimirConNumero(4, "Cambiar estado del juego N")
-    - imprimirConNumero(5, "Listado por tipo con corte de control")
-    - imprimirConNumero(6, "Actualizar juegos con novedades")
-    - imprimirConNumero(7, "Volver al Menu de Juegos")
-
-
-- mostrarMenuArchivosJuegos(listaJuegos ^, cantJuegos v)
-    - opcionElegida <- 0
-    - Mientras opcionElegida != -1
-        - opcionElegida <- -2
-        - imprimirMenuArchivosJuegos()
-        - Mientras opcionElegida < 0 o opcionElegida > 7
-            - Imprimir "Ingresa el numero de opcion elegida: "
-            - Leer opcionElegida
-            - Si opcionElegida < 0 o opcionElegida > 7
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
-        - Cuando opcionElegida sea
-            - 0
-                - imprimirMenuArchivosJuegos()
-            - 1
-                - leerArchivoJuegos(listaJuegos, cantJuegos)
-            - 2
-                - crearArchivoJuegos(listaJuegos, cantJuegos)
-            - 3
-                - n <- 0
-                - Imprimir "Ingrese el numero de juego a consultar (N): "
-                - Leer n
-                - Si consultarJuegoN(n, juego)
-                    - imprimirJuego(juego)
-                - Sino
-                    - Imprimir "No se encontro un juego en la posicion " + n
-            - 4
-                - n <- 0
-                - estado <- 0
-                - Imprimir "Ingrese el numero de juego a modificar (N): "
-                - Leer n
-                - Imprimir "Nuevo estado (1: operativo / 0: fuera de servicio): "
-                - Leer estado
-                - Si cambiarEstadoJuegoN(n, estado = 1)
-                    - Imprimir "Estado actualizado correctamente."
-                - Sino
-                    - Imprimir "No se pudo actualizar el juego en la posicion " + n
-            - 5
-                - listadoPorTipoConCorte()
-            - 6
-                - actualizarJuegosConNovedades()
-            - 7
-                - Imprimir "Regresando..."
-                - opcionElegida <- -1
-
-
-- mostrarMenuBuscarJuegos(listaJuegos ^, cantJuegos v)
-    - opcionElegida <- 0
-    - Mientras opcionElegida != -1
-        - opcionElegida <- -2
-        - imprimirTitulo("Buscar Juego")
-        - imprimirConNumero(1, "Por Codigo")
-        - imprimirConNumero(2, "Por Nombre")
-        - imprimirConNumero(3, "Volver al Menu de Juegos")
-        - Mientras opcionElegida < 1 o opcionElegida > 3
-            - Imprimir "Ingresa el numero de opcion elegida: "
-            - Leer opcionElegida
-            - Si opcionElegida < 1 o opcionElegida > 3
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
-        - Cuando opcionElegida sea
-            - 1
-                - Imprimir "Ingrese el codigo a buscar: "
-                - Leer cod
-                - ordenarPorCodigo(listaJuegos, cantJuegos)
-                - posCod <- buscarJuegoPorCodigoBinaria(listaJuegos, cantJuegos, cod)
-                - Si posCod != -1
-                    - Imprimir "Juego encontrado:"
-                    - imprimirJuego(listaJuegos[posCod])
-                - Sino
-                    - Imprimir "No se encontro un juego con ese codigo."
-            - 2
-                - Imprimir "Ingrese el nombre del juego a buscar: "
-                - Leer nombreBuscado
-                - posNom <- buscarJuegoPorNombre(listaJuegos, cantJuegos, nombreBuscado)
-                - Si posNom != -1
-                    - Imprimir "Juego encontrado:"
-                    - imprimirJuego(listaJuegos[posNom])
-                - Sino
-                    - Imprimir "No se encontro ningun juego que contenga ese nombre."
-            - 3
-                - Imprimir "Regresando..."
-                - opcionElegida <- -1
 
 
 - imprimirMenuFilas()
