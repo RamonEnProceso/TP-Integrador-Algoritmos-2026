@@ -154,13 +154,26 @@
     - Devolver nuevo
 
 
-- asignarJuegoVisitante()
-    - Iniciar vector juegosParaSeleccion[MAX_JUEGOS]
-    - cantJuegos <- leerArchivoJuegos(juegosParaSeleccion, MAX_JUEGOS)
-    - Si cantJuegos > 0
-        - seleccionarJuego(juegosParaSeleccion, cantJuegos)
-    - Sino
-        - Imprimir "No hay juegos disponibles en el sistema."
+- asignarJuegoVisitante(datos v^)
+    - Si datos.cantJuegos = 0
+        - datos.cantJuegos <- leerArchivoJuegos(datos.juegos, MAX_JUEGOS)
+        - Si datos.cantJuegos = 0
+            - Imprimir "No hay juegos disponibles en el sistema."
+            - Devolver
+    - Imprimir "Ingrese el numero de pulsera del visitante: "
+    - Leer pulsera
+    - Si no obtenerVisitantePorPulsera(datos.listaVisitantes, pulsera, v)
+        - Imprimir "No se encontro un visitante activo con la pulsera " + pulsera
+        - Devolver
+    - idxJuego <- seleccionarJuego(datos.juegos, datos.cantJuegos)
+    - Si idxJuego < 0 o idxJuego >= datos.cantJuegos
+        - Devolver
+    - Si estaEnCola(datos.filasJuegos[idxJuego], v.pulsera)
+        - Imprimir "[ACCESO DENEGADO] El visitante ya se encuentra en la fila."
+        - Devolver
+    - Si verificarAcceso(datos.juegos[idxJuego], v)
+        - encolarVisitante(datos.filasJuegos[idxJuego], v)
+        - Imprimir v.nombre + " fue asignado a la fila de " + datos.juegos[idxJuego].nombre
 
 
 - leerArchivoJuegos(lista v, n v, cantidad ^)
@@ -1002,8 +1015,8 @@
         - Imprimir error
         - Cerrar archivos
         - Terminar funcion
-    - hayMaestro <- leerJuego(maestro, m)
-    - hayNovedad <- leerNovedad(novedades, n)
+    - hayMaestro <- leerJuego(maestro v, m v^)
+    - hayNovedad <- leerNovedad(novedades v, n v^)
     - Mientras hayMaestro y hayNovedad
         - Si m.codigo < n.datos.codigo
             - grabarJuego(actualizado, m)
@@ -1034,16 +1047,48 @@
     - Imprimir "Maestro de juegos actualizado correctamente."
 
 
-- sumaTotalV(vec v, n v, total ^)
-    - total <- 0
-    - Para i <- 0 mientras i < n
-        - total <- total + vec[i]
-    - Devolver total
+- leerJuego(archivo v^, juego v, estado ^)
+    - Leer de archivo registro juego
+    - Devolver estado de lectura de archivo
 
 
-- imprimirDatos(texto v, datos v, total v)
-    - Para i <- 0 mientras i < total
-        - Imprimir texto[i] + ": " + datos[i]
+- leerNovedad(archivo v^, novedad v, estado ^)
+    - Leer de archivo registro novedad
+    - Devolver estado de lectura de archivo
+
+
+- grabarJuego(archivo v^, juego v)
+    - Escribir en archivo registro juego
+
+
+- sinMaestro(actualizado ^, novedad v)
+    - Si novedad.op = 'A'
+        - grabarJuego(actualizado, novedad.datos)
+        - Imprimir "[ALTA] Se agrego el juego " + novedad.datos.codigo + " - " + novedad.datos.nombre
+    - Sino
+        - Imprimir "[ERROR] La novedad del codigo " + novedad.datos.codigo + " no existe en el maestro."
+
+
+- conMaestro(actualizado v^, maestro v, novedad v)
+    - Si novedad.op = 'B'
+        - Imprimir "[BAJA] Se elimino el juego " + maestro.codigo + " - " + maestro.nombre
+    - Sino
+        - Si novedad.op = 'M'
+            - grabarJuego(actualizado, novedad.datos)
+            - Imprimir "[MODIFICACION] Se actualizo el juego " + novedad.datos.codigo + " - " + novedad.datos.nombre
+        - Sino
+            - Imprimir "[ERROR] El codigo " + maestro.codigo + " ya existe, no se puede dar de alta."
+            - grabarJuego(actualizado, maestro)
+            
+
+- buscarVisitanteActivoPorPulsera(lista v, pulseraNum v)
+    - actual <- lista
+    - Mientras actual != nulo y actual.visitante.pulsera != pulseraNum
+        - actual <- actual.siguiente
+    - Si actual != nulo
+        - imprimirVisitante(actual.visitante)
+        - Devolver
+    - Imprimir "No se encontro a un Visitante con esa pulsera."
 
 
 - imprimirVisitante(datos v)
@@ -1054,43 +1099,50 @@
     - Imprimir "Altura: " + datos.altura
 
 
-- swapString(c1 ^, c2 ^)
-    - tmp <- c1
-    - c1 <- c2
-    - c2 <- tmp
+- mostrarMenuOcupacion(datos ^)
+    - Si datos.cantJuegos = 0
+        - datos.cantJuegos <- leerArchivoJuegos(datos.juegos, MAX_JUEGOS)
+        - Si datos.cantJuegos = 0
+            - Imprimir "No hay juegos cargados. Genera los datos de prueba desde el Menu Principal."
+            - Devolver
+        - reconstruirMatriz(datos)
+    - opcionElegida <- 0
+    - imprimirMenuOcupacion()
+    - Mientras opcionElegida != -1
+        - opcionElegida <- -2
+        - leerInputMenu(0 v, 6 v, opcionElegida v^)
+        - Cuando opcionElegida sea
+            - 0
+                - imprimirMenuOcupacion()
+            - 1
+                - imprimirMatriz(datos)
+            - 2
+                - mayorOcupacion <- devolverMayorOcupacion(datos.datosMatriz)
+                - imprimirMayorOcupacion(mayorOcupacion v, datos v)
+            - 3
+                - maxPos <- devolverMasUsado(datos.datosMatriz)
+                - imprimirMasUsado
+            - 4
+                - imprimirTotales(datos)
+            - 5
+                - exportarReporteDia(datos)
+            - 6
+                - Imprimir "Regresando..."
+                - opcionElegida <- -1
 
 
-- swapInt(c1 ^, c2 ^)
-    - tmp <- c1
-    - c1 <- c2
-    - c2 <- tmp
-
-
-- devolverMasUsado(datosMatriz v, resultado ^)
-    - totalJuegos <- arreglo de enteros de tamaño datosMatriz.juegos
-    - totalPorJuego(datosMatriz, totalJuegos)
-    - mayorPos <- devolverMayorPosV(totalJuegos, datosMatriz.juegos)
-    - Devolver mayorPos
-
-
-- devolverMayorOcupacion(datosMatriz v, resultado ^)
-    - mayor <- -1
-    - juegoMasUsado <- -1
-    - franjaMasConcurrida <- -1
-    - Para i <- 0 mientras i < datosMatriz.juegos
-        - Para j -> 0 mientras j < datosMatriz.franjas
-            - Si datosMatriz.matriz[i][j] > mayor
-                - mayor <- datosMatriz.matriz[i][j]
-                - juegoMasUsado <- i
-                - franjaMasConcurrida <- j
-    - Devolver registro con mayor, juegoMasUsado, franjaMasConcurrida
+- imprimirMenuOcupacion()
+    - imprimirTitulo("Menu Ocupacion de Juegos")
+    - listaMenu <- {"Ver ocupacion de juegos por franjas","Mayor ocupacion registrada", "Juego mas utilizado","Ver totales de ocupacion","Exportar reporte del dia a archivo","Volver al Menu Principal"}
+    - Para i<-0 hasta 5
+        - imprimirConNumero(i+1,listaMenu[i])
 
 
 - imprimirMatriz(datos v)
     - imprimirTitulo("Matriz de ocupantes por franja")
-    - Para j -> 0 mientras j < datos.datosMatriz.franjas
+    - Para j -> 0 hasta datos.datosMatriz.franjas -1
         - nombresColumnas[j] <- FRANJAS_TEXTO[j]
-    - Para i <- 0 mientras i < datos.datosMatriz.juegos
+    - Para i <- 0 hasta datos.datosMatriz.juegos -1
         - nombresFilas[i] <- datos.juegos[i].nombre
     - tabla.columnas <- datos.datosMatriz.franjas
     - tabla.filas <- datos.datosMatriz.juegos
@@ -1100,13 +1152,70 @@
     - imprimirTabla(tabla)
 
 
+
+- devolverMayorOcupacion(datosMatriz v, resultado ^)
+    - mayor <- -1
+    - juegoMasUsado <- -1
+    - franjaMasConcurrida <- -1
+    - Para i <- 0 hasta datosMatriz.juegos -1
+        - Para j <- hasta datosMatriz.franjas -1
+            - Si datosMatriz.matriz[i][j] > mayor
+                - mayor <- datosMatriz.matriz[i][j]
+                - juegoMasUsado <- i
+                - franjaMasConcurrida <- j
+    - Devolver registro con mayor, juegoMasUsado, franjaMasConcurrida
+
+- imprimirMayorOcupacion(datos v, mayorOcupacion v)
+    - Imprimir "Mayor ocupacion registrada: " + datos.juegos[mayorOcupacion.juego].nombre + " de " + FRANJAS_TEXTO[mayorOcupacion.franja] + " con total de " + mayorOcupacion.ocupacion
+
+
+- devolverMasUsado(datosMatriz v, mayorPos ^)
+    - totalJuegos <- arreglo de enteros de tamaño datosMatriz.juegos
+    - totalPorJuego(datosMatriz, totalJuegos)
+    - mayorPos <- devolverMayorPosV(totalJuegos, datosMatriz.juegos)
+    - Devolver mayorPos
+
+
+- totalPorJuego(datos v, vectorSumaJuego ^)
+    - Para i <- 0 hasta datos.juegos -1
+        - total <- 0
+        - Para j <- 0 hasta datos.franjas -1
+            - total <- total + datos.matriz[i][j]
+        - vectorSumaJuego[i] <- total
+
+
+- devolverMayorPosV(v v, n v, pos ^)
+    - pos <- 0
+    - Para i <- 1 hasta n -1
+        - Si v[i] > v[pos]
+            - pos <- i
+    - Devolver pos
+
+- imprimirMasUsado(datos v, maxPos v)
+    - cantidadMax <- sumaTotalV(datos.datosMatriz.matriz[maxPos], datos.datosMatriz.franjas)
+    - Imprimir "El juego mas usado fue " + datos.juegos[maxPos].nombre + " con " + cantidadMax + " ocupantes"
+
+- sumaTotalV(vec v, n v, total ^)
+    - total <- 0
+    - Para i <- 0 hasta n-1
+        - total <- total + vec[i]
+    - Devolver total
+
+
+- reconstruirMatriz(datos ^)
+    - datos.datosMatriz.juegos <- datos.cantJuegos
+    - datos.datosMatriz.franjas <- FRANJAS_HORARIAS
+    - Para i <- 0 hast cantJuegos - 1
+        - datos.datosMatriz.matriz[i] <- datos.juegos[i].franjas
+
+
 - imprimirTotales(datos v)
     - totalPorJuego(datos.datosMatriz, totalJuegos)
     - totalPorFranja(datos.datosMatriz, totalFranjas)
     - total <- totalOcupacion(datos.datosMatriz)
     - nombreColumna[0] <- "Visitas"
     - imprimirTitulo("Total de visitas por juego")
-    - Para i <- 0 mientras i < datos.datosMatriz.juegos
+    - Para i <- 0 hasta datos.datosMatriz.juegos -1
         - nombresFilasJuegos[i] <- datos.juegos[i].nombre
         - punterosJuegos[i] <- totalJuegos[i]
     - tablaJuegos.columnas <- 1
@@ -1116,7 +1225,7 @@
     - tablaJuegos.contenido <- punterosJuegos
     - imprimirTabla(tablaJuegos)
     - imprimirTitulo("Total de visitas por franja horaria")
-    - Para j -> 0 mientras j < datos.datosMatriz.franjas
+    - Para j <- 0 hasta datos.datosMatriz.franjas -1
         - nombresFilasFranjas[j] <- FRANJAS_TEXTO[j]
         - punterosFranjas[j] <- totalFranjas[j]
     - tablaFranjas.columnas <- 1
@@ -1135,216 +1244,18 @@
     - tablaTotal.contenido <- punteroTotal
     - imprimirTabla(tablaTotal)
 
-
-- iniciarMatrizJuegoXFranjas(datos ^, juegos v)
-    - Imprimir "Inicializar datos de ocupacion de juegos por franja horaria..."
-    - Para i <- 0 mientras i < datos.juegos
-        - Imprimir "Cargando visitas al juego: " + juegos[i].nombre
-        - Para j -> 0 mientras j < datos.franjas
-            - Imprimir "Cargando visitas de " + FRANJAS_TEXTO[j] + ": "
-            - Leer datos.matriz[i][j]
-    - Imprimir "Datos de visitas registrados correctamente."
-
-
-- reconstruirMatriz(datos ^)
-    - datos.datosMatriz.juegos <- datos.cantJuegos
-    - datos.datosMatriz.franjas <- FRANJAS_HORARIAS
-    - Para i <- 0 mientras i < datos.cantJuegos
-        - datos.datosMatriz.matriz[i] <- datos.juegos[i].franjas
-
+- totalPorFranja(datos v, vectorSumaFranjas ^)
+    - Para i <- 0 hasta datos.franjas-1
+        - total <- 0
+        - Para j -> 0 hasta datos.juegos-1
+            - total <- total + datos.matriz[j][i]
+        - vectorSumaFranjas[i] <- total
 
 - totalOcupacion(datos v, resultado ^)
     - vector <- arreglo de enteros de tamaño datos.juegos
     - totalPorJuego(datos, vector)
     - sumaTotal <- sumaTotalV(vector, datos.juegos)
     - Devolver sumaTotal
-
-
-- totalPorFranja(datos v, vectorSumaFranjas ^)
-    - Para i <- 0 mientras i < datos.franjas
-        - total <- 0
-        - Para j -> 0 mientras j < datos.juegos
-            - total <- total + datos.matriz[j][i]
-        - vectorSumaFranjas[i] <- total
-
-
-- totalPorJuego(datos v, vectorSumaJuego ^)
-    - Para i <- 0 mientras i < datos.juegos
-        - total <- 0
-        - Para j -> 0 mientras j < datos.franjas
-            - total <- total + datos.matriz[i][j]
-        - vectorSumaJuego[i] <- total
-
-
-- devolverMayorPosV(v v, n v, resultado ^)
-    - pos <- 0
-    - Para i <- 1 mientras i < n
-        - Si v[i] > v[pos]
-            - pos <- i
-    - Devolver pos
-
-
-- ordenarDatosMinMax(nombres ^, datos ^, tamaño v)
-    - huboCambios <- verdadero
-    - Para i <- 0 mientras i < tamaño - 1 y huboCambios
-        - huboCambios <- falso
-        - Para j -> 0 mientras j < tamaño - i - 1
-            - Si datos[j] > datos[j + 1]
-                - swapInt(datos[j], datos[j + 1])
-                - swapString(nombres[j], nombres[j + 1])
-                - huboCambios <- verdadero
-
-
-
-- verificarAcceso(juego v, visitante v, resultado ^)
-    - Si no juego.operativo
-        - Imprimir "[ACCESO DENEGADO] El juego " + juego.nombre + " se encuentra FUERA DE SERVICIO."
-        - Devolver falso
-    - Si visitante.altura < juego.alturaMinima
-        - Imprimir "[ACCESO DENEGADO] El visitante " + visitante.nombre + " no cumple la altura minima requerida."
-        - Devolver falso
-    - Imprimir "[ACCESO PERMITIDO] " + visitante.nombre + " cumple los requisitos."
-    - Devolver verdadero
-
-
-- atenderSiguienteVisitante(c ^)
-    - Si desencolarVisitante(c, v)
-        - Imprimir "Atendiendo al visitante: " + v.nombre + " (Pulsera: " + v.pulsera + ")"
-    - Sino
-        - Imprimir "No hay visitantes en la fila para atender."
-
-
-- desencolarVisitante(c ^, v ^, resultado ^)
-    - Si c.frente = nulo
-        - Devolver falso
-    - aux <- c.frente
-    - v <- aux.visitante
-    - c.frente <- aux.siguiente
-    - Si c.frente = nulo
-        - c.fin <- nulo
-    - liberar aux
-    - Devolver verdadero
-
-
-- encolarVisitante(c ^, v v)
-    - nuevo <- nuevo nodo visitante
-    - nuevo.visitante <- v
-    - nuevo.siguiente <- nulo
-    - Si c.frente = nulo
-        - c.frente <- nuevo
-    - Sino
-        - c.fin.siguiente <- nuevo
-    - c.fin <- nuevo
-
-
-- estaEnCola(c v, pulsera v, resultado ^)
-    - actual <- c.frente
-    - Mientras actual != nulo
-        - Si actual.visitante.pulsera = pulsera
-            - Devolver verdadero
-        - actual <- actual.siguiente
-    - Devolver falso
-
-
-- liberarCola(c ^)
-    - actual <- c.frente
-    - Mientras actual != nulo
-        - temp <- actual
-        - actual <- actual.siguiente
-        - liberar temp
-    - c.frente <- nulo
-    - c.fin <- nulo
-
-
-- mostrarFilaJuego(c v)
-    - imprimirTitulo("FILA ACTUAL DEL JUEGO")
-    - Si c.frente = nulo
-        - Imprimir "La fila esta actualmente vacia."
-        - Devolver
-    - aux <- c.frente
-    - posicion <- 1
-    - Mientras aux != nulo
-        - Imprimir posicion + ". " + aux.visitante.nombre + " (Pulsera: " + aux.visitante.pulsera + ")"
-        - aux <- aux.siguiente
-        - posicion <- posicion + 1
-
-
-- buscarVisitanteActivoPorPulsera(lista v, pulseraNum v)
-    - actual <- lista
-    - Mientras actual != nulo y actual.visitante.pulsera != pulseraNum
-        - actual <- actual.siguiente
-    - Si actual != nulo
-        - imprimirVisitante(actual.visitante)
-        - Devolver
-    - Imprimir "No se encontro a un Visitante con esa pulsera."
-
-
-- obtenerVisitantePorPulsera(lista v, pulseraNum v, v ^, resultado ^)
-    - actual <- lista
-    - Mientras actual != nulo
-        - Si actual.visitante.pulsera = pulseraNum
-            - v <- actual.visitante
-            - Devolver verdadero
-        - actual <- actual.siguiente
-    - Devolver falso
-
-
-- contarActivosRec(lista v, resultado ^)
-    - Si lista = nulo
-        - Devolver 0
-    - Devolver 1 + contarActivosRec(lista.siguiente)
-
-
-- atenderFilaRec(c ^)
-    - Si c.frente = nulo
-        - Devolver
-    - atenderSiguienteVisitante(c)
-    - atenderFilaRec(c)
-
-
-- mostrarVisitantesActivosRec(lista v)
-    - Imprimir "Cantidad de visitantes activos (recursivo): " + contarActivosRec(lista)
-
-
-- leerJuego(archivo ^, juego ^, resultado ^)
-    - Leer de archivo registro juego
-    - Devolver estado de lectura de archivo
-
-
-- leerNovedad(archivo ^, novedad ^, resultado ^)
-    - Leer de archivo registro novedad
-    - Devolver estado de lectura de archivo
-
-
-- grabarJuego(archivo ^, juego v)
-    - Escribir en archivo registro juego
-
-
-- sinMaestro(actualizado ^, novedad v)
-    - Si novedad.op = 'A'
-        - grabarJuego(actualizado, novedad.datos)
-        - Imprimir "[ALTA] Se agrego el juego " + novedad.datos.codigo + " - " + novedad.datos.nombre
-    - Sino
-        - Imprimir "[ERROR] La novedad del codigo " + novedad.datos.codigo + " no existe en el maestro."
-
-
-- conMaestro(actualizado ^, maestro v, novedad v)
-    - Si novedad.op = 'B'
-        - Imprimir "[BAJA] Se elimino el juego " + maestro.codigo + " - " + maestro.nombre
-    - Sino
-        - Si novedad.op = 'M'
-            - grabarJuego(actualizado, novedad.datos)
-            - Imprimir "[MODIFICACION] Se actualizo el juego " + novedad.datos.codigo + " - " + novedad.datos.nombre
-        - Sino
-            - Imprimir "[ERROR] El codigo " + maestro.codigo + " ya existe, no se puede dar de alta."
-            - grabarJuego(actualizado, maestro)
-
-
-
-
-
-
-
 
 
 - exportarReporteDia(datos v)
@@ -1365,78 +1276,6 @@
     - Escribir en archivo "TOTAL DE VISITAS DEL DIA: " + total
     - Cerrar archivo
     - Imprimir "Reporte generado correctamente."
-
-
-- generarNovedadesDePrueba()
-    - Crear arreglo novedades de tamaño 4
-    - novedades[0] <- baja de Rueda de la Fortuna codigo 2
-    - novedades[1] <- modificacion de Autitos Chocadores codigo 3
-    - novedades[2] <- alta de Sillas Voladoras codigo 11
-    - novedades[3] <- modificacion de juego inexistente codigo 99
-    - Crear archivo rutaArchivoNovedades
-    - Si no archivo abierto
-        - Devolver
-    - Para i <- 0 mientras i < 4
-        - Escribir en archivo registro novedades[i]
-    - Cerrar archivo
-
-
-
-- generarDatosPrueba(datos ^)
-    - Imprimir "Generando datos..."
-    - Imprimir "Generando visitantes..."
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1000, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1001, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1002, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1003, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1004, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1005, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1006, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1007, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1008, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1009, datos.listaVisitantes)
-    - Imprimir "Cargando en memoria..."
-    - Imprimir "Generando juegos..."
-    - datos.juegos[0] <- Montana Rusa
-    - datos.juegos[1] <- Rueda de la Fortuna
-    - datos.juegos[2] <- Autitos Chocadores
-    - datos.juegos[3] <- Barco Pirata
-    - datos.juegos[4] <- Pendulo Vertigo
-    - datos.juegos[5] <- Tobogan Acuatico
-    - datos.juegos[6] <- Rio Salvaje
-    - datos.juegos[7] <- Pileta de Olas
-    - datos.juegos[8] <- Calesita
-    - datos.juegos[9] <- Tazas Locas
-    - datos.cantJuegos <- 10
-    - Imprimir "Grabandolos en archivo binario..."
-    - crearArchivoJuegos(datos.juegos, datos.cantJuegos)
-    - Imprimir "Guardando visitantes en visitantes.dat..."
-    - guardarVisitantes(datos.listaVisitantes)
-    - Imprimir "Generando novedades de prueba..."
-    - generarNovedadesDePrueba()
-    - Imprimir "Generando matriz de ocupacion de Juegos..."
-    - reconstruirMatriz(datos)
-    - Imprimir "Generando filas de espera de prueba para los juegos..."
-    - Para i <- 0 mientras i < MAX_JUEGOS
-        - liberarCola(datos.filasJuegos[i])
-    - encolarVisitante(datos.filasJuegos[0], visitante_1000)
-    - encolarVisitante(datos.filasJuegos[0], visitante_1001)
-    - encolarVisitante(datos.filasJuegos[0], visitante_1002)
-    - encolarVisitante(datos.filasJuegos[3], visitante_1003)
-    - encolarVisitante(datos.filasJuegos[3], visitante_1004)
-    - encolarVisitante(datos.filasJuegos[8], visitante_1009)
-    - Imprimir "Datos de prueba generados correctamente."
-
-
-
-
-- imprimirMenuFilas()
-    - imprimirTitulo("Menu Filas y Colas de Juegos")
-    - imprimirConNumero(1, "Encolar visitante en un juego")
-    - imprimirConNumero(2, "Ver fila de un juego")
-    - imprimirConNumero(3, "Atender siguiente visitante en un juego")
-    - imprimirConNumero(4, "Ver estado de todas las filas")
-    - imprimirConNumero(5, "Volver al Menu Principal")
 
 
 - mostrarMenuFilas(datos ^)
@@ -1511,11 +1350,86 @@
                 - opcionElegida <- -1
 
 
-- imprimirMenuHerramientas()
-    - imprimirTitulo("Menu Principal > Herramientas")
-    - imprimirConNumero(1, "Generar datos de prueba")
-    - imprimirConNumero(2, "Recursion")
-    - imprimirConNumero(3, "Volver al menu anterior")
+- imprimirMenuFilas()
+    - imprimirTitulo("Menu Filas y Colas de Juegos")
+    - imprimirConNumero(1, "Encolar visitante en un juego")
+    - imprimirConNumero(2, "Ver fila de un juego")
+    - imprimirConNumero(3, "Atender siguiente visitante en un juego")
+    - imprimirConNumero(4, "Ver estado de todas las filas")
+    - imprimirConNumero(5, "Volver al Menu Principal")
+
+
+- obtenerVisitantePorPulsera(lista v, pulseraNum v, v ^, resultado ^)
+    - actual <- lista
+    - Mientras actual != nulo
+        - Si actual.visitante.pulsera = pulseraNum
+            - v <- actual.visitante
+            - Devolver verdadero
+        - actual <- actual.siguiente
+    - Devolver falso
+
+
+- estaEnCola(c v, pulsera v, resultado ^)
+    - actual <- c.frente
+    - Mientras actual != nulo
+        - Si actual.visitante.pulsera = pulsera
+            - Devolver verdadero
+        - actual <- actual.siguiente
+    - Devolver falso
+
+
+- verificarAcceso(juego v, visitante v, resultado ^)
+    - Si no juego.operativo
+        - Imprimir "[ACCESO DENEGADO] El juego " + juego.nombre + " se encuentra FUERA DE SERVICIO."
+        - Devolver falso
+    - Si visitante.altura < juego.alturaMinima
+        - Imprimir "[ACCESO DENEGADO] El visitante " + visitante.nombre + " no cumple la altura minima requerida."
+        - Devolver falso
+    - Imprimir "[ACCESO PERMITIDO] " + visitante.nombre + " cumple los requisitos."
+    - Devolver verdadero
+
+
+- encolarVisitante(c ^, v v)
+    - nuevo <- nuevo nodo visitante
+    - nuevo.visitante <- v
+    - nuevo.siguiente <- nulo
+    - Si c.frente = nulo
+        - c.frente <- nuevo
+    - Sino
+        - c.fin.siguiente <- nuevo
+    - c.fin <- nuevo
+
+
+- mostrarFilaJuego(c v)
+    - imprimirTitulo("FILA ACTUAL DEL JUEGO")
+    - Si c.frente = nulo
+        - Imprimir "La fila esta actualmente vacia."
+        - Devolver
+    - aux <- c.frente
+    - posicion <- 1
+    - Mientras aux != nulo
+        - Imprimir posicion + ". " + aux.visitante.nombre + " (Pulsera: " + aux.visitante.pulsera + ")"
+        - aux <- aux.siguiente
+        - posicion <- posicion + 1
+
+
+- atenderSiguienteVisitante(c ^)
+    - Si desencolarVisitante(c, v)
+        - Imprimir "Atendiendo al visitante: " + v.nombre + " (Pulsera: " + v.pulsera + ")"
+    - Sino
+        - Imprimir "No hay visitantes en la fila para atender."
+
+
+- desencolarVisitante(c ^, v ^, resultado ^)
+    - Si c.frente = nulo
+        - Devolver falso
+    - aux <- c.frente
+    - v <- aux.visitante
+    - c.frente <- aux.siguiente
+    - Si c.frente = nulo
+        - c.fin <- nulo
+    - liberar aux
+    - Devolver verdadero
 
 
 - mostrarMenuHerramientas(datos ^)
@@ -1540,58 +1454,81 @@
                 - opcionElegida <- -1
 
 
-- imprimirMenuOcupacion()
-    - imprimirTitulo("Menu Ocupacion de Juegos")
-    - imprimirConNumero(1, "Ver ocupacion de juegos por franjas")
-    - imprimirConNumero(2, "Mayor ocupacion registrada")
-    - imprimirConNumero(3, "Juego mas utilizado")
-    - imprimirConNumero(4, "Ver totales de ocupacion")
-    - imprimirConNumero(5, "Exportar reporte del dia a archivo")
-    - imprimirConNumero(6, "Volver al Menu Principal")
-
-
-- mostrarMenuOcupacion(datos ^)
-    - Si datos.cantJuegos = 0
-        - datos.cantJuegos <- leerArchivoJuegos(datos.juegos, MAX_JUEGOS)
-        - Si datos.cantJuegos = 0
-            - Imprimir "No hay juegos cargados. Genera los datos de prueba desde el Menu Principal."
-            - Devolver
-        - reconstruirMatriz(datos)
-    - opcionElegida <- 0
-    - imprimirMenuOcupacion()
-    - Mientras opcionElegida != -1
-        - opcionElegida <- -2
-        - Mientras opcionElegida < 0 o opcionElegida > 6
-            - Imprimir "Ingresa un numero (0 para imprimir menu): "
-            - Leer opcionElegida
-            - Si opcionElegida < 0 o opcionElegida > 6
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
-        - Cuando opcionElegida sea
-            - 0
-                - imprimirMenuOcupacion()
-            - 1
-                - imprimirMatriz(datos)
-            - 2
-                - mayorOcupacion <- devolverMayorOcupacion(datos.datosMatriz)
-                - Imprimir "Mayor ocupacion registrada: " + datos.juegos[mayorOcupacion.juego].nombre + " de " + FRANJAS_TEXTO[mayorOcupacion.franja] + " con total de " + mayorOcupacion.ocupacion
-            - 3
-                - maxPos <- devolverMasUsado(datos.datosMatriz)
-                - cantidadMax <- sumaTotalV(datos.datosMatriz.matriz[maxPos], datos.datosMatriz.franjas)
-                - Imprimir "El juego mas usado fue " + datos.juegos[maxPos].nombre + " con " + cantidadMax + " ocupantes"
-            - 4
-                - imprimirTotales(datos)
-            - 5
-                - exportarReporteDia(datos)
-            - 6
-                - Imprimir "Regresando..."
-                - opcionElegida <- -1
-
-
-- imprimirMenuRecursividad()
-    - imprimirTitulo("Menu Principal > Herramientas > Recursion")
-    - imprimirConNumero(1, "Contar visitantes activos (recursivo)")
-    - imprimirConNumero(2, "Atender fila (recursivo)")
+- imprimirMenuHerramientas()
+    - imprimirTitulo("Menu Principal > Herramientas")
+    - imprimirConNumero(1, "Generar datos de prueba")
+    - imprimirConNumero(2, "Recursion")
     - imprimirConNumero(3, "Volver al menu anterior")
+
+
+- generarDatosPrueba(datos ^)
+    - Imprimir "Generando datos..."
+    - Imprimir "Generando visitantes..."
+    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1000, datos.listaVisitantes)
+    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1001, datos.listaVisitantes)
+    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1002, datos.listaVisitantes)
+    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1003, datos.listaVisitantes)
+    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1004, datos.listaVisitantes)
+    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1005, datos.listaVisitantes)
+    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1006, datos.listaVisitantes)
+    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1007, datos.listaVisitantes)
+    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1008, datos.listaVisitantes)
+    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1009, datos.listaVisitantes)
+    - Imprimir "Cargando en memoria..."
+    - Imprimir "Generando juegos..."
+    - datos.juegos[0] <- Montana Rusa
+    - datos.juegos[1] <- Rueda de la Fortuna
+    - datos.juegos[2] <- Autitos Chocadores
+    - datos.juegos[3] <- Barco Pirata
+    - datos.juegos[4] <- Pendulo Vertigo
+    - datos.juegos[5] <- Tobogan Acuatico
+    - datos.juegos[6] <- Rio Salvaje
+    - datos.juegos[7] <- Pileta de Olas
+    - datos.juegos[8] <- Calesita
+    - datos.juegos[9] <- Tazas Locas
+    - datos.cantJuegos <- 10
+    - Imprimir "Grabandolos en archivo binario..."
+    - crearArchivoJuegos(datos.juegos, datos.cantJuegos)
+    - Imprimir "Guardando visitantes en visitantes.dat..."
+    - guardarVisitantes(datos.listaVisitantes)
+    - Imprimir "Generando novedades de prueba..."
+    - generarNovedadesDePrueba()
+    - Imprimir "Generando matriz de ocupacion de Juegos..."
+    - reconstruirMatriz(datos)
+    - Imprimir "Generando filas de espera de prueba para los juegos..."
+    - Para i <- 0 mientras i < MAX_JUEGOS
+        - liberarCola(datos.filasJuegos[i])
+    - encolarVisitante(datos.filasJuegos[0], visitante_1000)
+    - encolarVisitante(datos.filasJuegos[0], visitante_1001)
+    - encolarVisitante(datos.filasJuegos[0], visitante_1002)
+    - encolarVisitante(datos.filasJuegos[3], visitante_1003)
+    - encolarVisitante(datos.filasJuegos[3], visitante_1004)
+    - encolarVisitante(datos.filasJuegos[8], visitante_1009)
+    - Imprimir "Datos de prueba generados correctamente."
+
+
+- generarNovedadesDePrueba()
+    - Crear arreglo novedades de tamaño 4
+    - novedades[0] <- baja de Rueda de la Fortuna codigo 2
+    - novedades[1] <- modificacion de Autitos Chocadores codigo 3
+    - novedades[2] <- alta de Sillas Voladoras codigo 11
+    - novedades[3] <- modificacion de juego inexistente codigo 99
+    - Crear archivo rutaArchivoNovedades
+    - Si no archivo abierto
+        - Devolver
+    - Para i <- 0 mientras i < 4
+        - Escribir en archivo registro novedades[i]
+    - Cerrar archivo
+
+
+- liberarCola(c ^)
+    - actual <- c.frente
+    - Mientras actual != nulo
+        - temp <- actual
+        - actual <- actual.siguiente
+        - liberar temp
+    - c.frente <- nulo
+    - c.fin <- nulo
 
 
 - mostrarMenuRecursividad(datos ^)
@@ -1624,6 +1561,29 @@
                 - Imprimir "Regresando..."
                 - opcionElegida <- -1
 
+
+- imprimirMenuRecursividad()
+    - imprimirTitulo("Menu Principal > Herramientas > Recursion")
+    - imprimirConNumero(1, "Contar visitantes activos (recursivo)")
+    - imprimirConNumero(2, "Atender fila (recursivo)")
+    - imprimirConNumero(3, "Volver al menu anterior")
+
+
+- mostrarVisitantesActivosRec(lista v)
+    - Imprimir "Cantidad de visitantes activos (recursivo): " + contarActivosRec(lista)
+
+
+- contarActivosRec(lista v, resultado ^)
+    - Si lista = nulo
+        - Devolver 0
+    - Devolver 1 + contarActivosRec(lista.siguiente)
+
+
+- atenderFilaRec(c ^)
+    - Si c.frente = nulo
+        - Devolver
+    - atenderSiguienteVisitante(c)
+    - atenderFilaRec(c)
 
 
 
