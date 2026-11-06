@@ -64,7 +64,7 @@
     - imprimirTitulo("Menu Principal" v)
     - listaMenu[6] <- {"Visitantes","Juegos","Ocupacion","Fila de espera","Herramientas","Salir"}
     - Para i <- 0 hasta 5
-        imprimirConNumero(i+1 v, listaMenu[i] v)
+        - imprimirConNumero(i+1 v, listaMenu[i] v)
 
 
 - imprimirTitulo(texto v)
@@ -117,8 +117,7 @@
 
 - imprimirMenuVisitantes()
     - imprimirTitulo("Menu Principal > Visitantes" v)
-    - listaMenu[8] <- {"Mostrar Visitantes","Registrar Visitante","Buscar Visitante",
-        "Asignar juego a visitante","Eliminar y liberar", "Historial de juegos","Archivos e indice","Volver al menu anterior"}
+    - listaMenu[8] <- {"Mostrar Visitantes","Registrar Visitante","Buscar Visitante","Asignar juego a visitante","Eliminar y liberar", "Historial de juegos","Archivos e indice","Volver al menu anterior"}
     - Para i <- 0 hasta 7
         - imprimirConNumero(i+1 v, listaMenu[i] v)
 
@@ -815,7 +814,7 @@
                 - opcionElegida <- -1
 
 
-- imprimirMenuOrdenar
+- imprimirMenuOrdenar()
     - imprimirTitulo("Ordenar Juegos de Menor a Mayor")
     - listaMenu <- {"Por Codigo", "Alfabeticamente", "Volver al Menu de Juegos"}
     - Para i <- 0 hasta 2
@@ -1278,86 +1277,76 @@
     - Imprimir "Reporte generado correctamente."
 
 
+
 - mostrarMenuFilas(datos ^)
-    - Si datos.cantJuegos = 0
-        - datos.cantJuegos <- leerArchivoJuegos(datos.juegos, MAX_JUEGOS)
-        - Si datos.cantJuegos = 0
-            - Imprimir "No hay juegos cargados en el sistema."
-            - Devolver
-    - opcionElegida <- 0
+    - cargo <- cargarJuegosSiVacio(datos)
+    - Si no cargo
+        - Devolver
+    - opcionElegida <- -2
     - imprimirMenuFilas()
     - Mientras opcionElegida != -1
         - opcionElegida <- -2
-        - Mientras opcionElegida < 0 o opcionElegida > 5
-            - Imprimir "Ingresa un numero (0 para imprimir menu): "
-            - Leer opcionElegida
-            - Si opcionElegida < 0 o opcionElegida > 5
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
+        - leerInputMenu(0 v, 5 v, &opcionElegida v^)
         - Cuando opcionElegida sea
             - 0
                 - imprimirMenuFilas()
             - 1
-                - Imprimir "Ingrese el numero de pulsera del visitante: "
-                - Leer pulseraBuscada
-                - existe <- obtenerVisitantePorPulsera(datos.listaVisitantes, pulseraBuscada, v)
-                - Si no existe
-                    - Imprimir "No se encontro ningun visitante activo con la pulsera " + pulseraBuscada
-                    - Imprimir "¿Desea registrarlo como nuevo visitante en el sistema? (1: Si / 2: No): "
-                    - Leer resp
-                    - Si resp = 1
-                        - leerInputVisitante(v)
-                        - datos.listaVisitantes <- agregarVisitanteLista(v, datos.listaVisitantes)
-                        - Imprimir "Visitante registrado exitosamente."
-                    - Sino
-                        - Imprimir "Operacion cancelada."
-                - Sino
-                    - Imprimir "Visitante identificado:"
-                    - imprimirVisitante(v)
-                - Si existe o resp = 1
-                    - Imprimir "Seleccione el juego al que desea ingresar a la fila:"
-                    - idxJuego <- seleccionarJuego(datos.juegos, datos.cantJuegos)
-                    - Si idxJuego >= 0 y idxJuego < datos.cantJuegos
-                        - Si estaEnCola(datos.filasJuegos[idxJuego], v.pulsera)
-                            - Imprimir "[ACCESO DENEGADO] El visitante ya se encuentra en la fila."
-                        - Sino
-                            - Si verificarAcceso(datos.juegos[idxJuego], v)
-                                - encolarVisitante(datos.filasJuegos[idxJuego], v)
-                                - Imprimir v.nombre + " ingreso a la fila de " + datos.juegos[idxJuego].nombre
-                                - mostrarFilaJuego(datos.filasJuegos[idxJuego])
+                - encolarVisitanteEnJuego(datos ^)
             - 2
-                - Imprimir "Seleccione el juego cuya fila desea consultar:"
-                - idxJuego <- seleccionarJuego(datos.juegos, datos.cantJuegos)
-                - Si idxJuego >= 0 y idxJuego < datos.cantJuegos
-                    - Imprimir "Fila de: " + datos.juegos[idxJuego].nombre
-                    - mostrarFilaJuego(datos.filasJuegos[idxJuego])
+                - verFilaDeJuego(datos ^)
             - 3
-                - Imprimir "Seleccione el juego para atender al siguiente visitante:"
-                - idxJuego <- seleccionarJuego(datos.juegos, datos.cantJuegos)
-                - Si idxJuego >= 0 y idxJuego < datos.cantJuegos
-                    - Imprimir "Atendiendo fila de: " + datos.juegos[idxJuego].nombre
-                    - atenderSiguienteVisitante(datos.filasJuegos[idxJuego])
+                - atenderFilaDeJuego(datos ^)
             - 4
-                - imprimirTitulo("ESTADO GENERAL DE LAS FILAS")
-                - Para i <- 0 mientras i < datos.cantJuegos
-                    - cantEnFila <- 0
-                    - aux <- datos.filasJuegos[i].frente
-                    - Mientras aux != nulo
-                        - cantEnFila <- cantEnFila + 1
-                        - aux <- aux.siguiente
-                    - Imprimir (i + 1) + ". " + datos.juegos[i].nombre + " [Codigo: " + datos.juegos[i].codigo + "]: " + cantEnFila + " visitantes en fila"
+                - mostrarEstadoFilas(datos v)
             - 5
                 - Imprimir "Regresando al Menu Principal..."
                 - opcionElegida <- -1
 
 
 - imprimirMenuFilas()
-    - imprimirTitulo("Menu Filas y Colas de Juegos")
-    - imprimirConNumero(1, "Encolar visitante en un juego")
-    - imprimirConNumero(2, "Ver fila de un juego")
-    - imprimirConNumero(3, "Atender siguiente visitante en un juego")
-    - imprimirConNumero(4, "Ver estado de todas las filas")
-    - imprimirConNumero(5, "Volver al Menu Principal")
+    - imprimirTitulo("Menu Principal > Filas y Colas")
+    - listaMenu <- {"Encolar visitante en un juego","Ver fila de un juego","Atender siguiente visitante en un juego","Ver estado de todas las filas","Volver al menu anterior"}
+    - Para i <- 0 hasta 4
+        - imprimirConNumero(i+1 v, listaMenu[i] v)
 
+- cargarJuegosSiVacio(datos v^)
+    - Si datos.cantJuegos > 0
+        - Devolver verdadero
+    - datos.cantJuegos <- leerArchivoJuegos(datos.juegos, MAX_JUEGOS)
+    - Si datos.cantJuegos = 0
+        - Imprimir "No hay juegos cargados en el sistema."
+        - Devolver falso
+    - Devolver verdadero
+
+
+
+- encolarVisitanteEnJuego(datos v^)
+    - Si no identificarVisitante(datos v)
+        - Devolver
+    - idxJuego <- pedirIndiceJuego(datos, "Seleccione el juego al que desea ingresar a la fila:")
+    - Si idxJuego = -1
+        - Devolver
+    - ingresarVisitanteAFila(datos.filasJuegos[idxJuego], datos.juegos[idxJuego] )
+
+- identificarVisitante(datos v^)
+    - Imprimir "Ingrese el numero de pulsera del visitante: "
+    - Leer pulseraBuscada
+    - Si obtenerVisitantePorPulsera(datos.listaVisitantes, pulseraBuscada v)
+        - Imprimir "Visitante identificado:"
+        - imprimirVisitante(v)
+        - Devolver verdadero
+    - Sino
+        - Imprimir "No se encontro ningun visitante activo con la pulsera " + pulseraBuscada
+        - Imprimir "¿Desea registrarlo como nuevo visitante en el sistema? (1: Si / 2: No): "
+        - Leer resp
+        - Si resp != 1
+            - Imprimir "Operacion cancelada."
+            - Devolver falso
+        - Sino
+            - leerInputVisitante(v)
+            - agregarVisitanteLista(v, datos.listaVisitantes v^)
+            - Imprimir "Visitante registrado exitosamente."
+    - Devolver verdadero
 
 - obtenerVisitantePorPulsera(lista v, pulseraNum v, v ^, resultado ^)
     - actual <- lista
@@ -1368,6 +1357,22 @@
         - actual <- actual.siguiente
     - Devolver falso
 
+- pedirIndiceJuego(datos v^, mensaje v)
+    - Imprimir mensaje
+    - idxJuego <- seleccionarJuego(datos.juegos, datos.cantJuegos)
+    - Si idxJuego < 0 o idxJuego >= datos.cantJuegos
+        - Devolver -1
+    - Devolver idxJuego
+
+- ingresarVisitanteAFila(c ^, juego v, v v)
+    - Si estaEnCola(c, v.pulsera)
+        - Imprimir "[ACCESO DENEGADO] El visitante ya se encuentra en la fila."
+        - Devolver
+    - Si no verificarAcceso(juego, v)
+        - Devolver
+    - encolarVisitante(c, v)
+    - Imprimir v.nombre + " ingreso a la fila de " + juego.nombre
+    - mostrarFilaJuego(c)
 
 - estaEnCola(c v, pulsera v, resultado ^)
     - actual <- c.frente
@@ -1377,7 +1382,6 @@
         - actual <- actual.siguiente
     - Devolver falso
 
-
 - verificarAcceso(juego v, visitante v, resultado ^)
     - Si no juego.operativo
         - Imprimir "[ACCESO DENEGADO] El juego " + juego.nombre + " se encuentra FUERA DE SERVICIO."
@@ -1385,11 +1389,11 @@
     - Si visitante.altura < juego.alturaMinima
         - Imprimir "[ACCESO DENEGADO] El visitante " + visitante.nombre + " no cumple la altura minima requerida."
         - Devolver falso
-    - Imprimir "[ACCESO PERMITIDO] " + visitante.nombre + " cumple los requisitos."
-    - Devolver verdadero
+    - Sino
+        - Imprimir "[ACCESO PERMITIDO] " + visitante.nombre + " cumple los requisitos."
+        - Devolver verdadero
 
-
-- encolarVisitante(c ^, v v)
+- encolarVisitante(c v^, v v)
     - nuevo <- nuevo nodo visitante
     - nuevo.visitante <- v
     - nuevo.siguiente <- nulo
@@ -1398,7 +1402,6 @@
     - Sino
         - c.fin.siguiente <- nuevo
     - c.fin <- nuevo
-
 
 - mostrarFilaJuego(c v)
     - imprimirTitulo("FILA ACTUAL DEL JUEGO")
@@ -1413,7 +1416,43 @@
         - posicion <- posicion + 1
 
 
-- atenderSiguienteVisitante(c ^)
+
+- verFilaDeJuego(datos ^)
+    - idxJuego <- pedirIndiceJuego(datos, "Seleccione el juego cuya fila desea consultar:")
+    - Si idxJuego = -1
+        - Devolver
+    - Imprimir "Fila de: " + datos.juegos[idxJuego].nombre
+    - mostrarFilaJuego(datos.filasJuegos[idxJuego])
+
+
+- atenderFilaDeJuego(datos ^)
+    - idxJuego <- pedirIndiceJuego(datos, "Seleccione el juego para atender al siguiente visitante:")
+    - Si idxJuego = -1
+        - Devolver
+    - Imprimir "Atendiendo fila de: " + datos.juegos[idxJuego].nombre
+    - atenderSiguienteVisitante(datos.filasJuegos[idxJuego])
+
+
+- mostrarEstadoFilas(datos v)
+    - imprimirTitulo("ESTADO GENERAL DE LAS FILAS")
+    - Para i <- 0 hasta datos.cantJuegos -1
+        - cantEnFila <- contarVisitantesEnFila(datos.filasJuegos[i])
+        - Imprimir (i + 1) + ". " + datos.juegos[i].nombre + " [Codigo: " + datos.juegos[i].codigo + "]: " + cantEnFila + " visitantes en fila"
+
+
+
+
+
+- contarVisitantesEnFila(c v)
+    - cantidad <- 0
+    - aux <- c.frente
+    - Mientras aux != nulo
+        - cantidad <- cantidad + 1
+        - aux <- aux.siguiente
+    - Devolver cantidad
+
+
+- atenderSiguienteVisitante(c v^)
     - Si desencolarVisitante(c, v)
         - Imprimir "Atendiendo al visitante: " + v.nombre + " (Pulsera: " + v.pulsera + ")"
     - Sino
@@ -1432,16 +1471,13 @@
     - Devolver verdadero
 
 
+
 - mostrarMenuHerramientas(datos ^)
     - opcionElegida <- 0
     - imprimirMenuHerramientas()
     - Mientras opcionElegida != -1
         - opcionElegida <- -2
-        - Mientras opcionElegida < 0 o opcionElegida > 3
-            - Imprimir "Ingresa un numero (0 para imprimir menu): "
-            - Leer opcionElegida
-            - Si opcionElegida < 0 o opcionElegida > 3
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
+        - leerInputMenu(0 v, 3 v, opcionElegida v^)
         - Cuando opcionElegida sea
             - 0
                 - imprimirMenuHerramientas()
@@ -1456,68 +1492,29 @@
 
 - imprimirMenuHerramientas()
     - imprimirTitulo("Menu Principal > Herramientas")
-    - imprimirConNumero(1, "Generar datos de prueba")
-    - imprimirConNumero(2, "Recursion")
-    - imprimirConNumero(3, "Volver al menu anterior")
+    - listaMenu <- {"Generar datos de prueba", "Recursion", "Volver al menu anterior"}
+    - Para i <- 0 hasta 2
+        - imprimirConNumero(i+1, listaMenu[i])
 
 
 - generarDatosPrueba(datos ^)
-    - Imprimir "Generando datos..."
-    - Imprimir "Generando visitantes..."
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1000, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1001, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1002, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1003, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1004, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1005, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1006, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1007, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1008, datos.listaVisitantes)
-    - datos.listaVisitantes <- agregarVisitanteLista(visitante_1009, datos.listaVisitantes)
-    - Imprimir "Cargando en memoria..."
-    - Imprimir "Generando juegos..."
-    - datos.juegos[0] <- Montana Rusa
-    - datos.juegos[1] <- Rueda de la Fortuna
-    - datos.juegos[2] <- Autitos Chocadores
-    - datos.juegos[3] <- Barco Pirata
-    - datos.juegos[4] <- Pendulo Vertigo
-    - datos.juegos[5] <- Tobogan Acuatico
-    - datos.juegos[6] <- Rio Salvaje
-    - datos.juegos[7] <- Pileta de Olas
-    - datos.juegos[8] <- Calesita
-    - datos.juegos[9] <- Tazas Locas
-    - datos.cantJuegos <- 10
-    - Imprimir "Grabandolos en archivo binario..."
-    - crearArchivoJuegos(datos.juegos, datos.cantJuegos)
-    - Imprimir "Guardando visitantes en visitantes.dat..."
+    - Imprimir "Generando datos de prueba..."
+    - Agregar 10 visitantes de prueba (pulseras 1000 a 1009) con agregarVisitanteLista
+    - Cargar 10 juegos de prueba en datos.juegos 
     - guardarVisitantes(datos.listaVisitantes)
-    - Imprimir "Generando novedades de prueba..."
     - generarNovedadesDePrueba()
-    - Imprimir "Generando matriz de ocupacion de Juegos..."
     - reconstruirMatriz(datos)
-    - Imprimir "Generando filas de espera de prueba para los juegos..."
     - Para i <- 0 mientras i < MAX_JUEGOS
         - liberarCola(datos.filasJuegos[i])
-    - encolarVisitante(datos.filasJuegos[0], visitante_1000)
-    - encolarVisitante(datos.filasJuegos[0], visitante_1001)
-    - encolarVisitante(datos.filasJuegos[0], visitante_1002)
-    - encolarVisitante(datos.filasJuegos[3], visitante_1003)
-    - encolarVisitante(datos.filasJuegos[3], visitante_1004)
-    - encolarVisitante(datos.filasJuegos[8], visitante_1009)
+    - Encolar visitantes de prueba
     - Imprimir "Datos de prueba generados correctamente."
 
 
 - generarNovedadesDePrueba()
-    - Crear arreglo novedades de tamaño 4
-    - novedades[0] <- baja de Rueda de la Fortuna codigo 2
-    - novedades[1] <- modificacion de Autitos Chocadores codigo 3
-    - novedades[2] <- alta de Sillas Voladoras codigo 11
-    - novedades[3] <- modificacion de juego inexistente codigo 99
     - Crear archivo rutaArchivoNovedades
     - Si no archivo abierto
         - Devolver
-    - Para i <- 0 mientras i < 4
-        - Escribir en archivo registro novedades[i]
+    - Escribir 4 novedades de prueba
     - Cerrar archivo
 
 
@@ -1536,27 +1533,14 @@
     - imprimirMenuRecursividad()
     - Mientras opcionElegida != -1
         - opcionElegida <- -2
-        - Mientras opcionElegida < 0 o opcionElegida > 3
-            - Imprimir "Ingresa un numero (0 para imprimir menu): "
-            - Leer opcionElegida
-            - Si opcionElegida < 0 o opcionElegida > 3
-                - Imprimir "Numero incorrecto. Ingrese uno correcto."
+        - leerInputMenu(0 v,3 v,opcionElegida v^)
         - Cuando opcionElegida sea
             - 0
                 - imprimirMenuRecursividad()
             - 1
                 - mostrarVisitantesActivosRec(datos.listaVisitantes)
             - 2
-                - Si datos.cantJuegos = 0
-                    - datos.cantJuegos <- leerArchivoJuegos(datos.juegos, MAX_JUEGOS)
-                - Si datos.cantJuegos = 0
-                    - Imprimir "No hay juegos cargados en el sistema."
-                - Sino
-                    - Imprimir "Seleccione el juego cuya fila desea atender (recursivamente):"
-                    - idxJuego <- seleccionarJuego(datos.juegos, datos.cantJuegos)
-                    - Si idxJuego >= 0 y idxJuego < datos.cantJuegos
-                        - Imprimir "Atendiendo la fila de: " + datos.juegos[idxJuego].nombre
-                        - atenderFilaRec(datos.filasJuegos[idxJuego])
+                - atenderFilaRecursivaDeJuego(datos ^)
             - 3
                 - Imprimir "Regresando..."
                 - opcionElegida <- -1
@@ -1564,9 +1548,18 @@
 
 - imprimirMenuRecursividad()
     - imprimirTitulo("Menu Principal > Herramientas > Recursion")
-    - imprimirConNumero(1, "Contar visitantes activos (recursivo)")
-    - imprimirConNumero(2, "Atender fila (recursivo)")
-    - imprimirConNumero(3, "Volver al menu anterior")
+    - listaMenu <- {"Contar visitantes activos (recursivo)","Atender fila (recursivo)", "Volver al menu anterior")}
+    - Para i <- 0 hasta 2
+        - imprimirConNumero(i+1, listaMenu[i])
+
+- atenderFilaRecursivaDeJuego(datos ^)
+    - Si no cargarJuegosSiVacio(datos)
+        - Devolver
+    - idxJuego <- pedirIndiceJuego(datos, "Seleccione el juego cuya fila desea atender (recursivamente):")
+    - Si idxJuego = -1
+        - Devolver
+    - Imprimir "Atendiendo la fila de: " + datos.juegos[idxJuego].nombre
+    - atenderFilaRec(datos.filasJuegos[idxJuego])
 
 
 - mostrarVisitantesActivosRec(lista v)
@@ -1584,7 +1577,3 @@
         - Devolver
     - atenderSiguienteVisitante(c)
     - atenderFilaRec(c)
-
-
-
-
