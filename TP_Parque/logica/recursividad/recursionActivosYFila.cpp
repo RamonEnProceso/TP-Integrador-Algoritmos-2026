@@ -8,13 +8,13 @@ int contarActivosRec(NodoVisitante* lista) {
     return 1 + contarActivosRec(lista->siguiente);
 }
 
-void atenderFilaRec(Cola &c) {
+void atenderFilaRec(Cola &c, NodoVisitante *lista, Juego *juego, int franja) {
     // caso base: fila vacia, no hay nada que atender
     if (c.frente == nullptr) {
         return;
     }
     // atiendo al visitante que esta al frente
-    atenderSiguienteVisitante(c);
+    atenderSiguienteVisitante(c, lista, juego, franja);
     // caso recursivo: atiendo el resto de la fila
-    atenderFilaRec(c);
+    atenderFilaRec(c, lista, juego, franja);
 }

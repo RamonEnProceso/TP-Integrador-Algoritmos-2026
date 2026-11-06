@@ -44,10 +44,10 @@ void mostrarMenuRecursividad(DatosParque &datos){
                     break;
                 }
                 cout << "Seleccione el juego cuya fila desea atender (recursivamente):\n";
-                int idxJuego = seleccionarJuego(datos.juegos, datos.cantJuegos);
+                int idxJuego = seleccionarJuego(datos.juegos, datos.cantJuegos, datos.filasJuegos);
                 if (idxJuego >= 0 && idxJuego < datos.cantJuegos) {
                     cout << "\n=== Atendiendo (recursivo) la fila de: " << datos.juegos[idxJuego].nombre << " ===\n";
-                    atenderFilaRec(datos.filasJuegos[idxJuego]);
+                    atenderFilaRec(datos.filasJuegos[idxJuego], datos.listaVisitantes, &datos.juegos[idxJuego]);
                 }
                 break;
             }

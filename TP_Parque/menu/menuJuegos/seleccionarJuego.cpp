@@ -18,26 +18,26 @@ static void imprimirMenu(){
     }
 }
 
-int seleccionarJuego(Juego juegos[], int n) {
+int seleccionarJuego(Juego juegos[], int n, Cola filas[]) {
     int opcionElegida = 0;
     int indiceEncontrado = -1;
 
     imprimirMenu();
 
     while (opcionElegida != -1) {
-        int opcionElegida = -2;
+        opcionElegida = -2;
         leerInputMenu(0, 3, opcionElegida);
 
         switch (opcionElegida) {
             case 0: {
                 imprimirMenu();
-                break;
+                continue;
             }
             case 1: {
                 cout << "Ingrese el codigo: ";
                 int cod;
                 cin >> cod;
-                ordenarPorCodigo(juegos, n);
+                ordenarPorCodigo(juegos, n, filas);
                 indiceEncontrado = buscarJuegoPorCodigoBinaria(juegos, n, cod);
                 break;
             }

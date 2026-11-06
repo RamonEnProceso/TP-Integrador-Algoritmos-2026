@@ -42,7 +42,7 @@ void mostrarMenuPrincipal(DatosParque &datos){
             mostrarMenuVisitantes(datos);
             break;
         case 2:
-            mostrarMenuJuegos(datos.juegos);
+            mostrarMenuJuegos(datos.juegos, datos.cantJuegos, datos.filasJuegos);
             break;
         case 3:
             mostrarMenuOcupacion(datos);

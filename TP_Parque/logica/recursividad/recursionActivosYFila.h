@@ -4,9 +4,10 @@
 
 #include "structs/nodoVisitante.h"
 #include "structs/cola.h"
+#include "structs/juego.h"
 
 int contarActivosRec(NodoVisitante* lista);
 
-void atenderFilaRec(Cola &c);
+void atenderFilaRec(Cola &c, NodoVisitante *lista = nullptr, Juego *juego = nullptr, int franja = 0);
 
 #endif

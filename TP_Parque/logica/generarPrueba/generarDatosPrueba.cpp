@@ -3,6 +3,7 @@
 #include "logica/archivo/guardarVisitantes.h"
 #include "logica/archivo/generarNovedadesDePrueba.h"
 #include "logica/nodo/agregarVisitanteLista.h"
+#include "logica/nodo/liberarVisitanteLista.h"
 #include "logica/matriz/reconstruirMatriz.h"
 #include "logica/cola/encolarVisitante.h"
 #include "logica/cola/liberarCola.h"
@@ -15,6 +16,7 @@ using namespace std;
 void generarDatosPrueba(DatosParque &datos){
     cout << "Generando datos...\n" ;
     cout << "Generando visitantes...\n" ;
+    datos.listaVisitantes = liberarVisitanteLista(datos.listaVisitantes);
 
     datos.listaVisitantes = agregarVisitanteLista({ 1000, "Ramon Ramirez", 23, 1.83f }, datos.listaVisitantes);
     datos.listaVisitantes = agregarVisitanteLista({ 1001, "Joaquin Orsini",   23, 1.83f }, datos.listaVisitantes);

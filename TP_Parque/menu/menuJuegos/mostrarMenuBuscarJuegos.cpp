@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void mostrarMenuBuscarJuegos(Juego *listaJuegos, int cantJuegos) {
+void mostrarMenuBuscarJuegos(Juego *listaJuegos, int cantJuegos, Cola *filas) {
     int opcionElegida = 0;
 
     while (opcionElegida != -1) {
@@ -22,7 +22,8 @@ void mostrarMenuBuscarJuegos(Juego *listaJuegos, int cantJuegos) {
 
         while (opcionElegida < 1 || opcionElegida > 3) {
             cout << "Ingresa el numero de opcion elegida: "; 
-            cin >> opcionElegida; cout << endl;
+            if (!(cin >> opcionElegida)) { if (cin.eof()) return; cin.clear(); cin.ignore(10000, '\n'); opcionElegida = -2; }
+            cout << endl;
             if (opcionElegida < 1 || opcionElegida > 3) {
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
             }
@@ -33,7 +34,7 @@ void mostrarMenuBuscarJuegos(Juego *listaJuegos, int cantJuegos) {
                 cout << "Ingrese el codigo a buscar: ";
                 int cod;
                 cin >> cod;
-                ordenarPorCodigo(listaJuegos, cantJuegos); 
+                ordenarPorCodigo(listaJuegos, cantJuegos, filas); 
                 int posCod = buscarJuegoPorCodigoBinaria(listaJuegos, cantJuegos, cod);
                 if (posCod != -1) {
                     imprimirJuego(listaJuegos[posCod]);

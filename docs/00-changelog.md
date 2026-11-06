@@ -1,5 +1,16 @@
 # Historial de Cambios
 
+## v1.2 - (06/11/2026)
+- Joaquín | *Corrección integral de bugs del sistema*
+    - Corregir desincronización de colas de espera al ordenar juegos
+    - Ajustar límite de pulseras para construcción del índice directo
+    - Conectar flujo de atención de filas con historial y ocupación
+    - Ordenar juegos por tipo antes del corte de control
+    - Conectar asignación de juego a visitante
+    - Hidratar lista de visitantes en memoria desde archivo al iniciar
+    - Prevenir bucle infinito ante entradas inválidas en menús
+    - Corregir validaciones de límites en menú ocupación
+
 ## v1.1 - (26/10/2026)
 - Ramón | *Refactorizar menus*
     - Modificar el menú de Juegos

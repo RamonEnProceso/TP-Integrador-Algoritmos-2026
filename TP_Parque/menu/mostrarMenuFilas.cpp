@@ -44,7 +44,7 @@ void mostrarMenuFilas(DatosParque &datos) {
     while (opcionElegida != -1) {
         opcionElegida = -2;;
 
-        leerInputMenu(0, 8, opcionElegida);
+        leerInputMenu(0, 5, opcionElegida);
 
         switch (opcionElegida) {
             case 0: {
@@ -78,7 +78,7 @@ void mostrarMenuFilas(DatosParque &datos) {
                 }
 
                 cout << "Seleccione el juego al que desea ingresar a la fila:\n";
-                int idxJuego = seleccionarJuego(datos.juegos, datos.cantJuegos);
+                int idxJuego = seleccionarJuego(datos.juegos, datos.cantJuegos, datos.filasJuegos);
 
                 if (idxJuego >= 0 && idxJuego < datos.cantJuegos) {
                     if (estaEnCola(datos.filasJuegos[idxJuego], v.pulsera)) {
@@ -100,7 +100,7 @@ void mostrarMenuFilas(DatosParque &datos) {
 
             case 2: {
                 cout << "Seleccione el juego cuya fila desea consultar:\n";
-                int idxJuego = seleccionarJuego(datos.juegos, datos.cantJuegos);
+                int idxJuego = seleccionarJuego(datos.juegos, datos.cantJuegos, datos.filasJuegos);
                 if (idxJuego >= 0 && idxJuego < datos.cantJuegos) {
                     cout << "\n=== Fila de: " << datos.juegos[idxJuego].nombre << " ===\n";
                     mostrarFilaJuego(datos.filasJuegos[idxJuego]);
@@ -110,10 +110,10 @@ void mostrarMenuFilas(DatosParque &datos) {
 
             case 3: {
                 cout << "Seleccione el juego para atender al siguiente visitante:\n";
-                int idxJuego = seleccionarJuego(datos.juegos, datos.cantJuegos);
+                int idxJuego = seleccionarJuego(datos.juegos, datos.cantJuegos, datos.filasJuegos);
                 if (idxJuego >= 0 && idxJuego < datos.cantJuegos) {
                     cout << "\n=== Atendiendo fila de: " << datos.juegos[idxJuego].nombre << " ===\n";
-                    atenderSiguienteVisitante(datos.filasJuegos[idxJuego]);
+                    atenderSiguienteVisitante(datos.filasJuegos[idxJuego], datos.listaVisitantes, &datos.juegos[idxJuego]);
                 }
                 break;
             }

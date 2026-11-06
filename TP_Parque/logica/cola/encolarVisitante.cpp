@@ -3,6 +3,7 @@
 void encolarVisitante(Cola &c, Visitante v) {
     NodoVisitante* nuevo = new NodoVisitante();
     nuevo->visitante = v;
+    nuevo->visitante.historial = nullptr;
     nuevo->siguiente = nullptr;
 
     if (c.frente == nullptr) {
