@@ -26,7 +26,6 @@ void generarDatosPrueba(DatosParque &datos){
     datos.listaVisitantes = agregarVisitanteLista({ 1007, "Alexis Nogueira",  22, 1.80f }, datos.listaVisitantes);
     datos.listaVisitantes = agregarVisitanteLista({ 1008, "Rigo Morel",       29, 1.74f }, datos.listaVisitantes);
     datos.listaVisitantes = agregarVisitanteLista({ 1009, "Mi amigo lucas",       14, 1.55f }, datos.listaVisitantes);
-
     cout << "Cargando en memoria...\n" ;
 
     cout << "Generando juegos...\n" ;
@@ -53,7 +52,6 @@ void generarDatosPrueba(DatosParque &datos){
 
     cout << "Generando novedades de prueba...\n";
     generarNovedadesDePrueba();
-
     cout << "Generando matriz de ocupacion de Juegos...\n";
 
     reconstruirMatriz(datos);
@@ -62,7 +60,6 @@ void generarDatosPrueba(DatosParque &datos){
     for (int i = 0; i < MAX_JUEGOS; i++) {
         liberarCola(datos.filasJuegos[i]);
     }
-
 
     encolarVisitante(datos.filasJuegos[0], { 1000, "Ramon Ramirez", 23, 1.83f });
     encolarVisitante(datos.filasJuegos[0], { 1001, "Joaquin Orsini",   23, 1.83f });

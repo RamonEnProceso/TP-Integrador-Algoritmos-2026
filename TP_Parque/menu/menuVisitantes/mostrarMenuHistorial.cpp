@@ -15,7 +15,7 @@ using namespace std;
 static void imprimirMenu(){
     imprimirTitulo("Menu Principal > Visitantes > Historial de juegos");
     char listaMenu[4][LARGO_NOMBRE] = {"Apilar juego visitado","Deshacer ultimo juego", "Ver historial","Volver al menu anterior"};
-    for (size_t i = 0; i < 3; i++){
+    for (size_t i = 0; i < 4; i++){
         imprimirConNumero(i+1, listaMenu[i]);
     }
 }

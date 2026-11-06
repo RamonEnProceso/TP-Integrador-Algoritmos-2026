@@ -18,7 +18,7 @@ void guardarVisitantes(NodoVisitante* lista) {
     while (actual != nullptr) {
         VisitanteArchivo reg{};
         reg.pulsera = actual->visitante.pulsera;
-        copiarTexto(reg.nombre, actual -> visitante.nombre);
+        copiarTexto(actual->visitante.nombre, reg.nombre);
         reg.edad = actual->visitante.edad;
         reg.altura = actual->visitante.altura;
 
