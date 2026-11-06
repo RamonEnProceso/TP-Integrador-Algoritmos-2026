@@ -9,7 +9,6 @@
 #include "utiles/outputs/imprimirVisitante.h"
 #include "utiles/inputs/leerInputMenu.h"
 #include "constantes/generales.h"
-#include "constantes/rutasArchivos.h"
 #include "logica/indice/mostrarIndice.h"
 #include <iostream>
 #include <fstream>

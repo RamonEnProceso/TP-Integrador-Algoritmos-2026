@@ -1,7 +1,7 @@
 
 #include "logica/indice/construirIndice.h"
 #include "constantes/rutasArchivos.h"
-#include "constantes/generales.h"
+#include "constantes/visitantes.h"
 #include "structs/visitante.h"
 #include <fstream>
 #include <iostream>
@@ -18,7 +18,7 @@ bool construirIndice() {
 
     int vacio = -1;
 
-    for (int k = 0; k < MAXP; k++) {
+    for (int k = 0; k < MAX_PULSERAS; k++) {
         archivoIndice.write((char*)&vacio,sizeof(int));}
 
     if (!archivoIndice) {
@@ -31,7 +31,7 @@ bool construirIndice() {
 
     while (archivo.read((char*)&reg,sizeof(VisitanteArchivo))) {
         // Verificar que la pulsera sea válida.
-        if (reg.pulsera < 1 || reg.pulsera > MAXP) {
+        if (reg.pulsera < 1 || reg.pulsera > MAX_PULSERAS) {
             cerr << "Numero de pulsera fuera de rango.\n\n";
             archivo.close();archivoIndice.close();return false;
         }
