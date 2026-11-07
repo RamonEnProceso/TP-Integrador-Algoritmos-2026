@@ -39,8 +39,11 @@ static void conMaestro(ofstream &actualizado, const Juego &maestro, const Noveda
 
         cout << "[BAJA] Se elimino el juego " << maestro.codigo << " - " << maestro.nombre << ".\n";
     } else if (novedad.op == 'M') {
-
-        grabarJuego(actualizado, novedad.datos);
+        Juego mod = novedad.datos;
+        for (int i = 0; i < FRANJAS_HORARIAS; i++) {
+            mod.franjas[i] = maestro.franjas[i];
+        }
+        grabarJuego(actualizado, mod);
         cout << "[MODIFICACION] Se actualizo el juego " << novedad.datos.codigo
              << " - " << novedad.datos.nombre << ".\n";
     } else {

@@ -32,7 +32,7 @@ static void construirArchivoIndice() {
 static void buscarVisitantePorIndice() {
     int pulsera = 0;
     cout << "Ingrese el numero de pulsera a buscar (0 para terminar): ";
-    cin >> pulsera;
+    if (!(cin >> pulsera)) { cin.clear(); cin.ignore(10000, '\n'); pulsera = 0; }
 
     while (pulsera != 0) {
         Visitante visitante;
@@ -41,7 +41,7 @@ static void buscarVisitantePorIndice() {
         else {
             cout << "No se encontro un visitante con la pulsera " << pulsera << ".\n\n";}
         cout << "Ingrese el numero de pulsera a buscar (0 para terminar): ";
-        cin >> pulsera;
+        if (!(cin >> pulsera)) { cin.clear(); cin.ignore(10000, '\n'); pulsera = 0; }
     }
     cout << "\n";
 }

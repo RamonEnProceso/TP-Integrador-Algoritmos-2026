@@ -21,10 +21,12 @@ static void imprimirMenu(){
     return;
 }
 
-void mostrarMenuJuegos(Juego *listaJuegos) {
+void mostrarMenuJuegos(Juego *listaJuegos, int &cantidad, Cola *filas) {
     int opcionElegida = 0;
 
-    int cantidad = leerArchivoJuegos(listaJuegos);
+    if (cantidad == 0) {
+        cantidad = leerArchivoJuegos(listaJuegos);
+    }
 
     if (cantidad == 0) {
         cout << "No hay juegos cargados. Genera los datos de prueba desde el Menu Principal.\n\n";
@@ -47,10 +49,10 @@ void mostrarMenuJuegos(Juego *listaJuegos) {
                 mostrarMenuListaJuegos(listaJuegos, cantidad);
                 break;
             case 2:
-                mostrarMenuOrdenarJuegos(listaJuegos, cantidad);
+                mostrarMenuOrdenarJuegos(listaJuegos, cantidad, filas);
                 break;
             case 3: {
-                mostrarMenuBuscarJuegos(listaJuegos, cantidad);
+                mostrarMenuBuscarJuegos(listaJuegos, cantidad, filas);
                 break;
             }
             case 4: {

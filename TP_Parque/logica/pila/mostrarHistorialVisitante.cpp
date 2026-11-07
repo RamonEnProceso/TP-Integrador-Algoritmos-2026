@@ -1,6 +1,7 @@
 #include "logica/pila/mostrarHistorialVisitante.h"
 #include "logica/pila/topeHistorial.h"
 #include "logica/vector/buscarJuegoPorCodigoBinaria.h"
+#include "logica/vector/ordenarPorCodigo.h"
 #include "structs/juego.h"
 #include <iostream>
 
@@ -12,12 +13,16 @@ void mostrarHistorialVisitante(NodoJuegoVisitado *pila, Juego juegos[], int cant
         return;
     }
 
+    Juego ordenados[MAX_JUEGOS];
+    for (int i = 0; i < cantidad; i++) ordenados[i] = juegos[i];
+    ordenarPorCodigo(ordenados, cantidad);
+
     cout << "Historial (del mas reciente al mas viejo):\n";
     NodoJuegoVisitado *actual = pila; 
     while (actual != nullptr){
-        int idx = buscarJuegoPorCodigoBinaria(juegos, cantidad, actual->codigoJuego);
+        int idx = buscarJuegoPorCodigoBinaria(ordenados, cantidad, actual->codigoJuego);
         if (idx != -1) {
-            cout << " - Juego: " << juegos[idx].nombre << endl;
+            cout << " - Juego: " << ordenados[idx].nombre << endl;
         }
         actual = actual->siguiente;
     }

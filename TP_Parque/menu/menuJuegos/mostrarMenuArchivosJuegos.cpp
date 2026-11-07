@@ -24,7 +24,7 @@ static void imprimirMenu(){
     imprimirConNumero(7, "Volver al Menu de Juegos");
 }
 
-void mostrarMenuArchivosJuegos(Juego *listaJuegos, int cantJuegos) {
+void mostrarMenuArchivosJuegos(Juego *listaJuegos, int &cantJuegos) {
     int opcionElegida = 0;
 
     while (opcionElegida != -1) {
@@ -34,7 +34,8 @@ void mostrarMenuArchivosJuegos(Juego *listaJuegos, int cantJuegos) {
 
         while (opcionElegida < 0 || opcionElegida > 7) {
             cout << "Ingresa el numero de opcion elegida: ";
-            cin >> opcionElegida; cout << endl;
+            if (!(cin >> opcionElegida)) { if (cin.eof()) return; cin.clear(); cin.ignore(10000, '\n'); opcionElegida = -2; }
+            cout << endl;
             if (opcionElegida < 0 || opcionElegida > 7) {
                 cout << "Numero incorrecto. Ingrese uno correcto.\n";
             }
@@ -45,7 +46,7 @@ void mostrarMenuArchivosJuegos(Juego *listaJuegos, int cantJuegos) {
                 imprimirMenu();
                 break;
             case 1:
-                leerArchivoJuegos(listaJuegos,cantJuegos);
+                cantJuegos = leerArchivoJuegos(listaJuegos, MAX_JUEGOS);
                 break;
             case 2:
                 crearArchivoJuegos(listaJuegos,cantJuegos);
@@ -69,6 +70,7 @@ void mostrarMenuArchivosJuegos(Juego *listaJuegos, int cantJuegos) {
                 cout << "Nuevo estado (1: operativo / 0: fuera de servicio): ";
                 cin >> estado; cout << endl;
                 if (cambiarEstadoJuegoN(n, estado == 1)) {
+                    cantJuegos = leerArchivoJuegos(listaJuegos, MAX_JUEGOS);
                     cout << "Estado actualizado correctamente.\n\n";
                 } else {
                     cout << "No se pudo actualizar el juego en la posicion " << n << ".\n\n";
@@ -80,6 +82,7 @@ void mostrarMenuArchivosJuegos(Juego *listaJuegos, int cantJuegos) {
                 break;
             case 6:
                 actualizarJuegosConNovedades();
+                cantJuegos = leerArchivoJuegos(listaJuegos, MAX_JUEGOS);
                 break;
             case 7:
                 cout << "Regresando...\n\n";

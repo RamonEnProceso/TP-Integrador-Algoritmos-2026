@@ -7,6 +7,10 @@
 #include "logica/nodo/mostrarVisitantesActivos.h"
 #include "logica/nodo/agregarVisitanteLista.h"
 #include "logica/nodo/buscarVisitanteActivoPorPulsera.h"
+#include "logica/nodo/obtenerVisitantePorPulsera.h"
+#include "logica/cola/estaEnCola.h"
+#include "logica/cola/encolarVisitante.h"
+#include "logica/verificador/verificarAcceso.h"
 #include "structs/juego.h"
 #include "structs/visitante.h"
 #include "structs/nodoVisitante.h"
@@ -34,11 +38,29 @@ static void imprimirMenu(){
 void asignarJuegoVisitante (DatosParque &datos){
     if (datos.cantJuegos == 0) {
         datos.cantJuegos = leerArchivoJuegos(datos.juegos, MAX_JUEGOS);
+        if (datos.cantJuegos == 0) {
+            cout << "No hay juegos disponibles en el sistema.\n\n";
+            return;
+        }
     }
-    if (datos.cantJuegos > 0) {
-        seleccionarJuego(datos.juegos, datos.cantJuegos);
-    } else {
-        cout << "No hay juegos disponibles en el sistema.\n\n";
+    int pulsera = 0;
+    cout << "Ingrese el numero de pulsera del visitante: ";
+    cin >> pulsera; cout << endl;
+    Visitante v;
+    if (!obtenerVisitantePorPulsera(datos.listaVisitantes, pulsera, v)) {
+        cout << "No se encontro un visitante activo con la pulsera " << pulsera << ".\n\n";
+        return;
+    }
+    int idxJuego = seleccionarJuego(datos.juegos, datos.cantJuegos, datos.filasJuegos);
+    if (idxJuego >= 0 && idxJuego < datos.cantJuegos) {
+        if (estaEnCola(datos.filasJuegos[idxJuego], v.pulsera)) {
+            cout << "[ACCESO DENEGADO] El visitante ya se encuentra en la fila.\n\n";
+            return;
+        }
+        if (verificarAcceso(datos.juegos[idxJuego], v)) {
+            encolarVisitante(datos.filasJuegos[idxJuego], v);
+            cout << ">>> " << v.nombre << " fue asignado a la fila de '" << datos.juegos[idxJuego].nombre << "'. <<<\n\n";
+        }
     }
 }
 

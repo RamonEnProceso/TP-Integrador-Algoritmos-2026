@@ -8,6 +8,7 @@
 #include "logica/matriz/devolverJuegoMasUsado.h"
 #include "logica/matriz/reconstruirMatriz.h"
 #include "logica/archivo/exportarReporteDia.h"
+#include "logica/archivo/leerArchivoJuegos.h"
 #include "utiles/matematica/sumaTotal.h"
 #include "constantes/matrizConstantes.h"
 #include "structs/mayorOcupacion.h"
@@ -28,6 +29,13 @@ static void imprimirMenu(){
 }
 
 void mostrarMenuOcupacion(DatosParque &datos){
+    if (datos.cantJuegos == 0) {
+        datos.cantJuegos = leerArchivoJuegos(datos.juegos, MAX_JUEGOS);
+        if (datos.cantJuegos == 0) {
+            cout << "No hay juegos cargados en el sistema.\n\n";
+            return;
+        }
+    }
     int opcionElegida = 0;
     reconstruirMatriz(datos);
 
@@ -50,16 +58,20 @@ void mostrarMenuOcupacion(DatosParque &datos){
 
             case 2: {
                 MayorOcupacion mayorOcupacion = devolverMayorOcupacion(datos.datosMatriz);
-                cout << "El pico maximo fue en el juego " << datos.juegos[mayorOcupacion.juego].nombre
-                << " de " << FRANJAS_TEXTO[mayorOcupacion.franja] << " con un total de " << mayorOcupacion.ocupacion
-                << " visitantes. \n\n";
+                if (mayorOcupacion.juego != -1 && mayorOcupacion.franja != -1) {
+                    cout << "El pico maximo fue en el juego " << datos.juegos[mayorOcupacion.juego].nombre
+                    << " de " << FRANJAS_TEXTO[mayorOcupacion.franja] << " con un total de " << mayorOcupacion.ocupacion
+                    << " visitantes. \n\n";
+                }
                 break;
             }
 
             case 3: {
                 int maxPos = devolverMasUsado(datos.datosMatriz);
-                int cantidadMax = sumaTotalV(datos.datosMatriz.matriz[maxPos],datos.datosMatriz.franjas);
-                cout<< "El juego mas usado fue " << datos.juegos[maxPos].nombre << " con " << cantidadMax << " ocupantes en todo el dia.\n\n";
+                if (maxPos != -1) {
+                    int cantidadMax = sumaTotalV(datos.datosMatriz.matriz[maxPos],datos.datosMatriz.franjas);
+                    cout<< "El juego mas usado fue " << datos.juegos[maxPos].nombre << " con " << cantidadMax << " ocupantes en todo el dia.\n\n";
+                }
                 break;
             }
 

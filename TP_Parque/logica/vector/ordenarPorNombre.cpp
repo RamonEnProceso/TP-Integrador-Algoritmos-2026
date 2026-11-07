@@ -8,7 +8,7 @@ int compararTextos(const char* a, const char* b) {
     return a[i] - b[i];
 }
 
-void ordenarPorNombre(Juego juegos[], int n) {
+void ordenarPorNombre(Juego juegos[], int n, Cola filas[]) {
     bool huboCambios = true;
     for (int i = 0; i < n - 1 && huboCambios; i++) {
         huboCambios = false;
@@ -17,6 +17,11 @@ void ordenarPorNombre(Juego juegos[], int n) {
                 Juego aux = juegos[j];
                 juegos[j] = juegos[j + 1];
                 juegos[j + 1] = aux;
+                if (filas != nullptr) {
+                    Cola auxF = filas[j];
+                    filas[j] = filas[j + 1];
+                    filas[j + 1] = auxF;
+                }
                 huboCambios = true;
             }
         }

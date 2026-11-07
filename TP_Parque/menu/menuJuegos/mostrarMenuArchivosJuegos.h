@@ -2,6 +2,6 @@
 #define MOSTRAR_MENU_ARCHIVOSJUEGOS_H
 #include "structs/juego.h"
 
-void mostrarMenuArchivosJuegos(Juego *listaJuegos, int cantJuegos);
+void mostrarMenuArchivosJuegos(Juego *listaJuegos, int &cantJuegos);
 
 #endif

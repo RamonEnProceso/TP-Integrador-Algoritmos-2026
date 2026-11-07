@@ -23,6 +23,16 @@ void listadoPorTipoConCorte() {
         return;
     }
 
+    for (int i = 0; i < cantidad - 1; i++) {
+        for (int j = 0; j < cantidad - 1 - i; j++) {
+            if (juegos[j].tipo > juegos[j + 1].tipo) {
+                Juego aux = juegos[j];
+                juegos[j] = juegos[j + 1];
+                juegos[j + 1] = aux;
+            }
+        }
+    }
+
     int tipoActual = juegos[0].tipo;
     int subtotal = 0;
     int totalGeneral = 0;
