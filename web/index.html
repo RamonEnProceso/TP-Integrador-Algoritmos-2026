@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TP Parque de Diversiones</title>
+<style>
+  body { margin: 0; background: #0d1117; color: #e6edf3; font-family: ui-monospace, Consolas, monospace; }
+  #app { max-width: 900px; margin: 0 auto; padding: 16px; }
+  #salida { height: 70vh; overflow-y: auto; margin: 0; padding: 12px; background: #010409;
+            border: 1px solid #30363d; border-radius: 6px; white-space: pre-wrap; word-break: break-word; }
+  #entrada { display: flex; gap: 8px; margin-top: 8px; }
+  #linea { flex: 1; padding: 8px; background: #161b22; color: inherit; border: 1px solid #30363d;
+           border-radius: 6px; font: inherit; }
+  button { padding: 8px 14px; background: #238636; color: #fff; border: 0; border-radius: 6px; font: inherit; cursor: pointer; }
+  button.peligro { background: #8b1d1d; }
+  button.descarga { background: #1f6feb; }
+  #acciones { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  button:disabled, #linea:disabled { opacity: .5; cursor: not-allowed; }
+</style>
+</head>
+<body>
+<div id="app">
+  <pre id="salida"></pre>
+  <form id="entrada" autocomplete="off">
+    <input id="linea" type="text" placeholder="Escribí acá y apretá Enter" disabled>
+    <button type="submit">Enviar</button>
+  </form>
+  <div id="acciones">
+    <button class="descarga" id="descargar" type="button" disabled>Descargar reporte</button>
+    <button class="peligro" id="borrar" type="button">Borrar datos guardados y reiniciar</button>
+  </div>
+</div>
+
+<script>
+// ---- Configuración que completa el script de Python ----
+const PREFIJO = "tpParque:";
+const EXCLUIDOS = new Set(["reporte_dia.txt"]);   // archivos que NO se guardan en localStorage
+const REPORTE = "reporte_dia.txt";                // archivo que se puede descargar a la PC
+const CARPETA = "/datos";
+
+const botonDescarga = document.getElementById("descargar");
+const salida = document.getElementById("salida");
+const form = document.getElementById("entrada");
+const campo = document.getElementById("linea");
+
+// ---- Salida: el C++ escribe BYTE por BYTE; los juntamos y decodificamos como UTF-8 ----
+const decodificador = new TextDecoder("utf-8");
+let pendientes = [];
+
+function escribirByte(byte) { pendientes.push(byte & 255); }
+
+function vaciarSalida() {
+  if (pendientes.length === 0) return;
+  salida.textContent += decodificador.decode(new Uint8Array(pendientes), { stream: true });
+  pendientes = [];
+  salida.scrollTop = salida.scrollHeight;
+}
+
+// ---- Persistencia: archivos binarios <-> texto base64 (localStorage solo guarda texto) ----
+function aBase64(bytes) {
+  let binario = "";
+  const trozo = 0x8000;                       // de a pedazos, para no reventar la pila
+  for (let i = 0; i < bytes.length; i += trozo) {
+    binario += String.fromCharCode.apply(null, bytes.subarray(i, i + trozo));
+  }
+  return btoa(binario);
+}
+
+function desdeBase64(texto) {
+  const binario = atob(texto);
+  const bytes = new Uint8Array(binario.length);
+  for (let i = 0; i < binario.length; i++) bytes[i] = binario.charCodeAt(i);
+  return bytes;
+}
+
+function cargarDatos() {                      // corre ANTES de main()
+  const FS = Module.FS;
+  try { FS.mkdir(CARPETA); } catch (e) { /* ya existía */ }
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const clave = localStorage.key(i);
+      if (!clave.startsWith(PREFIJO)) continue;
+      const nombre = clave.slice(PREFIJO.length);
+      FS.writeFile(CARPETA + "/" + nombre, desdeBase64(localStorage.getItem(clave)));
+    }
+  } catch (e) { console.warn("No pude cargar datos guardados:", e); }
+}
+
+function persistir() {                        // copia el sistema de archivos virtual -> localStorage
+  try {
+    const FS = Module.FS;
+    const existentes = new Set();
+    for (const nombre of FS.readdir(CARPETA)) {
+      if (nombre === "." || nombre === ".." || EXCLUIDOS.has(nombre)) continue;
+      existentes.add(nombre);
+      localStorage.setItem(PREFIJO + nombre, aBase64(FS.readFile(CARPETA + "/" + nombre)));
+    }
+    // Si el programa borró un archivo, lo borramos también de localStorage.
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const clave = localStorage.key(i);
+      if (clave.startsWith(PREFIJO) && !existentes.has(clave.slice(PREFIJO.length))) {
+        localStorage.removeItem(clave);
+      }
+    }
+  } catch (e) { console.warn("No pude guardar en localStorage:", e); }
+}
+
+// ---- Descarga: del sistema de archivos virtual a la carpeta Descargas de la PC ----
+function actualizarBotonReporte() {
+  let existe = false;
+  try { Module.FS.readFile(CARPETA + "/" + REPORTE); existe = true; } catch (e) { /* todavía no existe */ }
+  botonDescarga.disabled = !existe;
+}
+
+botonDescarga.addEventListener("click", () => {
+  try {
+    const bytes = Module.FS.readFile(CARPETA + "/" + REPORTE);
+    const blob = new Blob([bytes], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const enlace = document.createElement("a");
+    enlace.href = url;
+    enlace.download = REPORTE;                // el nombre con el que se guarda
+    document.body.appendChild(enlace);
+    enlace.click();                           // simula el clic en un enlace de descarga
+    enlace.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);   // liberar la memoria del Blob
+  } catch (e) {
+    alert("Todavía no se generó " + REPORTE + ". Generalo desde el menú del programa.");
+  }
+});
+
+// ---- Entrada: el C++ llama a leerLinea() y se queda esperando la Promise ----
+let resolverLinea = null;
+
+window.tpParque = {
+  leerLinea() {
+    vaciarSalida();
+    persistir();                              // cada vez que el programa espera, guardamos
+    actualizarBotonReporte();
+    campo.disabled = false;
+    campo.focus();
+    return new Promise((resolver) => { resolverLinea = resolver; });
+  }
+};
+
+form.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+  if (resolverLinea === null) return;
+  const linea = campo.value;
+  campo.value = "";
+  campo.disabled = true;
+  salida.textContent += linea + "\n";         // "eco", como haría una consola real
+  const resolver = resolverLinea;
+  resolverLinea = null;
+  resolver(linea + "\n");                     // despierta al C++
+});
+
+document.getElementById("borrar").addEventListener("click", () => {
+  for (let i = localStorage.length - 1; i >= 0; i--) {
+    const clave = localStorage.key(i);
+    if (clave.startsWith(PREFIJO)) localStorage.removeItem(clave);
+  }
+  location.reload();
+});
+
+// ---- Configuración que lee Emscripten (tiene que existir ANTES de cargar parque.js) ----
+window.Module = {
+  stdout: escribirByte,
+  stderr: escribirByte,
+  preRun: [cargarDatos],
+  onExit() {
+    vaciarSalida();
+    persistir();
+    actualizarBotonReporte();
+    salida.textContent += "\n[Programa finalizado]\n";
+    campo.disabled = true;
+  }
+};
+</script>
+<script src="parque.js"></script>
+</body>
+</html>
