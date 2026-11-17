@@ -4,20 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TP Parque de Diversiones</title>
-<style>
-  body { margin: 0; background: #0d1117; color: #e6edf3; font-family: ui-monospace, Consolas, monospace; }
-  #app { max-width: 900px; margin: 0 auto; padding: 16px; }
-  #salida { height: 70vh; overflow-y: auto; margin: 0; padding: 12px; background: #010409;
-            border: 1px solid #30363d; border-radius: 6px; white-space: pre-wrap; word-break: break-word; }
-  #entrada { display: flex; gap: 8px; margin-top: 8px; }
-  #linea { flex: 1; padding: 8px; background: #161b22; color: inherit; border: 1px solid #30363d;
-           border-radius: 6px; font: inherit; }
-  button { padding: 8px 14px; background: #238636; color: #fff; border: 0; border-radius: 6px; font: inherit; cursor: pointer; }
-  button.peligro { background: #8b1d1d; }
-  button.descarga { background: #1f6feb; }
-  #acciones { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
-  button:disabled, #linea:disabled { opacity: .5; cursor: not-allowed; }
-</style>
+<link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <div id="app">
@@ -27,8 +14,8 @@
     <button type="submit">Enviar</button>
   </form>
   <div id="acciones">
+    <button class="peligro" id="borrar" type="button">Borrar y reiniciar</button>
     <button class="descarga" id="descargar" type="button" disabled>Descargar reporte</button>
-    <button class="peligro" id="borrar" type="button">Borrar datos guardados y reiniciar</button>
   </div>
 </div>
 
