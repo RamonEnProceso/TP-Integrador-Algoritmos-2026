@@ -4,7 +4,7 @@ name: Deploy static web to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - web
     paths:
       - 'web/**'
       - '.github/workflows/deploy.yml'
