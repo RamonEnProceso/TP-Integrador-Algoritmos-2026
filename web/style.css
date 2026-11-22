@@ -1,0 +1,87 @@
+body {
+    margin: 0; 
+    background: #008183; 
+    color: #e6edf3; 
+    font-family: 
+    ui-monospace, Consolas, monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+    width: 100dvw;
+    overflow: hidden;
+}
+
+.window{
+    max-width: 910px;
+    min-width: 550px;
+    padding: 5px;
+    background-color: #C2C2C4;
+}
+
+#app { max-width: 900px; min-width: 500px; width: 100%; height: auto; aspect-ratio: 8/3;}
+
+#salida { 
+    height: 30vh;
+    overflow-y: auto; 
+    margin: 0; 
+    padding: 20px; 
+    background: #010409;
+    font-size: 16px;
+    align-content: end;
+    border: 1px solid #30363d;
+    border-bottom: none;
+    white-space: pre-wrap; 
+    word-break: break-word;
+}
+
+#entrada { display: flex;}
+
+#linea { 
+    flex: 1; 
+    padding: 8px; 
+    background: #161b22; 
+    color: inherit; 
+    border: 1px solid #30363d;
+    font: inherit; 
+}
+
+button { padding: 8px 14px; background: #b8b8b8; color: #000000; border: 0; font: inherit; cursor: pointer;font-weight: bold;}
+
+button.peligro, button.descarga { color: #ffffff; font-weight: bold; padding: 5px 8px; font-size: 12px;}
+
+button.peligro { background: #b91010}
+
+button.descarga { background: #1f6feb}
+
+#acciones { display: flex; padding: 2px; gap: 2px; flex-wrap: nowrap; flex-direction: row-reverse; justify-content: flex-start; margin-bottom: 20px; background: #010183; background: linear-gradient(90deg,#010183 0%, #0281d1 100%);}
+
+button:disabled, #linea:disabled { opacity: .5; cursor: not-allowed; }
+
+button:disabled {visibility: hidden;}
+
+.bisel{box-shadow: 1px 1px 0px 1px #ffffff82 inset,  -1px -1px 0px 1px #0000005f inset;}
+
+
+@media (max-width: 750px){
+    #app {min-width: 370px;}
+    #salida {font-size: 14px;} 
+}
+
+/* Tablets */
+@media (min-width: 481px) and (max-width: 768px) {
+    button.peligro, button.descarga {font-size: 15px;}
+}
+
+/* Celular */
+@media (max-width: 500px) {
+    :root{
+        --min_width:30dvw;
+        --font_size:11px;
+    }
+    .window{min-width: var(--min_width);}
+    #app {min-width: var(--min_width);}
+    #salida {font-size: var(--font_size)}
+    #linea {font-size: var(--font_size)}
+}
